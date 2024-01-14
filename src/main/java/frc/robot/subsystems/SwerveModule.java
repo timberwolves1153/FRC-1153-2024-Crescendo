@@ -104,6 +104,7 @@ public class SwerveModule {
     }
 
     private void configAngleMotor(){
+        mAngleMotor.clearFaults();
         mAngleMotor.restoreFactoryDefaults(); 
         CANSparkMaxUtil.setCANSparkMaxBusUsage(mAngleMotor, Usage.kPositionOnly);
         mAngleMotor.setSmartCurrentLimit(Constants.Swerve.angleContinuousCurrentLimit);
@@ -120,7 +121,8 @@ public class SwerveModule {
         resetToAbsolute();
     }
 
-    private void configDriveMotor(){        
+    private void configDriveMotor(){ 
+        mDriveMotor.clearFaults();       
         mDriveMotor.restoreFactoryDefaults();
         CANSparkMaxUtil.setCANSparkMaxBusUsage(mAngleMotor, Usage.kAll);
         mDriveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);

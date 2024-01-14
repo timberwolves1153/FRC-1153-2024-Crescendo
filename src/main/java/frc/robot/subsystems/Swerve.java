@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     public SwerveModule[] mSwerveMods;
+    private SwerveDriveKinematics kinematics;
     public Pigeon2 gyro;
     public Alliance alliance;
 
@@ -35,6 +36,7 @@ public class Swerve extends SubsystemBase {
         gyro.clearStickyFaults();
         zeroGyro();
 
+        
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.Swerve.Mod0.constants),
             new SwerveModule(1, Constants.Swerve.Mod1.constants),
@@ -99,19 +101,30 @@ public class Swerve extends SubsystemBase {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getStates());
     }
 
+    // public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
+
+    //     var states = Constants.Swerve.swerveKinematics.toSwerveModuleStates(robotRelativeSpeeds);
+
+    //     SwerveDriveKinematics.desaturateWheelSpeeds(getStates(), Constants.Swerve.maxSpeed);
+
+    //     setModuleStates(states);
+    // }
+
+    // public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
+    //     ChassisSpeeds robotRelative = ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation());
+
+    //     driveRobotRelative(robotRelative);
+    // }
+
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
+        ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
 
-        var states = Constants.Swerve.swerveKinematics.toSwerveModuleStates(robotRelativeSpeeds);
-
-        SwerveDriveKinematics.desaturateWheelSpeeds(getStates(), Constants.Swerve.maxSpeed);
-
-        setModuleStates(states);
+        SwerveModuleState[] targetStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(targetSpeeds);
+        setModuleStates(targetStates);
     }
 
     public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
-        ChassisSpeeds robotRelative = ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation());
-
-        driveRobotRelative(robotRelative);
+        driveRobotRelative(ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation()));
     }
 
     public Pose2d getPose() {
