@@ -3,22 +3,22 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.AnalogEncoder;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotController;
-import frc.robot.lib.math.Conversions;
 import frc.robot.lib.math.OnBoardModuleState;
 import frc.robot.lib.util.CANSparkMaxUtil;
-import frc.robot.lib.math.OnBoardModuleState;
 import frc.robot.lib.util.SwerveModuleConstants;
 import frc.robot.lib.util.CANSparkMaxUtil.Usage;
 import frc.robot.Constants;
+import frc.robot.lib.math.Conversions;
+
 
 public class SwerveModule {
     public int moduleNumber;
@@ -88,8 +88,9 @@ public class SwerveModule {
 
     private void setAngle(SwerveModuleState desiredState){
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
-        
-        mAngleMotor.set(Conversions.degreesToCANSparkMax(angle.getDegrees(), Constants.Swerve.angleGearRatio));
+        double sparkMaxPosition = Conversions.degreesToCANSparkMax(angle.getDegrees(), Constants.Swerve.angleGearRatio);
+        //mAngleMotor.set(Conversions.degreesToCANSparkMax(angle.getDegrees(), Constants.Swerve.angleGearRatio));
+        mAngleMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
         lastAngle = angle;
     }
 
@@ -150,9 +151,3 @@ public class SwerveModule {
         );
     }
 }
-
-//Dyuthi's attempt at documentation:
-//  voltageCompensation(from 3512) has been added to Constants.java, idth that is needed, but ehhhhh.....
-
-
-//Gaffey's cool comment
