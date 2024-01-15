@@ -34,7 +34,6 @@ public class SwerveModule {
     private final SparkPIDController angleController;
     private final SparkPIDController driveController;
 
-   // private final WPI_TalonFX test = new WPI_TalonFX(43);
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
@@ -81,16 +80,17 @@ public class SwerveModule {
             mDriveMotor.set(percentOutput);
         }
         else {
-            double velocity = Conversions.absoluteEncoderPortsToDegrees(desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
-            mDriveMotor.set(velocity); //(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
+            driveController.setReference(
+          desiredState.speedMetersPerSecond,
+          ControlType.kVelocity,
+          0,
+          feedforward.calculate(desiredState.speedMetersPerSecond));
         }
     }
 
     private void setAngle(SwerveModuleState desiredState){
         Rotation2d angle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.01)) ? lastAngle : desiredState.angle; //Prevent rotating module if speed is less then 1%. Prevents Jittering.
-        double sparkMaxPosition = Conversions.degreesToCANSparkMax(angle.getDegrees(), Constants.Swerve.angleGearRatio);
-        //mAngleMotor.set(Conversions.degreesToCANSparkMax(angle.getDegrees(), Constants.Swerve.angleGearRatio));
-        mAngleMotor.getPIDController().setReference(angle.getDegrees(), ControlType.kPosition);
+        angleController.setReference(angle.getDegrees(), ControlType.kPosition);
         lastAngle = angle;
     }
 
@@ -128,13 +128,13 @@ public class SwerveModule {
         mDriveMotor.setSmartCurrentLimit(Constants.Swerve.driveContinuousCurrentLimit);
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setIdleMode(Constants.Swerve.driveNeutralMode);
-        driveEncoder.setPositionConversionFactor(Constants.Swerve.driveConversionPositionFactor); //fixed in constants file
-        driveEncoder.setPositionConversionFactor(Constants.Swerve.driveConversionVelocityFactor); //fixed in constants file
-        driveController.setP(Constants.Swerve.angleKP);
-        driveController.setI(Constants.Swerve.angleKI);
-        driveController.setD(Constants.Swerve.angleKD);
-        driveController.setFF(Constants.Swerve.angleKFF); //fixed in constants file
-        // mDriveMotor.enableVoltageCompensation(Constants.Swerve.voltageComp); we have simpleFeedforward, unnecessary 
+        driveEncoder.setPositionConversionFactor(Constants.Swerve.driveConversionPositionFactor); 
+        driveEncoder.setVelocityConversionFactor(Constants.Swerve.driveConversionVelocityFactor); 
+        driveController.setP(Constants.Swerve.driveKP);
+        driveController.setI(Constants.Swerve.driveKI);
+        driveController.setD(Constants.Swerve.driveKD);
+        driveController.setFF(Constants.Swerve.driveKFF); 
+        mDriveMotor.enableVoltageCompensation(Constants.Swerve.voltageComp);        
         mDriveMotor.burnFlash();
         driveEncoder.setPosition(0.0);
         
