@@ -5,11 +5,14 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import static edu.wpi.first.units.Units.Volts;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.lib.math.OnBoardModuleState;
@@ -151,5 +154,9 @@ public class SwerveModule {
         Conversions.neoToMeters(driveEncoder.getCountsPerRevolution(), Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio), 
              getAngle()
         );
+    }
+
+    public void setDriveVoltage(double volts) {
+        mDriveMotor.setVoltage(volts);
     }
 }

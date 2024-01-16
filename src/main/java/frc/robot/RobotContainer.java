@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 
 /**
@@ -44,6 +45,10 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -70,6 +75,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+
+        driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+
+        driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
     }
 
     public Joystick getDriveController(){
