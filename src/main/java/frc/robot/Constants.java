@@ -54,12 +54,12 @@ public final class Constants {
         public static final boolean absoluteEncoderPortsInvert = chosenModule.absoluteEncoderPortsInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleContinuousCurrentLimit = 40;
+        public static final int angleContinuousCurrentLimit = 25;
         public static final int anglePeakCurrentLimit = 20;
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveContinuousCurrentLimit = 80;
+        public static final int driveContinuousCurrentLimit = 35;
         public static final int drivePeakCurrentLimit = 60;
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
@@ -90,9 +90,9 @@ public final class Constants {
 
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double driveKS = (0.667); //TODO: This must be tuned to specific robot
-        public static final double driveKV = (2.44);
-        public static final double driveKA = (0.27);
+        public static final double driveKS = (0.0321); //TODO: This must be tuned to specific robot
+        public static final double driveKV = (0.1807);
+        public static final double driveKA = (0.0615);
 
         public static final double driveConversionPositionFactor = 
             (wheelDiameter * Math.PI) / driveGearRatio;

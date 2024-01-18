@@ -156,6 +156,18 @@ public class SwerveModule {
         );
     }
 
+    public double getDriveDistance() {
+        return driveEncoder.getPosition();
+    }
+
+    public double getDriveVelocity() {
+        return driveEncoder.getVelocity();
+    }
+
+    public double getDriveAppliedOutput() {
+        return mDriveMotor.getAppliedOutput();
+    }
+
     public void setDriveVoltage(double volts) {
         mDriveMotor.setVoltage(volts);
     }

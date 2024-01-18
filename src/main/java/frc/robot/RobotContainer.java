@@ -12,7 +12,9 @@ import frc.robot.lib.util.AxisButton;
 
 import java.util.stream.Collector;
 
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -94,6 +96,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new PathPlannerAuto("4NoteAuto");
+        return new PathPlannerAuto("StraightAuto");
     }
 }
