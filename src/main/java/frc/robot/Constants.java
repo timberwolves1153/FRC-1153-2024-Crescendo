@@ -20,14 +20,14 @@ public final class Constants {
 
     public static final class Swerve {
         public static final int pigeonID = 5;
-        public static final boolean invertGyro = false; // Always ensure Gyro is CCW+ CW-
+        public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
 
         public static final NEOSwerveConstants chosenModule =  //TODO: This must be tuned to specific robot
             NEOSwerveConstants.SDSMK4i(NEOSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(20.98); //TODO: This must be tuned to specific robot
-        public static final double wheelBase = Units.inchesToMeters(20.98); //TODO: This must be tuned to specific robot
+        public static final double trackWidth = Units.inchesToMeters(28); //TODO: This must be tuned to specific robot
+        public static final double wheelBase = Units.inchesToMeters(28); //TODO: This must be tuned to specific robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
         public static final double wheelDiameter = chosenModule.wheelDiameter;
 
@@ -75,7 +75,7 @@ public final class Constants {
         // public static final double angleKD = chosenModule.angleKD;
         // public static final double angleKFF = chosenModule.angleKFF;
 
-        public static final double angleKP = 0.01;
+        public static final double angleKP = 0.05;
         public static final double angleKI = 0.00;
         public static final double angleKD = 0.00;
         public static final double angleKFF = 0.00;
@@ -118,7 +118,7 @@ public final class Constants {
             public static final int driveMotorID = 01;
             public static final int angleMotorID = 02;
             public static final int absoluteEncoderPorts = 0;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(0.53);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(180.77 +180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -128,7 +128,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 12;
             public static final int absoluteEncoderPorts = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(210.73);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(32.9+180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -138,7 +138,7 @@ public final class Constants {
             public static final int driveMotorID = 21;
             public static final int angleMotorID = 22;
             public static final int absoluteEncoderPorts = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(184.49);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(4.77 +180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -148,7 +148,7 @@ public final class Constants {
             public static final int driveMotorID = 31;
             public static final int angleMotorID = 32;
             public static final int absoluteEncoderPorts = 3; //MIGHT SWAP WITH 1
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(35.78);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(215.38+180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }

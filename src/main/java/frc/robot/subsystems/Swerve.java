@@ -145,21 +145,6 @@ public class Swerve extends SubsystemBase {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getStates());
     }
 
-    // public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
-
-    //     var states = Constants.Swerve.swerveKinematics.toSwerveModuleStates(robotRelativeSpeeds);
-
-    //     SwerveDriveKinematics.desaturateWheelSpeeds(getStates(), Constants.Swerve.maxSpeed);
-
-    //     setModuleStates(states);
-    // }
-
-    // public void driveFieldRelative(ChassisSpeeds fieldRelativeSpeeds) {
-    //     ChassisSpeeds robotRelative = ChassisSpeeds.fromFieldRelativeSpeeds(fieldRelativeSpeeds, getPose().getRotation());
-
-    //     driveRobotRelative(robotRelative);
-    // }
-
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
         ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
 
@@ -177,6 +162,8 @@ public class Swerve extends SubsystemBase {
 
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(getAngle(), getModulePositions(), pose);
+
+        
     }
 
     public SwerveModuleState[] getStates(){
@@ -211,6 +198,10 @@ public class Swerve extends SubsystemBase {
         }
     }
 
+    public double getGyroAngle() {
+        return gyro.getAngle();
+    }
+
     public void driveForVoltage(double volts) {
          for(SwerveModule mod : mSwerveMods) {
         //     if (mod.moduleNumber == 0 || mod.moduleNumber == 1) {
@@ -239,7 +230,9 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " absoluteEncoderPorts", mod.getAbsoluteEncoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
             
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position", mod.getPosition().distanceMeters);
             //SmartDashboard.putNumber("Mod" + mod.moduleNumber + " get encoder 1", mod.getDriveEncoderPositon());
 
         }
