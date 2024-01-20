@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
@@ -37,6 +38,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 public class RobotContainer {
 
     private final Swerve s_Swerve = new Swerve();
+    private final Elevator elevator = new Elevator();
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -51,6 +53,9 @@ public class RobotContainer {
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton driveX = new JoystickButton(driver, XboxController.Button.kX.value);
+
+    private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
+    private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -83,6 +88,12 @@ public class RobotContainer {
 
         driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+
+        opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
+        opY.onFalse(new InstantCommand(() -> elevator.stop()));
+
+        opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
+        opA.onFalse(new InstantCommand(() -> elevator.stop()));
     }
 
     public Joystick getDriveController(){
