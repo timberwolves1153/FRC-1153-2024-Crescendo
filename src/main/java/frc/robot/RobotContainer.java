@@ -89,11 +89,11 @@ public class RobotContainer {
         driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
 
-        opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
-        opY.onFalse(new InstantCommand(() -> elevator.stop()));
+        // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
+        // opY.onFalse(new InstantCommand(() -> elevator.stop()));
 
-        opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
-        opA.onFalse(new InstantCommand(() -> elevator.stop()));
+        // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
+        // opA.onFalse(new InstantCommand(() -> elevator.stop()));
     }
 
     public Joystick getDriveController(){
@@ -107,6 +107,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new PathPlannerAuto("4NoteAuto");
+        return new PathPlannerAuto("2NoteAuto");
     }
 }
