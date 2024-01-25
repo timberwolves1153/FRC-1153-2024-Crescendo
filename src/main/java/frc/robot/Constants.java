@@ -17,6 +17,15 @@ public final class Constants {
     public static final boolean collectorTuningMode = false;
     public static final double stickDeadband = 0.2;
 
+    public static final class Field {
+        public static final double FIELD_WIDTH = 8.21;
+        public static final double FIELD_LENGTH = 16.54;
+
+    public static final Translation2d CENTER = new Translation2d(FIELD_LENGTH / 2, FIELD_WIDTH / 2);
+    public static final Translation2d BLUE_SPEAKER = new Translation2d(0.00, 5.55);
+    public static final Translation2d RED_SPEAKER = new Translation2d(15.64, 5.55);
+
+    }
 
     public static final class Swerve {
         public static final int pigeonID = 5;
