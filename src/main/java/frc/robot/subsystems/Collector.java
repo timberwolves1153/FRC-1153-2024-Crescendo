@@ -5,12 +5,13 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
-public class Collector {
+public class Collector extends SubsystemBase{
     
     private CANSparkMax pivotMotor;
     private CANSparkMax collectorMotor;
@@ -19,11 +20,12 @@ public class Collector {
 
 
     public double kP, kI, kD, kFF, kMaxOutput, kMinOutput, kInput, maxRPM;
+    private final double IntakeSetpoint = 0;
 
     public Collector() {
         
         pivotMotor = new CANSparkMax(41, MotorType.kBrushless);
-        collectorMotor = new CANSparkMax( 42, MotorType.kBrushless);
+        collectorMotor = new CANSparkMax(42, MotorType.kBrushless);
 
         pivotMotor.restoreFactoryDefaults();
         pivotMotor.setInverted(false);
@@ -86,8 +88,12 @@ public class Collector {
         pivotMotor.setVoltage(0);
     }
 
-    public void setIntakePosition(double encoderTicks) { //takes in certain number of encoder ticks
-        pidController.setReference(encoderTicks, ControlType.kPosition);
+    public void deployIntake() { //takes in certain number of encoder ticks
+        pidController.setReference(IntakeSetpoint, ControlType.kPosition);
+    }
+
+    public void retractIntake() {
+        pidController.setReference(IntakeSetpoint - IntakeSetpoint, ControlType.kPosition);
     }
 
     public void receiveValues() {
@@ -127,6 +133,11 @@ public class Collector {
             kMaxOutput = max;
         }
 
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Intake Encoder", pivotEncoder.getPosition());
     }
 
 }
