@@ -102,9 +102,9 @@ public class Swerve extends SubsystemBase {
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(5), 
-                new PIDConstants(5), 
-                3.81, 
+                new PIDConstants(6), 
+                new PIDConstants(6), 
+                4.5, 
                 0.44, 
                 new ReplanningConfig()), 
             () -> {
@@ -196,10 +196,6 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.resetToAbsolute();
         }
-    }
-
-    public double getGyroAngle() {
-        return gyro.getAngle();
     }
 
     public void driveForVoltage(double volts) {

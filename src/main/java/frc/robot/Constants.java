@@ -118,7 +118,7 @@ public final class Constants {
             public static final int driveMotorID = 01;
             public static final int angleMotorID = 02;
             public static final int absoluteEncoderPorts = 0;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(180.77 +180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(180.77);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -128,7 +128,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 12;
             public static final int absoluteEncoderPorts = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(32.9+180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(32.9);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -138,7 +138,7 @@ public final class Constants {
             public static final int driveMotorID = 21;
             public static final int angleMotorID = 22;
             public static final int absoluteEncoderPorts = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(4.77 +180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(4.77);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -148,7 +148,7 @@ public final class Constants {
             public static final int driveMotorID = 31;
             public static final int angleMotorID = 32;
             public static final int absoluteEncoderPorts = 3; //MIGHT SWAP WITH 1
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(215.38+180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(215.38);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
