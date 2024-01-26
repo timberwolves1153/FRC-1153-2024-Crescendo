@@ -102,8 +102,8 @@ public class Swerve extends SubsystemBase {
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(6), 
-                new PIDConstants(6), 
+                new PIDConstants(5), 
+                new PIDConstants(5), 
                 4.5, 
                 0.44, 
                 new ReplanningConfig()), 
