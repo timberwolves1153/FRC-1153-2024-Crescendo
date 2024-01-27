@@ -102,10 +102,10 @@ public class Swerve extends SubsystemBase {
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(5), 
-                new PIDConstants(5), 
+                new PIDConstants(10), 
+                new PIDConstants(10), 
                 4.5, 
-                0.44, 
+                0.406, 
                 new ReplanningConfig()), 
             () -> {
                 var alliance = DriverStation.getAlliance();
@@ -229,6 +229,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
             
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position", mod.getPosition().distanceMeters);
+            SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
             //SmartDashboard.putNumber("Mod" + mod.moduleNumber + " get encoder 1", mod.getDriveEncoderPositon());
 
         }

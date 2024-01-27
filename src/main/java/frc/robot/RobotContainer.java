@@ -107,6 +107,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
+        PathPlannerPath path = PathPlannerPath.fromPathFile("StraightPath");
         return new PathPlannerAuto("StraightAuto");
     }
 }
