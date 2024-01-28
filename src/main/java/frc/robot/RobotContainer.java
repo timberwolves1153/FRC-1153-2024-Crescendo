@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
+import frc.robot.commands.RotateAndX;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
@@ -39,6 +40,8 @@ public class RobotContainer {
 
     private final Swerve s_Swerve = new Swerve();
     private final Elevator elevator = new Elevator();
+
+    private final RotateAndX rotateAndX = new RotateAndX(s_Swerve);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -83,11 +86,14 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-        driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
-        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        // driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+        // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
 
-        driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
-        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        // driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        // driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+
+        driveY.whileTrue(rotateAndX);
+        driveA.whileTrue(new InstantCommand(() -> s_Swerve.xPosition(false)));
 
         opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
         opY.onFalse(new InstantCommand(() -> elevator.stop()));

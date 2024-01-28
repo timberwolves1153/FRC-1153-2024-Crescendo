@@ -107,7 +107,7 @@ public final class Constants {
         public static final double maxAngularVelocity = 11.5; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
-        public static final IdleMode angleNeutralMode = IdleMode.kCoast;
+        public static final IdleMode angleNeutralMode = IdleMode.kBrake;
         
         public static final IdleMode driveNeutralMode = IdleMode.kBrake;
        // public static final double angleConversionFactor = 0;

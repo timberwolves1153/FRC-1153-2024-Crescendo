@@ -218,6 +218,22 @@ public class Swerve extends SubsystemBase {
         return sysIdRoutine.dynamic(direction);
     }
 
+    public void xPosition(boolean isOpenLoop){
+        SwerveModuleState[] swerveModuleStates =
+            new SwerveModuleState[]{
+                new SwerveModuleState(1, Rotation2d.fromDegrees(45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(45))
+            };
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        }
+
+        System.out.println("Set to X Position");
+    }
+
     @Override
     public void periodic(){
         swerveOdometry.update(getAngle(), getModulePositions());  
