@@ -1,16 +1,22 @@
 package frc.robot;
 
 
+import javax.xml.crypto.dsig.Transform;
+
 //import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.robot.lib.util.NEOSwerveConstants;
 import frc.robot.lib.util.SwerveModuleConstants;
+import frc.robot.subsystems.Vision.AprilTagCamera.Resolution;
 
 public final class Constants {
 
@@ -25,6 +31,16 @@ public final class Constants {
     public static final Translation2d BLUE_SPEAKER = new Translation2d(0.00, 5.55);
     public static final Translation2d RED_SPEAKER = new Translation2d(15.64, 5.55);
 
+    }
+
+    public static final class VisionHardware {
+        public static final String CAMERA_A_NAME = "cameraA";
+        public static final Transform3d CAMERA_A_LOCATION = new Transform3d(
+        new Translation3d(0.0, 0.0, 0.5),
+        new Rotation3d(0.0, 0.0, 0.0)
+        );
+        public static final Resolution CAMERA_A_RESOLUTION = Resolution.RES_1280_720;
+        public static final Rotation2d CAMERA_A_FOV = Rotation2d.fromDegrees(75);
     }
 
     public static final class Swerve {

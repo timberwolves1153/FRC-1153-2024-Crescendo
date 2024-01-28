@@ -40,7 +40,7 @@ public class AprilTagCamera implements Runnable, Closeable {
     private PhotonCameraSim cameraSim;
     private AtomicReference<EstimatedRobotPose> atomicEstimateRobotPose;
     
-    public AprilTagCamera(String name, Transform3d locationonBot, Resolution resolution, Rotation2d fovDiag ) {
+    public AprilTagCamera(String name, Transform3d locationOnBot, Resolution resolution, Rotation2d fovDiag ) {
 
         this.aprilTagCamera = new PhotonCamera(name);
         this.locationOnBot = locationOnBot;
@@ -51,7 +51,7 @@ public class AprilTagCamera implements Runnable, Closeable {
                 fieldlayout, 
                 PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
                 aprilTagCamera, 
-                locationonBot);
+                locationOnBot);
 
         poseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
         this.atomicEstimateRobotPose = new AtomicReference<EstimatedRobotPose>();

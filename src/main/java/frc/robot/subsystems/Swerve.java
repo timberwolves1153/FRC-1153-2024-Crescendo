@@ -14,6 +14,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -43,6 +45,8 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
     public Alliance alliance;
     public double voltage;
+
+    public SwerveDrivePoseEstimator swervePoseEstimator;
 
     private final MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0));
     private final MutableMeasure<Distance> distance = mutable(Meters.of(0));
@@ -95,6 +99,11 @@ public class Swerve extends SubsystemBase {
         resetModulesToAbsolute();
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getModulePositions());
+
+        swervePoseEstimator = new SwerveDrivePoseEstimator(kinematics, getAngle(), getModulePositions(), getPose());
+
+        //swervePoseEstimator.addVisionMeasurement(0, voltage);
+
         // Drive base radius needs to be configured
         AutoBuilder.configureHolonomic(
             this::getPose, 
