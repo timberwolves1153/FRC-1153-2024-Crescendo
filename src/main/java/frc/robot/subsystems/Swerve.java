@@ -100,7 +100,11 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getModulePositions());
 
-        swervePoseEstimator = new SwerveDrivePoseEstimator(kinematics, getAngle(), getModulePositions(), getPose());
+        swervePoseEstimator = new SwerveDrivePoseEstimator(
+            kinematics, 
+            getAngle(), 
+            getModulePositions(), 
+            getPose());
 
         //swervePoseEstimator.addVisionMeasurement(0, voltage);
 
@@ -230,6 +234,7 @@ public class Swerve extends SubsystemBase {
     public Command sysIdDynamic(SysIdRoutine.Direction direction) {
         return sysIdRoutine.dynamic(direction);
     }
+    
 
     @Override
     public void periodic(){
@@ -246,6 +251,11 @@ public class Swerve extends SubsystemBase {
 
         }
     }
+
+
+
+
+    
 }
 
 //fix getModulePositions => exists within 6328, commented out function above, why no worky?
