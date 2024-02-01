@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Vision.VisionExperiment;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
@@ -38,7 +39,8 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 public class RobotContainer {
 
     private final Swerve s_Swerve = new Swerve();
-    private final Elevator elevator = new Elevator();
+   // private final Elevator elevator = new Elevator();
+    private final VisionExperiment vision = new VisionExperiment(s_Swerve);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -89,11 +91,11 @@ public class RobotContainer {
         driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
 
-        opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
-        opY.onFalse(new InstantCommand(() -> elevator.stop()));
+        // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
+        // opY.onFalse(new InstantCommand(() -> elevator.stop()));
 
-        opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
-        opA.onFalse(new InstantCommand(() -> elevator.stop()));
+        // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
+        // opA.onFalse(new InstantCommand(() -> elevator.stop()));
     }
 
     public Joystick getDriveController(){

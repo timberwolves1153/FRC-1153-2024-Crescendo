@@ -100,13 +100,12 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getModulePositions());
 
-        swervePoseEstimator = new SwerveDrivePoseEstimator(
-            kinematics, 
-            getAngle(), 
-            getModulePositions(), 
-            getPose());
+        // swervePoseEstimator = new SwerveDrivePoseEstimator(
+        //     kinematics, 
+        //     getAngle(), 
+        //     getModulePositions(), 
+        //     getPose());
 
-        //swervePoseEstimator.addVisionMeasurement(0, voltage);
 
         // Drive base radius needs to be configured
         AutoBuilder.configureHolonomic(
