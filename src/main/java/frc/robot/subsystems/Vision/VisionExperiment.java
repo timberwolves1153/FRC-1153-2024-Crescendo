@@ -48,7 +48,7 @@ public class VisionExperiment extends SubsystemBase{
     public VisionExperiment(Swerve swerve) {
 
         
-        cam = new PhotonCamera("photonvision");
+        cam = new PhotonCamera("intakeCam");
         this.swerve = swerve;
         
 
