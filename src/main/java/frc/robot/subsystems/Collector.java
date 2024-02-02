@@ -6,6 +6,7 @@ import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -25,51 +26,47 @@ public class Collector extends SubsystemBase{
     public Collector() {
         
         pivotMotor = new CANSparkMax(41, MotorType.kBrushless);
-        collectorMotor = new CANSparkMax(42, MotorType.kBrushless);
+        collectorMotor = new CANSparkMax(40, MotorType.kBrushless);
+
+        pivotEncoder = pivotMotor.getEncoder();
+        pidController = pivotMotor.getPIDController();
 
         pivotMotor.restoreFactoryDefaults();
         pivotMotor.setInverted(false);
-        pivotMotor.setIdleMode(IdleMode.kCoast);
+        pivotMotor.setIdleMode(IdleMode.kBrake);
         pivotMotor.setSmartCurrentLimit(40);
         pivotMotor.burnFlash();
 
         collectorMotor.restoreFactoryDefaults();
         collectorMotor.setInverted(false);
         collectorMotor.setIdleMode(IdleMode.kCoast);
-        collectorMotor.burnFlash();
         collectorMotor.setSmartCurrentLimit(40);
+        collectorMotor.burnFlash();
 
-        pivotEncoder = pivotMotor.getEncoder();
+       
 
         kP = 0.1;
-        kI = 1e-4;
-        kD = 1;
+        kI = 0;
+        kD = 0;
         kFF = 0;
         kMaxOutput = 1;
         kMinOutput = -1;
 
-        pidController.setP(kD);
-        pidController.setI(kD);
+        pidController.setP(kP);
+        pidController.setI(kI);
         pidController.setD(kD);
-        pidController.setFF(kD);
+        pidController.setFF(kFF);
         pidController.setOutputRange(kMinOutput, kMaxOutput);
 
-        SmartDashboard.putNumber("P Gain", kP);
-        SmartDashboard.putNumber("D Gain", kD);
-        SmartDashboard.putNumber("I Gain", kI);
-        SmartDashboard.putNumber("Feed Forward", kFF);
-        SmartDashboard.putNumber("Minimum Output", kMinOutput);
-        SmartDashboard.putNumber("Maximum Output", kMaxOutput);
-        SmartDashboard.putNumber("Set Rotations", 0);
-
+        
     }
 
     public void intake(){
-        collectorMotor.setVoltage(1);
+        collectorMotor.setVoltage(-12);
     }
 
     public void outtake(){
-        collectorMotor.setVoltage(-1);
+        collectorMotor.setVoltage(12);
     }
 
     public void collectorStop(){
@@ -137,7 +134,17 @@ public class Collector extends SubsystemBase{
 
     @Override
     public void periodic() {
+
+        if (Constants.collectorTuningMode) {
         SmartDashboard.putNumber("Intake Encoder", pivotEncoder.getPosition());
+
+        SmartDashboard.putNumber("P Gain", kP);
+        SmartDashboard.putNumber("D Gain", kD);
+        SmartDashboard.putNumber("I Gain", kI);
+        SmartDashboard.putNumber("Feed Forward", kFF);
+     
+        }
+
     }
 
 }

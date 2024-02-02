@@ -10,8 +10,7 @@ import frc.robot.subsystems.Swerve;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.lib.util.AxisButton;
-
-import java.util.stream.Collector;
+import frc.robot.subsystems.Collector;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -38,7 +37,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 public class RobotContainer {
 
     private final Swerve s_Swerve = new Swerve();
-    private final Elevator elevator = new Elevator();
+    //private final Elevator elevator = new Elevator();
+    private final Collector collector = new Collector() {
+        
+    };
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -56,6 +58,11 @@ public class RobotContainer {
 
     private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
+    private final JoystickButton leftBumper = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton rightBumper = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -89,11 +96,25 @@ public class RobotContainer {
         driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
 
-        opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
-        opY.onFalse(new InstantCommand(() -> elevator.stop()));
+        leftBumper.onTrue(new InstantCommand(() -> collector.intake()));
+        leftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
-        opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
-        opA.onFalse(new InstantCommand(() -> elevator.stop()));
+        rightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
+        rightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+        opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
+        opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
+
+        opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
+        opA.onFalse(new InstantCommand(() -> collector.collectorStop()));
+
+
+
+       // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
+        //opY.onFalse(new InstantCommand(() -> elevator.stop()));
+
+       // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
+       // opA.onFalse(new InstantCommand(() -> elevator.stop()));
     }
 
     public Joystick getDriveController(){
