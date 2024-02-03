@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.MutableMeasure.mutable;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -7,8 +11,15 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.units.Angle;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.MutableMeasure;
+import edu.wpi.first.units.Velocity;
+import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 
 public class Launcher extends SubsystemBase{
@@ -20,6 +31,14 @@ public class Launcher extends SubsystemBase{
     
     private SimpleMotorFeedforward rollerFF;
     
+    private SysIdRoutine launcherRoutine = new SysIdRoutine(
+      new SysIdRoutine.Config(),
+      new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this)
+    );
+    
+    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
+    private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(RPM.of(0));
+
 
     public Launcher() {
         m_leftRoller = new CANSparkMax(53, MotorType.kBrushless);
@@ -75,5 +94,23 @@ public class Launcher extends SubsystemBase{
 
         m_leftRoller.burnFlash();
         m_rightRoller.burnFlash();
+    }
+
+    /* Called by the SysIdRoutine */
+    private void voltageDrive(Measure<Voltage> voltage) {
+        m_leftRoller.setVoltage(voltage.in(Volts));
+    }
+
+    /* Called by the SysId routine */
+    private void logMotors(SysIdRoutineLog log) {
+        log.motor("pivot")
+        // Log voltage
+        .voltage(
+            mutableAppliedVoltage.mut_replace(
+                // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
+                // by the voltage going into the spark max, called the bus voltage to receive the
+                // output voltage
+                m_leftRoller.getAppliedOutput() * m_leftRoller.getBusVoltage(), Volts))
+        .angularVelocity(mutableVelocity.mut_replace(getVelocity(), RPM));
     }
 }
