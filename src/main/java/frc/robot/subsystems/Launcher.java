@@ -7,6 +7,9 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,6 +19,9 @@ public class Launcher extends SubsystemBase{
     private SparkPIDController roller1PID, pivotPID;
     private DutyCycleEncoder pivotEncoder;
 
+    private PIDController rollerController, pivotController;
+    private SimpleMotorFeedforward rollerFF;
+    private ArmFeedforward pivotFF;
     
 
     public Launcher() {
@@ -24,6 +30,11 @@ public class Launcher extends SubsystemBase{
         m_Roller1 = new CANSparkMax(53, MotorType.kBrushless);
         m_Roller2 = new CANSparkMax(54, MotorType.kBrushless);
 
+        pivotController = new PIDController(0, 0, 0);
+        pivotFF = new ArmFeedforward(0, 0, 0);
+
+        rollerController = new PIDController(0, 0, 0);
+        rollerFF = new SimpleMotorFeedforward(0, 0);
         
 
         roller1PID = m_Roller1.getPIDController();
@@ -59,8 +70,14 @@ public class Launcher extends SubsystemBase{
         
     }
 
+    public double getVelocity() {
+        return m_Roller1.getEncoder().getVelocity();
+    }
+
     public void setLauncherVelocity(double setpoint) {
-        roller1PID.setReference(setpoint, ControlType.kVelocity);
+        double feedback = rollerController.calculate(getVelocity(), setpoint);
+        double feedforward = rollerFF.calculate(setpoint);
+        m_Roller1.setVoltage(feedback + feedforward);
         
     }
 
