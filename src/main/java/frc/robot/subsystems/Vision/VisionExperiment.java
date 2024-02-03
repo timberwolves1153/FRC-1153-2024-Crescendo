@@ -33,7 +33,7 @@ public class VisionExperiment extends SubsystemBase{
     final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(5);
     final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
     // Angle between horizontal and the camera.
-   // final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(camResult.getBestTarget().getPitch());
+   final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(61.114);
 
     // How far from the target we want to be
     final double GOAL_RANGE_METERS = Units.feetToMeters(3);
@@ -69,7 +69,7 @@ public class VisionExperiment extends SubsystemBase{
 
         rotationPID.calculate(targetRotation, 0);
 
-        swerve.drive(new Translation2d(0,0), targetRotation, true, true);
+        swerve.drive(new Translation2d(0,0), targetRotation, true, false);
 
         
     }
@@ -83,7 +83,7 @@ public class VisionExperiment extends SubsystemBase{
     public double calculateRange() {
         var result = cam.getLatestResult();
         if (result.hasTargets()) {
-            double range = PhotonUtils.calculateDistanceToTargetMeters(Units.inchesToMeters(57.7), GOAL_RANGE_METERS, Units.degreesToRadians(result.getBestTarget().getPitch()), CAMERA_HEIGHT_METERS);
+            double range = PhotonUtils.calculateDistanceToTargetMeters(Units.inchesToMeters(57.7), GOAL_RANGE_METERS, CAMERA_PITCH_RADIANS, Units.degreesToRadians(result.getBestTarget().getPitch()));
             return range;
         }else {
             return 0;
