@@ -11,13 +11,15 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Launcher extends SubsystemBase{
     
     private CANSparkMax m_Roller1, m_Roller2, m_leftPivot, m_rightPivot;
     private SparkPIDController roller1PID, pivotPID;
-    private DutyCycleEncoder pivotEncoder;
+    private DutyCycleEncoder pivotAbsoluteEncoder;
 
     private PIDController rollerController, pivotController;
     private SimpleMotorFeedforward rollerFF;
@@ -30,18 +32,15 @@ public class Launcher extends SubsystemBase{
         m_Roller1 = new CANSparkMax(53, MotorType.kBrushless);
         m_Roller2 = new CANSparkMax(54, MotorType.kBrushless);
 
+        // NEED TO TUNE
         pivotController = new PIDController(0, 0, 0);
         pivotFF = new ArmFeedforward(0, 0, 0);
-
+        // NEED TO TUNE
         rollerController = new PIDController(0, 0, 0);
-        rollerFF = new SimpleMotorFeedforward(0, 0);
-        
-
-        roller1PID = m_Roller1.getPIDController();
-        pivotPID = m_leftPivot.getPIDController();
+        rollerFF = new SimpleMotorFeedforward(0, 0, 0);
 
         
-        pivotEncoder = new DutyCycleEncoder(0);
+        pivotAbsoluteEncoder = new DutyCycleEncoder(0);
 
         configMotors();
     }
@@ -82,7 +81,36 @@ public class Launcher extends SubsystemBase{
     }
 
     public double getAbsoluteMeasurement() {
-        return pivotEncoder.getAbsolutePosition();
+        return pivotAbsoluteEncoder.getAbsolutePosition();
+    }
+    public double getPivotRadians() {
+        return getAbsoluteMeasurement() * 2 * Math.PI;
+    }
+
+    public double getPivotDegrees() {
+        return Math.toDegrees(getPivotRadians());
+    }
+
+    public void setPivotPosition(double degrees) {
+        double setpointRads = Math.toRadians(degrees);
+        double feedback = pivotController.calculate(getPivotRadians(), setpointRads);
+        double feedforward = pivotFF.calculate(setpointRads, 1);
+        m_leftPivot.setVoltage(feedback + feedforward);
+    }
+
+    @Override
+    public void periodic() {
+        if (Constants.launcherPivotTuningMode) {
+            SmartDashboard.putNumber("pivot degrees", getPivotDegrees());
+            SmartDashboard.putNumber("pivot absolute", getAbsoluteMeasurement());
+            SmartDashboard.putNumber("pivot radians", getPivotRadians());
+            SmartDashboard.putNumber("pivot setpoint", pivotController.getSetpoint());
+
+        }
+        if (Constants.launcherRollerTuningMode) {
+            SmartDashboard.putNumber("roller velocity", getVelocity());
+            SmartDashboard.putNumber("velocity setpoint", rollerController.getSetpoint());
+        }
     }
 
 
@@ -90,37 +118,27 @@ public class Launcher extends SubsystemBase{
         m_leftPivot.restoreFactoryDefaults();
         m_leftPivot.clearFaults();
         m_leftPivot.setIdleMode(IdleMode.kBrake);
-        
+        m_leftPivot.setInverted(false);
 
         m_rightPivot.restoreFactoryDefaults();
         m_rightPivot.clearFaults();
         m_rightPivot.setIdleMode(IdleMode.kBrake);
-        m_rightPivot.setInverted(true);
-        m_rightPivot.follow(m_leftPivot);
-        m_rightPivot.burnFlash();
-        m_leftPivot.burnFlash();
+        m_rightPivot.follow(m_leftPivot, true);
         
 
         m_Roller1.restoreFactoryDefaults();
         m_Roller1.clearFaults();
         m_Roller1.setIdleMode(IdleMode.kCoast);
+        m_Roller1.setInverted(false);
 
         m_Roller2.restoreFactoryDefaults();
         m_Roller2.clearFaults();
         m_Roller2.setIdleMode(IdleMode.kCoast);
-        m_Roller2.setInverted(true);
+        m_Roller2.follow(m_Roller1, true);
 
-        m_Roller2.follow(m_Roller1);
         m_Roller2.burnFlash();
         m_Roller1.burnFlash();
-        
-        roller1PID.setP(0.01);
-        roller1PID.setI(0);
-        roller1PID.setD(0); 
-
-        // roller2PID.setI(0.01);
-        // roller2PID.setI(0);
-        // roller2PID.setI(0);
-
+        m_rightPivot.burnFlash();
+        m_leftPivot.burnFlash();
     }
 }
