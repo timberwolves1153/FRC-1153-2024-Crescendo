@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Swerve;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
@@ -38,7 +38,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 public class RobotContainer {
 
     private final Swerve s_Swerve = new Swerve();
-    private final Elevator elevator = new Elevator();
+    private final Winch elevator = new Winch();
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
