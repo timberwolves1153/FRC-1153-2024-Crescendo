@@ -118,7 +118,7 @@ public class Pivot extends SubsystemBase{
         m_rightPivot.restoreFactoryDefaults();
         m_rightPivot.clearFaults();
         m_rightPivot.setIdleMode(IdleMode.kBrake);
-        m_rightPivot.follow(m_leftPivot, true);
+        m_rightPivot.follow(m_leftPivot, false);
         
         m_rightPivot.burnFlash();
         m_leftPivot.burnFlash();

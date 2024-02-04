@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.subsystems.Winch;
+import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Swerve;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
@@ -39,6 +40,7 @@ public class RobotContainer {
 
     private final Swerve s_Swerve = new Swerve();
     private final Winch elevator = new Winch();
+    private final Launcher launcher = new Launcher();
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -88,6 +90,9 @@ public class RobotContainer {
 
         driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+
+        opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
+        opA.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
 
         // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
         // opY.onFalse(new InstantCommand(() -> elevator.stop()));

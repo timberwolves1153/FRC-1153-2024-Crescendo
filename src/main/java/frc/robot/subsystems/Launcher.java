@@ -52,13 +52,14 @@ public class Launcher extends SubsystemBase{
     }
 
     public void launchWithVolts() {
-        m_leftRoller.setVoltage(6);
+        m_leftRoller.setVoltage(-9);
+        m_rightRoller.setVoltage(-9);
        
     }
 
     public void stopLauncher() {
         m_leftRoller.setVoltage(0);
-        
+        m_rightRoller.setVoltage(0);
     }
 
     public double getVelocity() {
@@ -86,11 +87,14 @@ public class Launcher extends SubsystemBase{
         m_leftRoller.clearFaults();
         m_leftRoller.setIdleMode(IdleMode.kCoast);
         m_leftRoller.setInverted(false);
+        m_leftRoller.setSmartCurrentLimit(40);
 
         m_rightRoller.restoreFactoryDefaults();
         m_rightRoller.clearFaults();
         m_rightRoller.setIdleMode(IdleMode.kCoast);
-        m_rightRoller.follow(m_leftRoller, true);
+        m_rightRoller.setInverted(true);
+        m_rightRoller.setSmartCurrentLimit(40);
+        // m_rightRoller.follow(m_leftRoller, true);
 
         m_leftRoller.burnFlash();
         m_rightRoller.burnFlash();
