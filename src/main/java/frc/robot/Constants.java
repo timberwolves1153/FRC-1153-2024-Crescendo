@@ -33,14 +33,15 @@ public final class Constants {
 
     }
 
-    public static final class VisionHardware {
-        public static final String CAMERA_A_NAME = "cameraA";
-        public static final Transform3d CAMERA_A_LOCATION = new Transform3d(
-        new Translation3d(0.0, 0.0, 0.5),
-        new Rotation3d(0.0, 0.0, 0.0)
-        );
-        public static final Resolution CAMERA_A_RESOLUTION = Resolution.RES_1280_720;
-        public static final Rotation2d CAMERA_A_FOV = Rotation2d.fromDegrees(75);
+    public static final class VisionSettings {
+        public static final String INTAKECAM_NAME = "intakeCam";
+        public static final Transform3d INTAKECAM_LOCATION = new Transform3d(
+            new Translation3d(0.33, 0.33, 0.2), 
+            new Rotation3d(0, Math.toRadians(21.7), Math.toRadians(23)));
+
+
+        public static final Resolution INTAKECAM_RESOLUTION = Resolution.RES_1280_720;
+        public static final Rotation2d INTAKECAM_FOV = Rotation2d.fromDegrees(75);
     }
 
     public static final class Swerve {

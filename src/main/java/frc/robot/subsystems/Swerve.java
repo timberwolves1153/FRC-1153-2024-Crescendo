@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
 import frc.robot.Constants;
+import frc.robot.subsystems.Vision.VisionExperiment;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -15,6 +16,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -37,6 +39,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Volts;
+import static edu.wpi.first.wpilibj.Timer.getFPGATimestamp;
+import java.util.Optional;
+
+import org.photonvision.EstimatedRobotPose;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
@@ -47,6 +53,8 @@ public class Swerve extends SubsystemBase {
     public double voltage;
 
     public SwerveDrivePoseEstimator swervePoseEstimator;
+    private VisionExperiment vision;
+    
 
     private final MutableMeasure<Voltage> appliedVoltage = mutable(Volts.of(0));
     private final MutableMeasure<Distance> distance = mutable(Meters.of(0));
@@ -100,11 +108,16 @@ public class Swerve extends SubsystemBase {
 
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getAngle(), getModulePositions());
 
-        // swervePoseEstimator = new SwerveDrivePoseEstimator(
-        //     kinematics, 
-        //     getAngle(), 
-        //     getModulePositions(), 
-        //     getPose());
+        var stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
+        var visionStdDevs = VecBuilder.fill(1, 1, 1);
+        swervePoseEstimator = new SwerveDrivePoseEstimator(
+            kinematics, 
+            getAngle(), 
+            getModulePositions(), 
+            new Pose2d(),
+            stateStdDevs,
+            visionStdDevs);
+
 
 
         // Drive base radius needs to be configured
@@ -214,6 +227,8 @@ public class Swerve extends SubsystemBase {
         return gyro.getAngle();
     }
 
+    
+
     public void driveForVoltage(double volts) {
          for(SwerveModule mod : mSwerveMods) {
         //     if (mod.moduleNumber == 0 || mod.moduleNumber == 1) {
@@ -238,6 +253,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic(){
         swerveOdometry.update(getAngle(), getModulePositions());  
+        swervePoseEstimator.update(getAngle(), getModulePositions());
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " absoluteEncoderPorts", mod.getAbsoluteEncoder().getDegrees());
