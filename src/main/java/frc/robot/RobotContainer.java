@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.Mailbox;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Swerve;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
@@ -41,6 +43,8 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     private final Winch elevator = new Winch();
     private final Launcher launcher = new Launcher();
+    private final Pivot pivot = new Pivot();
+    private final Mailbox mailbox = new Mailbox();
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -58,6 +62,12 @@ public class RobotContainer {
 
     private final JoystickButton opY = new JoystickButton(operator, XboxController.Button.kY.value);
     private final JoystickButton opA = new JoystickButton(operator, XboxController.Button.kA.value);
+    private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
+    private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
+
+     private final JoystickButton opLeftBumper = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton opRightBumper = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -85,14 +95,32 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-        driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
-        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        // driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+        // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
 
-        driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
-        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        // driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        // driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
 
-        opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        opA.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
+        driveA.whileTrue(launcher.dynamicLauncher(Direction.kForward));
+        driveY.whileTrue(launcher.dynamicLauncher(Direction.kReverse));
+
+        driveB.whileTrue(launcher.quasistaticLauncher(Direction.kForward));
+        driveX.whileTrue(launcher.quasistaticLauncher(Direction.kReverse));
+
+        opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
+        opB.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
+
+        opA.onTrue(new InstantCommand(() -> pivot.pivotDown()));
+        opA.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        opY.onTrue(new InstantCommand(() -> pivot.pivotUp()));
+        opY.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        opLeftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
+        opLeftBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+
+        opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
+        opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
         // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
         // opY.onFalse(new InstantCommand(() -> elevator.stop()));

@@ -56,11 +56,11 @@ public class Pivot extends SubsystemBase{
     }
 
     public void pivotUp() {
-        m_leftPivot.setVoltage(6);
+        m_leftPivot.setVoltage(-3);
     }
 
     public void pivotDown() {
-        m_leftPivot.setVoltage(-6);
+        m_leftPivot.setVoltage(3);
     }
 
     public void pivotStop() {
@@ -69,11 +69,11 @@ public class Pivot extends SubsystemBase{
     }
 
     public double getAbsoluteMeasurement() {
-        return pivotAbsoluteEncoder.getAbsolutePosition();
+        return (pivotAbsoluteEncoder.getAbsolutePosition() + 0.5) % 1;
     }
 
     public double getPivotRadians() {
-        return getAbsoluteMeasurement() * 2 * Math.PI;
+        return (getAbsoluteMeasurement()- 0.71086) * -2 * Math.PI ;
     }
 
     public double getPivotDegrees() {
@@ -111,11 +111,12 @@ public class Pivot extends SubsystemBase{
 
     public void configMotors() {
         m_leftPivot.restoreFactoryDefaults();
+        m_rightPivot.restoreFactoryDefaults();
         m_leftPivot.clearFaults();
         m_leftPivot.setIdleMode(IdleMode.kBrake);
         m_leftPivot.setInverted(false);
 
-        m_rightPivot.restoreFactoryDefaults();
+        
         m_rightPivot.clearFaults();
         m_rightPivot.setIdleMode(IdleMode.kBrake);
         m_rightPivot.follow(m_leftPivot, false);

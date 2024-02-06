@@ -18,6 +18,7 @@ import edu.wpi.first.units.Velocity;
 import edu.wpi.first.units.Voltage;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
@@ -30,6 +31,7 @@ public class Launcher extends SubsystemBase{
     private PIDController leftRollerController;
     
     private SimpleMotorFeedforward rollerFF;
+    private double leftLauncherVolts, rightLauncherVolts, kp, velSetpoint;
     
     private SysIdRoutine launcherRoutine = new SysIdRoutine(
       new SysIdRoutine.Config(),
@@ -45,15 +47,25 @@ public class Launcher extends SubsystemBase{
         m_rightRoller = new CANSparkMax(54, MotorType.kBrushless);
 
         // NEED TO TUNE
-        leftRollerController = new PIDController(0, 0, 0);
+        leftRollerController = new PIDController(kp, 0, 0);
         rollerFF = new SimpleMotorFeedforward(0, 0, 0);
+
+        leftLauncherVolts = 0;
+        rightLauncherVolts = 0;
+        kp = 0;
+        velSetpoint = 0;
+
+        SmartDashboard.putNumber("Left Launcher Volts", leftLauncherVolts);
+        SmartDashboard.putNumber("Right Launcher Volts", rightLauncherVolts);
+        SmartDashboard.putNumber("kP", kp);
+        SmartDashboard.putNumber("velocity setpoint RPM", kp);
 
         configMotors();
     }
 
     public void launchWithVolts() {
-        m_leftRoller.setVoltage(-9);
-        m_rightRoller.setVoltage(-9);
+        m_leftRoller.setVoltage(leftLauncherVolts);
+        m_rightRoller.setVoltage(-1 * rightLauncherVolts);
        
     }
 
@@ -62,12 +74,16 @@ public class Launcher extends SubsystemBase{
         m_rightRoller.setVoltage(0);
     }
 
-    public double getVelocity() {
+    public double getLeftVelocity() {
         return m_leftRoller.getEncoder().getVelocity();
     }
 
+    public double getRightVelocity() {
+        return m_rightRoller.getEncoder().getVelocity();
+    }
+
     public void setLauncherVelocity(double setpoint) {
-        double feedback = leftRollerController.calculate(getVelocity(), setpoint);
+        double feedback = leftRollerController.calculate(getLeftVelocity(), setpoint);
         double feedforward = rollerFF.calculate(setpoint);
         m_leftRoller.setVoltage(feedback + feedforward);
         
@@ -76,9 +92,23 @@ public class Launcher extends SubsystemBase{
     @Override
     public void periodic() {
         if (Constants.launcherRollerTuningMode) {
-            SmartDashboard.putNumber("roller velocity", getVelocity());
+            SmartDashboard.putNumber("roller velocity", getLeftVelocity());
             SmartDashboard.putNumber("velocity setpoint", leftRollerController.getSetpoint());
         }
+
+       double leftRollerV = SmartDashboard.getNumber("Left Launcher Volts", leftLauncherVolts);
+        leftLauncherVolts = leftRollerV;
+
+        if((leftLauncherVolts != leftRollerV)) { 
+            leftLauncherVolts = leftRollerV;
+         }
+
+         double rightRollerV = SmartDashboard.getNumber("Right Launcher Volts", rightLauncherVolts);
+
+         if((rightLauncherVolts != rightRollerV)) { 
+            rightLauncherVolts = rightRollerV;
+         }
+        
     }
 
 
@@ -103,11 +133,20 @@ public class Launcher extends SubsystemBase{
     /* Called by the SysIdRoutine */
     private void voltageDrive(Measure<Voltage> voltage) {
         m_leftRoller.setVoltage(voltage.in(Volts));
+        m_rightRoller.setVoltage(voltage.in(Volts));
+    }
+
+    public Command dynamicLauncher(SysIdRoutine.Direction direction) {
+        return launcherRoutine.dynamic(direction);
+    }
+
+    public Command quasistaticLauncher(SysIdRoutine.Direction direction) {
+        return launcherRoutine.quasistatic(direction);
     }
 
     /* Called by the SysId routine */
     private void logMotors(SysIdRoutineLog log) {
-        log.motor("pivot")
+        log.motor("left launcher")
         // Log voltage
         .voltage(
             mutableAppliedVoltage.mut_replace(
@@ -115,6 +154,13 @@ public class Launcher extends SubsystemBase{
                 // by the voltage going into the spark max, called the bus voltage to receive the
                 // output voltage
                 m_leftRoller.getAppliedOutput() * m_leftRoller.getBusVoltage(), Volts))
-        .angularVelocity(mutableVelocity.mut_replace(getVelocity(), RPM));
+        .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
+
+        log.motor("right launcher")
+        .voltage(mutableAppliedVoltage.mut_replace(
+                m_rightRoller.getAppliedOutput() * m_rightRoller.getBusVoltage(), Volts))
+            .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
     }
+
+    
 }
