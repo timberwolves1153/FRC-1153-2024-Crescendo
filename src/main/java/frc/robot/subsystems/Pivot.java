@@ -32,6 +32,7 @@ public class Pivot extends SubsystemBase{
 
     private PIDController pivotController;
     private ArmFeedforward pivotFF;
+    private final double pivotOffset = 0.45886;
     
     private SysIdRoutine pivotRoutine = new SysIdRoutine(
       new SysIdRoutine.Config(),
@@ -73,7 +74,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public double getPivotRadians() {
-        return (getAbsoluteMeasurement()- 0.71086) * -2 * Math.PI ;
+        return (getAbsoluteMeasurement() - pivotOffset) * -2 * Math.PI ;
     }
 
     public double getPivotDegrees() {
