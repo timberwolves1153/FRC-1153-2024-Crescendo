@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Volts;
 import static edu.wpi.first.units.Units.RPM;
+import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
 import com.revrobotics.CANSparkMax;
@@ -11,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.AngleStatistics;
 import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.MutableMeasure;
@@ -29,17 +31,40 @@ public class Launcher extends SubsystemBase{
 
     private SparkPIDController leftRollerPID;
     private PIDController leftRollerController;
-    
+    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
+    private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(RPM.of(0));
+    private final MutableMeasure<Angle> mutablePosition = mutable(Degrees.of(0));
     private SimpleMotorFeedforward rollerFF;
     private double leftLauncherVolts, rightLauncherVolts, kp, velSetpoint;
     
-    private SysIdRoutine launcherRoutine = new SysIdRoutine(
+    private final SysIdRoutine launcherRoutine = new SysIdRoutine(
       new SysIdRoutine.Config(),
-      new SysIdRoutine.Mechanism(this::voltageDrive, this::logMotors, this)
+      new SysIdRoutine.Mechanism((Measure<Voltage> volts) -> {
+        m_leftRoller.setVoltage(volts.in(Volts));
+        m_rightRoller.setVoltage(volts.in(Volts));
+     }, 
+     log -> {
+        log.motor("left launcher")
+        // Log voltage
+        .voltage(
+            mutableAppliedVoltage.mut_replace(
+                // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
+                // by the voltage going into the spark max, called the bus voltage to receive the
+                // output voltage
+                m_leftRoller.getAppliedOutput(), Volts))
+                .angularPosition(mutablePosition.mut_replace(getLeftAngularPositionDegrees(), Degrees))
+                .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
+
+        log.motor("right launcher")
+        .voltage(mutableAppliedVoltage.mut_replace(
+                m_rightRoller.getAppliedOutput(), Volts))
+            .angularPosition(mutablePosition.mut_replace(getRightAngularPositionDegrees(), Degrees))
+            .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
+      }, this)
+
     );
     
-    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
-    private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(RPM.of(0));
+    
 
 
     public Launcher() {
@@ -80,6 +105,14 @@ public class Launcher extends SubsystemBase{
 
     public double getRightVelocity() {
         return m_rightRoller.getEncoder().getVelocity();
+    }
+
+    public double getRightAngularPositionDegrees() {
+        return m_rightRoller.getEncoder().getPosition() * 360;
+    }
+
+    public double getLeftAngularPositionDegrees() {
+        return m_leftRoller.getEncoder().getPosition() * 360;
     }
 
     public void setLauncherVelocity(double setpoint) {
@@ -126,6 +159,9 @@ public class Launcher extends SubsystemBase{
         m_rightRoller.setSmartCurrentLimit(40);
         // m_rightRoller.follow(m_leftRoller, true);
 
+        m_rightRoller.getEncoder().setPositionConversionFactor(1 / m_rightRoller.getEncoder().getCountsPerRevolution());
+        m_leftRoller.getEncoder().setPositionConversionFactor( 1 / m_leftRoller.getEncoder().getCountsPerRevolution());
+
         m_leftRoller.burnFlash();
         m_rightRoller.burnFlash();
     }
@@ -145,22 +181,21 @@ public class Launcher extends SubsystemBase{
     }
 
     /* Called by the SysId routine */
-    private void logMotors(SysIdRoutineLog log) {
-        log.motor("left launcher")
-        // Log voltage
-        .voltage(
-            mutableAppliedVoltage.mut_replace(
-                // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
-                // by the voltage going into the spark max, called the bus voltage to receive the
-                // output voltage
-                m_leftRoller.getAppliedOutput() * m_leftRoller.getBusVoltage(), Volts))
-        .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
+    // private void logMotors(SysIdRoutineLog log) {
+    //     log.motor("left launcher")
+    //     // Log voltage
+    //     .voltage(
+    //         mutableAppliedVoltage.mut_replace(
+    //             // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
+    //             // by the voltage going into the spark max, called the bus voltage to receive the
+    //             // output voltage
+    //             m_leftRoller.getAppliedOutput() * m_leftRoller.getBusVoltage(), Volts))
+    //     .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
 
-        log.motor("right launcher")
-        .voltage(mutableAppliedVoltage.mut_replace(
-                m_rightRoller.getAppliedOutput() * m_rightRoller.getBusVoltage(), Volts))
-            .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
-    }
-
+    //     log.motor("right launcher")
+    //     .voltage(mutableAppliedVoltage.mut_replace(
+    //             m_rightRoller.getAppliedOutput() * m_rightRoller.getBusVoltage(), Volts))
+    //         .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
+    // }
     
 }
