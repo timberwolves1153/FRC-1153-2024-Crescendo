@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Mailbox;
 import frc.robot.subsystems.Swerve;
+import frc.robot.Auto.TestAuto;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
@@ -20,6 +21,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -37,10 +39,13 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
  */
 public class RobotContainer {
 
-    private final Swerve s_Swerve = new Swerve();
+    //private final Swerve s_Swerve = new Swerve();
     //private final Elevator elevator = new Elevator();
     private final Collector collector = new Collector();
     //private final Mailbox mailbox = new Mailbox();
+
+    private final TestAuto testAuto = new TestAuto();
+    private SendableChooser<Command> autoChooser;
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -66,15 +71,17 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-        s_Swerve.setDefaultCommand(
-            new TeleopSwerve(
-                s_Swerve, 
-                () -> -driver.getRawAxis(translationAxis), 
-                () -> -driver.getRawAxis(strafeAxis), 
-                () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean()
-            )
-        );
+        // s_Swerve.setDefaultCommand(
+        //     new TeleopSwerve(
+        //         s_Swerve, 
+        //         () -> -driver.getRawAxis(translationAxis), 
+        //         () -> -driver.getRawAxis(strafeAxis), 
+        //         () -> -driver.getRawAxis(rotationAxis), 
+        //         () -> robotCentric.getAsBoolean()
+        //     )
+        // );
+        autoChooser = new SendableChooser<Command>();
+        autoChooser.addOption("testAuto", testAuto);
 
         // Configure the button bindings
         configureButtonBindings();
@@ -88,13 +95,13 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
-        driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
-        driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
+        // driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
+        // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
 
-        driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
-        driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
+        // driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
+        // driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
 
         leftBumper.onTrue(new InstantCommand(() -> collector.intake()));
         leftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
@@ -106,11 +113,11 @@ public class RobotContainer {
         //rightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
         //rightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
-        opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
-        opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
+        // opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
+        // opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
-        opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
-        opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
+        // opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
+        // opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
 
 
@@ -132,6 +139,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new PathPlannerAuto("4NoteAuto");
+        return autoChooser.getSelected();
     }
 }

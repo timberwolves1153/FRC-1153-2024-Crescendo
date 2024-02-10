@@ -15,7 +15,8 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 public class Collector extends SubsystemBase{
     
     private CANSparkMax pivotMotor;
-    private CANSparkMax collectorMotor;
+    private CANSparkMax collectorMotor1;
+    private CANSparkMax collectorMotor2;
     private RelativeEncoder pivotEncoder;
     private SparkPIDController pidController;
 
@@ -26,7 +27,8 @@ public class Collector extends SubsystemBase{
     public Collector() {
         
         pivotMotor = new CANSparkMax(41, MotorType.kBrushless);
-        collectorMotor = new CANSparkMax(40, MotorType.kBrushless);
+        collectorMotor1 = new CANSparkMax(40, MotorType.kBrushless);
+        collectorMotor2 = new CANSparkMax(42, MotorType.kBrushless);
 
         pivotEncoder = pivotMotor.getEncoder();
         pidController = pivotMotor.getPIDController();
@@ -37,11 +39,17 @@ public class Collector extends SubsystemBase{
         pivotMotor.setSmartCurrentLimit(40);
         pivotMotor.burnFlash();
 
-        collectorMotor.restoreFactoryDefaults();
-        collectorMotor.setInverted(false);
-        collectorMotor.setIdleMode(IdleMode.kCoast);
-        collectorMotor.setSmartCurrentLimit(40);
-        collectorMotor.burnFlash();
+        collectorMotor1.restoreFactoryDefaults();
+        collectorMotor1.setInverted(false);
+        collectorMotor1.setIdleMode(IdleMode.kCoast);
+        collectorMotor1.setSmartCurrentLimit(40);
+        collectorMotor1.burnFlash();
+
+        collectorMotor2.restoreFactoryDefaults();
+        collectorMotor2.setInverted(false);
+        collectorMotor2.setIdleMode(IdleMode.kCoast);
+        collectorMotor2.setSmartCurrentLimit(40);
+        collectorMotor2.burnFlash();
 
        
 
@@ -62,15 +70,18 @@ public class Collector extends SubsystemBase{
     }
 
     public void intake(){
-        collectorMotor.setVoltage(-12);
+        collectorMotor1.setVoltage(-12);
+        collectorMotor2.setVoltage(12);
     }
 
     public void outtake(){
-        collectorMotor.setVoltage(12);
+        collectorMotor1.setVoltage(12);
+        collectorMotor2.setVoltage(-12);
     }
 
     public void collectorStop(){
-        collectorMotor.setVoltage(0);
+        collectorMotor1.setVoltage(0);
+        collectorMotor2.setVoltage(0);
     }
 
     public void pivotUp(){
