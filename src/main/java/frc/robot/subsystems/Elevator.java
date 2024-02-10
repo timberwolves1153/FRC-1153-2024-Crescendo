@@ -12,8 +12,8 @@ public class Elevator extends SubsystemBase{
 
 
     public Elevator() {
-        leftMotor = new CANSparkMax(61, MotorType.kBrushless);
-        rightMotor = new CANSparkMax(60, MotorType.kBrushless);
+        leftMotor = new CANSparkMax(60, MotorType.kBrushless);
+        rightMotor = new CANSparkMax(61, MotorType.kBrushless);
         
         
       // rightMotor.follow(leftMotor, false);

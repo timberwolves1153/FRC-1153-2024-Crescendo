@@ -40,7 +40,7 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     //private final Elevator elevator = new Elevator();
     private final Collector collector = new Collector();
-    private final Mailbox mailbox = new Mailbox();
+    //private final Mailbox mailbox = new Mailbox();
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -96,21 +96,21 @@ public class RobotContainer {
         driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
         driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
 
-        //leftBumper.onTrue(new InstantCommand(() -> collector.intake()));
-        //leftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        leftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
-        leftBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+        leftBumper.onTrue(new InstantCommand(() -> collector.intake()));
+        leftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        //leftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
+        //leftBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
-        //rightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
-        //rightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        rightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
-        rightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+        rightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
+        rightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        //rightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
+        //rightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
         opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
         opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
         opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
-        opA.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
 
 
