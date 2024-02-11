@@ -16,19 +16,23 @@ public class Elevator extends SubsystemBase{
         rightMotor = new CANSparkMax(61, MotorType.kBrushless);
         
         
-      // rightMotor.follow(leftMotor, false);
+      
 
         leftMotor.restoreFactoryDefaults();
-        leftMotor.clearFaults();
-        leftMotor.setIdleMode(IdleMode.kBrake);
-       // leftMotor.setInverted(false);
-        leftMotor.setSmartCurrentLimit(40);
-
-        rightMotor.clearFaults();
-        rightMotor.setSmartCurrentLimit(40);
         rightMotor.restoreFactoryDefaults();
+        leftMotor.clearFaults();
+        rightMotor.clearFaults();
+        leftMotor.setIdleMode(IdleMode.kBrake);
         rightMotor.setIdleMode(IdleMode.kBrake);
+    
+        leftMotor.setSmartCurrentLimit(40);
+        rightMotor.setSmartCurrentLimit(40);
 
+        // leftMotor.setInverted(false);
+        
+        rightMotor.follow(leftMotor, true);
+         
+        
         
         leftMotor.burnFlash();
         rightMotor.burnFlash();
@@ -37,18 +41,18 @@ public class Elevator extends SubsystemBase{
     public void moveUp() {
         // sets both left and right motors bc follow()
         leftMotor.setVoltage(-6);
-        rightMotor.setVoltage(6);
+        //rightMotor.setVoltage(6);
     }
 
     public void moveDown() {
         // sets both left and right motors bc follow()
         leftMotor.setVoltage(6);
-        rightMotor.setVoltage(-6);
+        //rightMotor.setVoltage(-6);
     }
 
     public void stop() {
         leftMotor.setVoltage(0);
-        rightMotor.setVoltage(0);
+        //rightMotor.setVoltage(0);
     }
 
 }

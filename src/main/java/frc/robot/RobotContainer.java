@@ -8,6 +8,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Mailbox;
 import frc.robot.subsystems.Swerve;
 import frc.robot.Auto.TestAuto;
+import frc.robot.commands.RotateAndX;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
@@ -46,6 +47,8 @@ public class RobotContainer {
 
     private final TestAuto testAuto = new TestAuto();
     private SendableChooser<Command> autoChooser;
+
+    private final RotateAndX rotateAndX = new RotateAndX(s_Swerve);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
