@@ -89,8 +89,8 @@ public class Launcher extends SubsystemBase{
     }
 
     public void launchWithVolts() {
-        m_leftRoller.setVoltage(leftLauncherVolts);
-        m_rightRoller.setVoltage(-1 * rightLauncherVolts);
+        m_leftRoller.setVoltage(-9);
+        m_rightRoller.setVoltage(-9);
        
     }
 

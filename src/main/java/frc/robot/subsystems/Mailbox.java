@@ -21,11 +21,11 @@ public class Mailbox extends SubsystemBase {
     }
 
     public void sendToLauncher() {
-        indexMotor.setVoltage(-mailboxVolts);
+        indexMotor.setVoltage(6);
     }
 
     public void sendToIntake() {
-        indexMotor.setVoltage(mailboxVolts);
+        indexMotor.setVoltage(-6);
     }
 
     public void stop() {

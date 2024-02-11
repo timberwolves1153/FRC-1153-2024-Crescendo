@@ -113,13 +113,15 @@ public class RobotContainer {
 
         opLeftBumper.onTrue(new InstantCommand(() -> collector.intake()));
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        opLeftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
-        opLeftBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
-        opRightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
-        opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
+        
+        opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
         opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+
+        // opRightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
+        // opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
+        opX.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
+        opX.onFalse(new InstantCommand(() -> mailbox.stop()));
 
         opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
         opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
