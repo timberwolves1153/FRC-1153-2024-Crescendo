@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -115,13 +116,13 @@ public class RobotContainer {
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
         
-        opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
-        opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+        // opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
+        // opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
         // opRightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
         // opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        opX.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
-        opX.onFalse(new InstantCommand(() -> mailbox.stop()));
+       // opX.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
+        
 
         opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
         opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
@@ -132,7 +133,14 @@ public class RobotContainer {
         opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
 
+        opX.onTrue(new InstantCommand(() -> launcher.setLauncherVelocity()));
+        opX.onFalse(new InstantCommand(() -> launcher.setLauncherZero()));
+        
+        //opB.onTrue(Commands.runOnce(() -> collector.deployIntake(), collector));
 
+        //opX.onTrue(Commands.runOnce(() -> collector.retractIntake(), collector));
+
+        //opRightBumper.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
 
 
 

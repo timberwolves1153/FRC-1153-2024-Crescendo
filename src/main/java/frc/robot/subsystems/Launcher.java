@@ -30,39 +30,40 @@ public class Launcher extends SubsystemBase{
     private CANSparkMax m_leftRoller, m_rightRoller;
 
     private SparkPIDController leftRollerPID;
-    private PIDController leftRollerController;
+    private PIDController rollerController;
     private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
     private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(RPM.of(0));
     private final MutableMeasure<Angle> mutablePosition = mutable(Degrees.of(0));
     private SimpleMotorFeedforward rollerFF;
     private double leftLauncherVolts, rightLauncherVolts, kp, velSetpoint;
     
-    private final SysIdRoutine launcherRoutine = new SysIdRoutine(
-      new SysIdRoutine.Config(),
-      new SysIdRoutine.Mechanism((Measure<Voltage> volts) -> {
-        m_leftRoller.setVoltage(volts.in(Volts));
-        m_rightRoller.setVoltage(volts.in(Volts));
-     }, 
-     log -> {
-        log.motor("left launcher")
-        // Log voltage
-        .voltage(
-            mutableAppliedVoltage.mut_replace(
-                // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
-                // by the voltage going into the spark max, called the bus voltage to receive the
-                // output voltage
-                m_leftRoller.getAppliedOutput(), Volts))
-                .angularPosition(mutablePosition.mut_replace(getLeftAngularPositionDegrees(), Degrees))
-                .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
+    
+    // private final SysIdRoutine launcherRoutine = new SysIdRoutine(
+    //   new SysIdRoutine.Config(),
+    //   new SysIdRoutine.Mechanism((Measure<Voltage> volts) -> {
+    //     m_leftRoller.setVoltage(volts.in(Volts));
+    //     m_rightRoller.setVoltage(volts.in(Volts));
+    //  }, 
+    //  log -> {
+    //     log.motor("left launcher")
+    //     // Log voltage
+    //     .voltage(
+    //         mutableAppliedVoltage.mut_replace(
+    //             // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
+    //             // by the voltage going into the spark max, called the bus voltage to receive the
+    //             // output voltage
+    //             m_leftRoller.getAppliedOutput(), Volts))
+    //             .angularPosition(mutablePosition.mut_replace(getLeftAngularPositionDegrees(), Degrees))
+    //             .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
 
-        log.motor("right launcher")
-        .voltage(mutableAppliedVoltage.mut_replace(
-                m_rightRoller.getAppliedOutput(), Volts))
-            .angularPosition(mutablePosition.mut_replace(getRightAngularPositionDegrees(), Degrees))
-            .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
-      }, this)
+    //     log.motor("right launcher")
+    //     .voltage(mutableAppliedVoltage.mut_replace(
+    //             m_rightRoller.getAppliedOutput(), Volts))
+    //         .angularPosition(mutablePosition.mut_replace(getRightAngularPositionDegrees(), Degrees))
+    //         .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
+    //   }, this)
 
-    );
+    // );
     
     
 
@@ -72,18 +73,17 @@ public class Launcher extends SubsystemBase{
         m_rightRoller = new CANSparkMax(54, MotorType.kBrushless);
 
         // NEED TO TUNE
-        leftRollerController = new PIDController(kp, 0, 0);
-        rollerFF = new SimpleMotorFeedforward(0, 0, 0);
+        rollerController = new PIDController(kp, 0, 0);
+        rollerFF = new SimpleMotorFeedforward(0, 0.2, 1.14);
 
         leftLauncherVolts = 0;
         rightLauncherVolts = 0;
-        kp = 0;
         velSetpoint = 0;
 
-        SmartDashboard.putNumber("Left Launcher Volts", leftLauncherVolts);
-        SmartDashboard.putNumber("Right Launcher Volts", rightLauncherVolts);
-        SmartDashboard.putNumber("kP", kp);
-        SmartDashboard.putNumber("velocity setpoint RPM", kp);
+        // SmartDashboard.putNumber("Left Launcher Volts", leftLauncherVolts);
+        // SmartDashboard.putNumber("Right Launcher Volts", rightLauncherVolts);
+        SmartDashboard.putNumber("launcher kP", kp);
+        SmartDashboard.putNumber("launcher setpoint", velSetpoint);
 
         configMotors();
     }
@@ -107,26 +107,30 @@ public class Launcher extends SubsystemBase{
         return m_rightRoller.getEncoder().getVelocity();
     }
 
-    public double getRightAngularPositionDegrees() {
-        return m_rightRoller.getEncoder().getPosition() * 360;
+    public void setLauncherVelocity() {
+        double feedback = rollerController.calculate(300, getLeftVelocity());
+        double feedforward = rollerFF.calculate(getLeftVelocity(), 300, 0.02);
+        m_leftRoller.setVoltage(feedback + 0);
+        m_rightRoller.setVoltage(feedback + 0);
+        
     }
-
-    public double getLeftAngularPositionDegrees() {
-        return m_leftRoller.getEncoder().getPosition() * 360;
-    }
-
-    public void setLauncherVelocity(double setpoint) {
-        double feedback = leftRollerController.calculate(getLeftVelocity(), setpoint);
-        double feedforward = rollerFF.calculate(setpoint);
+    public void setLauncherZero() {
+        double feedback = rollerController.calculate(getLeftVelocity(), 0);
+        double feedforward = rollerFF.calculate(0);
         m_leftRoller.setVoltage(feedback + feedforward);
+        m_rightRoller.setVoltage(feedback + feedforward);
         
     }
 
     @Override
     public void periodic() {
         if (Constants.launcherRollerTuningMode) {
-            SmartDashboard.putNumber("roller velocity", getLeftVelocity());
-            SmartDashboard.putNumber("velocity setpoint", leftRollerController.getSetpoint());
+            SmartDashboard.putNumber("left velocity", getLeftVelocity());
+            SmartDashboard.putNumber("right Velocity", getRightVelocity());
+            SmartDashboard.putNumber("current setpoint", rollerController.getSetpoint());
+            SmartDashboard.putNumber("left volts", m_leftRoller.getAppliedOutput() * 12);
+            SmartDashboard.putNumber("right volts", m_rightRoller.getAppliedOutput() * 12);
+            
         }
 
        double leftRollerV = SmartDashboard.getNumber("Left Launcher Volts", leftLauncherVolts);
@@ -141,7 +145,18 @@ public class Launcher extends SubsystemBase{
          if((rightLauncherVolts != rightRollerV)) { 
             rightLauncherVolts = rightRollerV;
          }
+
+        double launcherKP = SmartDashboard.getNumber("launcher kP", kp);
+
+        if (kp != launcherKP) {
+            kp = launcherKP;
+        }
+
+        double launcherRPM = SmartDashboard.getNumber("launcher setpoint", velSetpoint);
         
+        if (velSetpoint != launcherRPM) {
+            velSetpoint = launcherRPM;
+        }
     }
 
 
@@ -159,8 +174,8 @@ public class Launcher extends SubsystemBase{
         m_rightRoller.setSmartCurrentLimit(40);
         // m_rightRoller.follow(m_leftRoller, true);
 
-        m_rightRoller.getEncoder().setPositionConversionFactor(1 / m_rightRoller.getEncoder().getCountsPerRevolution());
-        m_leftRoller.getEncoder().setPositionConversionFactor( 1 / m_leftRoller.getEncoder().getCountsPerRevolution());
+        // m_rightRoller.getEncoder().setPositionConversionFactor(1 / m_rightRoller.getEncoder().getCountsPerRevolution());
+        // m_leftRoller.getEncoder().setPositionConversionFactor( 1 / m_leftRoller.getEncoder().getCountsPerRevolution());
 
         m_leftRoller.burnFlash();
         m_rightRoller.burnFlash();
@@ -172,13 +187,13 @@ public class Launcher extends SubsystemBase{
         m_rightRoller.setVoltage(voltage.in(Volts));
     }
 
-    public Command dynamicLauncher(SysIdRoutine.Direction direction) {
-        return launcherRoutine.dynamic(direction);
-    }
+    // public Command dynamicLauncher(SysIdRoutine.Direction direction) {
+    //     return launcherRoutine.dynamic(direction);
+    // }
 
-    public Command quasistaticLauncher(SysIdRoutine.Direction direction) {
-        return launcherRoutine.quasistatic(direction);
-    }
+    // public Command quasistaticLauncher(SysIdRoutine.Direction direction) {
+    //     return launcherRoutine.quasistatic(direction);
+    // }
 
     /* Called by the SysId routine */
     // private void logMotors(SysIdRoutineLog log) {

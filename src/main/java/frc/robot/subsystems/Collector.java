@@ -22,7 +22,7 @@ public class Collector extends SubsystemBase{
 
 
     public double kP, kI, kD, kFF, kMaxOutput, kMinOutput, kInput, maxRPM;
-    private final double IntakeSetpoint = 0;
+    private final double IntakeSetpoint = 15;
 
     public Collector() {
         
@@ -34,6 +34,12 @@ public class Collector extends SubsystemBase{
         pidController = pivotMotor.getPIDController();
 
         pivotMotor.restoreFactoryDefaults();
+
+        pidController.setP(0.02);
+        pidController.setI(kI);
+        pidController.setD(kD);
+        pidController.setFF(0);
+       
         pivotMotor.setInverted(false);
         pivotMotor.setIdleMode(IdleMode.kBrake);
         pivotMotor.setSmartCurrentLimit(40);
@@ -53,18 +59,14 @@ public class Collector extends SubsystemBase{
 
        
 
-        kP = 0.1;
+        kP = 0.01;
         kI = 0;
         kD = 0;
         kFF = 0;
         kMaxOutput = 1;
         kMinOutput = -1;
 
-        pidController.setP(kP);
-        pidController.setI(kI);
-        pidController.setD(kD);
-        pidController.setFF(kFF);
-        pidController.setOutputRange(kMinOutput, kMaxOutput);
+        
 
         
     }
@@ -104,50 +106,20 @@ public class Collector extends SubsystemBase{
         pidController.setReference(IntakeSetpoint - IntakeSetpoint, ControlType.kPosition);
     }
 
-    public void receiveValues() {
-
-        double p = SmartDashboard.getNumber("P Gain", 0);
-        double i = SmartDashboard.getNumber("I Gain", 0);
-        double d = SmartDashboard.getNumber("D Gain", 0);
-        double ff = SmartDashboard.getNumber("Feed Forward", 0);
-        double min = SmartDashboard.getNumber("MinOutput", 0);
-        double max = SmartDashboard.getNumber("MaxOutput", 0);
-
-        if (p != kP) {
-            pidController.setP(kP = p);
-        }
-
-        if (i != kI) {
-            pidController.setI(kI = i);
-        }
-
-        if (d != kD) {
-            pidController.setD(kD = d);
-        }
-
-        if (ff != kFF) {
-            pidController.setFF(kFF = ff);
-        }
-
-        if (min != kMinOutput) {
-            pidController.setOutputRange(min, max);
-            kMinOutput = min;
-            kMaxOutput = max;
-        }
-
-        if  (max != kMaxOutput) {
-            pidController.setOutputRange(min, max);
-            kMinOutput = min;
-            kMaxOutput = max;
-        }
-
+    public void resetIntakeEncoder() {
+        pivotEncoder.setPosition(0);
     }
+
+    public double getIntakePosition() {
+        return pivotEncoder.getPosition();
+    }
+
 
     @Override
     public void periodic() {
 
         if (Constants.collectorTuningMode) {
-        SmartDashboard.putNumber("Intake Encoder", pivotEncoder.getPosition());
+        SmartDashboard.putNumber("Intake Encoder", getIntakePosition());
 
         SmartDashboard.putNumber("P Gain", kP);
         SmartDashboard.putNumber("D Gain", kD);
