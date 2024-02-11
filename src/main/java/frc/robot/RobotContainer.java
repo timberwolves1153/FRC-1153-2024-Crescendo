@@ -39,10 +39,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
  */
 public class RobotContainer {
 
-    //private final Swerve s_Swerve = new Swerve();
+    private final Swerve s_Swerve = new Swerve();
     //private final Elevator elevator = new Elevator();
     private final Collector collector = new Collector();
-    //private final Mailbox mailbox = new Mailbox();
+    private final Mailbox mailbox = new Mailbox();
 
     private final TestAuto testAuto = new TestAuto();
     private SendableChooser<Command> autoChooser;
@@ -71,15 +71,15 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-        // s_Swerve.setDefaultCommand(
-        //     new TeleopSwerve(
-        //         s_Swerve, 
-        //         () -> -driver.getRawAxis(translationAxis), 
-        //         () -> -driver.getRawAxis(strafeAxis), 
-        //         () -> -driver.getRawAxis(rotationAxis), 
-        //         () -> robotCentric.getAsBoolean()
-        //     )
-        // );
+        s_Swerve.setDefaultCommand(
+            new TeleopSwerve(
+                s_Swerve, 
+                () -> -driver.getRawAxis(translationAxis), 
+                () -> -driver.getRawAxis(strafeAxis), 
+                () -> -driver.getRawAxis(rotationAxis), 
+                () -> robotCentric.getAsBoolean()
+            )
+        );
         autoChooser = new SendableChooser<Command>();
         autoChooser.addOption("testAuto", testAuto);
 
@@ -95,7 +95,7 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
         /* Driver Buttons */
-        // zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
 
         // driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
         // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
@@ -105,19 +105,19 @@ public class RobotContainer {
 
         leftBumper.onTrue(new InstantCommand(() -> collector.intake()));
         leftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        //leftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
-        //leftBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+        leftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
+        leftBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
         rightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
         rightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-        //rightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
-        //rightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+        rightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
+        rightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
-        // opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
-        // opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
+        opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
+        opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
-        // opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
-        // opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
+        opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
+        opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
 
 
