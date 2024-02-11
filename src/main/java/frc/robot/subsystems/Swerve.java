@@ -102,10 +102,10 @@ public class Swerve extends SubsystemBase {
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 
             new HolonomicPathFollowerConfig(
-                new PIDConstants(5), 
-                new PIDConstants(5), 
-                3.81, 
-                0.44, 
+                new PIDConstants(10), 
+                new PIDConstants(10), 
+                4.5, 
+                0.406, 
                 new ReplanningConfig()), 
             () -> {
                 var alliance = DriverStation.getAlliance();
@@ -198,10 +198,6 @@ public class Swerve extends SubsystemBase {
         }
     }
 
-    public double getGyroAngle() {
-        return gyro.getAngle();
-    }
-
     public void driveForVoltage(double volts) {
          for(SwerveModule mod : mSwerveMods) {
         //     if (mod.moduleNumber == 0 || mod.moduleNumber == 1) {
@@ -222,6 +218,22 @@ public class Swerve extends SubsystemBase {
         return sysIdRoutine.dynamic(direction);
     }
 
+    public void xPosition(boolean isOpenLoop){
+        SwerveModuleState[] swerveModuleStates =
+            new SwerveModuleState[]{
+                new SwerveModuleState(1, Rotation2d.fromDegrees(45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(-45)),
+                new SwerveModuleState(1, Rotation2d.fromDegrees(45))
+            };
+
+        for(SwerveModule mod : mSwerveMods){
+            mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+        }
+
+        System.out.println("Set to X Position");
+    }
+
     @Override
     public void periodic(){
         swerveOdometry.update(getAngle(), getModulePositions());  
@@ -233,6 +245,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
             
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position", mod.getPosition().distanceMeters);
+            SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
             //SmartDashboard.putNumber("Mod" + mod.moduleNumber + " get encoder 1", mod.getDriveEncoderPositon());
 
         }

@@ -9,12 +9,13 @@ import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Mailbox;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Swerve;
+import frc.robot.Auto.TestAuto;
+import frc.robot.commands.RotateAndX;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.lib.util.AxisButton;
-
-import java.util.stream.Collector;
+import frc.robot.subsystems.Collector;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -23,6 +24,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -45,6 +47,12 @@ public class RobotContainer {
     private final Launcher launcher = new Launcher();
     private final Pivot pivot = new Pivot();
     private final Mailbox mailbox = new Mailbox();
+    private final Collector collector = new Collector();
+
+    private final TestAuto testAuto = new TestAuto();
+    private SendableChooser<Command> autoChooser;
+
+    private final RotateAndX rotateAndX = new RotateAndX(s_Swerve);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -65,7 +73,7 @@ public class RobotContainer {
     private final JoystickButton opB = new JoystickButton(operator, XboxController.Button.kB.value);
     private final JoystickButton opX = new JoystickButton(operator, XboxController.Button.kX.value);
 
-     private final JoystickButton opLeftBumper = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton opLeftBumper = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton opRightBumper = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
 
@@ -80,6 +88,8 @@ public class RobotContainer {
                 () -> robotCentric.getAsBoolean()
             )
         );
+        autoChooser = new SendableChooser<Command>();
+        autoChooser.addOption("testAuto", testAuto);
 
         // Configure the button bindings
         configureButtonBindings();
@@ -101,32 +111,34 @@ public class RobotContainer {
         // driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
         // driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
 
-        driveA.whileTrue(launcher.dynamicLauncher(Direction.kForward));
-        driveY.whileTrue(launcher.dynamicLauncher(Direction.kReverse));
-
-        driveB.whileTrue(launcher.quasistaticLauncher(Direction.kForward));
-        driveX.whileTrue(launcher.quasistaticLauncher(Direction.kReverse));
-
-        opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        opB.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
-
-        opA.onTrue(new InstantCommand(() -> pivot.pivotDown()));
-        opA.onFalse(new InstantCommand(() -> pivot.pivotStop()));
-
-        opY.onTrue(new InstantCommand(() -> pivot.pivotUp()));
-        opY.onFalse(new InstantCommand(() -> pivot.pivotStop()));
-
+        opLeftBumper.onTrue(new InstantCommand(() -> collector.intake()));
+        opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
         opLeftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
         opLeftBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
+        opRightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
+        opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
         opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake()));
         opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
-        // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
-        // opY.onFalse(new InstantCommand(() -> elevator.stop()));
+        opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
+        opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
-        // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
-        // opA.onFalse(new InstantCommand(() -> elevator.stop()));
+        opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
+        opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
+        
+        opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
+        opB.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
+
+
+
+
+
+       // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
+        //opY.onFalse(new InstantCommand(() -> elevator.stop()));
+
+       // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
+       // opA.onFalse(new InstantCommand(() -> elevator.stop()));
     }
 
     public Joystick getDriveController(){
@@ -140,6 +152,6 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An ExampleCommand will run in autonomous
-        return new PathPlannerAuto("2NoteAuto");
+        return autoChooser.getSelected();
     }
 }
