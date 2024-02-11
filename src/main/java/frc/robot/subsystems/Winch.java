@@ -6,17 +6,15 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Elevator extends SubsystemBase{
+public class Winch extends SubsystemBase{
     
     private CANSparkMax leftMotor, rightMotor;
 
 
-    public Elevator() {
-        leftMotor = new CANSparkMax(60, MotorType.kBrushless);
-        rightMotor = new CANSparkMax(61, MotorType.kBrushless);
+    public Winch() {
+        leftMotor = new CANSparkMax(61, MotorType.kBrushless);
+        rightMotor = new CANSparkMax(60, MotorType.kBrushless);
         
-        
-      
 
         leftMotor.restoreFactoryDefaults();
         rightMotor.restoreFactoryDefaults();
