@@ -61,6 +61,7 @@ public class RobotContainer {
 
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
+    private final Joystick atari = new Joystick(2);
     // The robot's subsystems and commands are defined here...
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
@@ -76,6 +77,12 @@ public class RobotContainer {
 
     private final JoystickButton opLeftBumper = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton opRightBumper = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
+
+    private final JoystickButton atari1 = new JoystickButton(atari, 1);
+    private final JoystickButton atari2 = new JoystickButton(atari, 2);
+    private final JoystickButton atari3 = new JoystickButton(atari, 3);
+    private final JoystickButton atari14 = new JoystickButton(atari, 4);
+
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -116,25 +123,31 @@ public class RobotContainer {
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
         
-        // opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
-        // opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+       // opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
+       // opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
         // opRightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
         // opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
        // opX.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
         
 
-        opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
-        opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
+        // opY.onTrue(new InstantCommand(() -> collector.pivotUp()));
+        // opY.onFalse(new InstantCommand(() -> collector.pivotStop()));
 
-        opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
-        opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
+        // opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
+        // opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
         
+        opY.onTrue(new InstantCommand(() -> pivot.pivotUp()));
+        opY.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+
+        opA.onTrue(new InstantCommand(() -> pivot.pivotDown()));
+        opA.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+    
         opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
 
-        opX.onTrue(new InstantCommand(() -> launcher.setLauncherVelocity()));
-        opX.onFalse(new InstantCommand(() -> launcher.setLauncherZero()));
+        opX.onTrue(new InstantCommand(() -> launcher.setLauncherReference()));
+        opX.onFalse(new InstantCommand(() -> launcher.setLauncherReferenceToZero()));
         
         //opB.onTrue(Commands.runOnce(() -> collector.deployIntake(), collector));
 
@@ -149,6 +162,14 @@ public class RobotContainer {
 
        // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
        // opA.onFalse(new InstantCommand(() -> elevator.stop()));
+
+      // atari1.onTrue(Commands.runOnce(() -> pivot.setPivotPosition(30), pivot));
+        atari1.whileTrue( pivot.quasistaticRoutine(Direction.kForward));
+       atari2.whileTrue(pivot.quasistaticRoutine(Direction.kReverse));
+
+       atari3.whileTrue(pivot.dynamicRoutine(Direction.kForward));
+       atari14.whileTrue(pivot.dynamicRoutine(Direction.kReverse));
+       //atari1.onFalse(Commands.runOnce(() -> pivot., null))
     }
 
     public Joystick getDriveController(){

@@ -20,8 +20,10 @@ import edu.wpi.first.units.Angle;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants;
 
 public class Pivot extends SubsystemBase{
@@ -32,7 +34,7 @@ public class Pivot extends SubsystemBase{
 
     private PIDController pivotController;
     private ArmFeedforward pivotFF;
-    private final double pivotOffset = 0.45886;
+    private final double pivotOffset = Math.toRadians(90);
     
     private SysIdRoutine pivotRoutine = new SysIdRoutine(
       new SysIdRoutine.Config(),
@@ -48,10 +50,11 @@ public class Pivot extends SubsystemBase{
         m_rightPivot = new CANSparkMax(52, MotorType.kBrushless);
 
         // NEED TO TUNE
-        pivotController = new PIDController(0, 0, 0);
-        pivotFF = new ArmFeedforward(0, 0, 0);
+        pivotController = new PIDController(0.01, 0, 0);
+        pivotFF = new ArmFeedforward(1.2756, 257.27, 0.0476, 0.0173);
         
         pivotAbsoluteEncoder = new DutyCycleEncoder(0);
+        
 
         configMotors();
     }
@@ -74,7 +77,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public double getPivotRadians() {
-        return (getAbsoluteMeasurement() - pivotOffset) * -2 * Math.PI ;
+        return pivotOffset - (((getAbsoluteMeasurement()) * 2 * Math.PI)/2);
     }
 
     public double getPivotDegrees() {
@@ -97,6 +100,8 @@ public class Pivot extends SubsystemBase{
         double feedforward = pivotFF.calculate(setpointRads, 1);
         m_leftPivot.setVoltage(feedback + feedforward);
     }
+
+    
 
     @Override
     public void periodic() {
@@ -130,6 +135,16 @@ public class Pivot extends SubsystemBase{
     private void voltageDrive(Measure<Voltage> voltage) {
         m_leftPivot.setVoltage(voltage.in(Volts));
     }
+
+    public Command quasistaticRoutine(SysIdRoutine.Direction direction) {
+        return pivotRoutine.quasistatic(direction);
+    }
+
+    public Command dynamicRoutine(SysIdRoutine.Direction direction) {
+       return pivotRoutine.dynamic(direction);
+    }
+
+    
 
     /* Called by the SysId routine */
     private void logMotors(SysIdRoutineLog log) {

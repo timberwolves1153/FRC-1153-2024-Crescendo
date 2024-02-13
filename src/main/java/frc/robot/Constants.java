@@ -14,8 +14,8 @@ import frc.robot.lib.util.SwerveModuleConstants;
 
 public final class Constants {
 
-    public static final boolean launcherRollerTuningMode = true;
-    public static final boolean launcherPivotTuningMode = false;
+    public static final boolean launcherRollerTuningMode = false;
+    public static final boolean launcherPivotTuningMode = true;
     public static final boolean collectorTuningMode = false;
     public static final double stickDeadband = 0.2;
 

@@ -5,10 +5,13 @@ import static edu.wpi.first.units.Units.RPM;
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.MutableMeasure.mutable;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkPIDController.ArbFFUnits;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -36,6 +39,7 @@ public class Launcher extends SubsystemBase{
     private final MutableMeasure<Angle> mutablePosition = mutable(Degrees.of(0));
     private SimpleMotorFeedforward rollerFF;
     private double leftLauncherVolts, rightLauncherVolts, kp, velSetpoint;
+    private SparkPIDController revController;
     
     
     // private final SysIdRoutine launcherRoutine = new SysIdRoutine(
@@ -74,23 +78,27 @@ public class Launcher extends SubsystemBase{
 
         // NEED TO TUNE
         rollerController = new PIDController(kp, 0, 0);
-        rollerFF = new SimpleMotorFeedforward(0, 0.2, 1.14);
-
+        revController = m_leftRoller.getPIDController();
+        revController.setP(0.01);
+        revController.setFeedbackDevice(m_leftRoller.getEncoder());
+        //rollerFF = new SimpleMotorFeedforward(0, 0.2, 1.14);
+        rollerFF = new SimpleMotorFeedforward(0, 0, 0);
+        m_leftRoller.getEncoder().setPosition(0);
         leftLauncherVolts = 0;
         rightLauncherVolts = 0;
         velSetpoint = 0;
 
         // SmartDashboard.putNumber("Left Launcher Volts", leftLauncherVolts);
         // SmartDashboard.putNumber("Right Launcher Volts", rightLauncherVolts);
-        SmartDashboard.putNumber("launcher kP", kp);
-        SmartDashboard.putNumber("launcher setpoint", velSetpoint);
+       // SmartDashboard.putNumber("launcher kP", kp);
+       // SmartDashboard.putNumber("launcher setpoint", velSetpoint);
 
         configMotors();
     }
 
     public void launchWithVolts() {
-        m_leftRoller.setVoltage(-9);
-        m_rightRoller.setVoltage(-9);
+        m_leftRoller.setVoltage(-12);
+        m_rightRoller.setVoltage(-10.8);
        
     }
 
@@ -108,10 +116,12 @@ public class Launcher extends SubsystemBase{
     }
 
     public void setLauncherVelocity() {
-        double feedback = rollerController.calculate(300, getLeftVelocity());
-        double feedforward = rollerFF.calculate(getLeftVelocity(), 300, 0.02);
-        m_leftRoller.setVoltage(feedback + 0);
-        m_rightRoller.setVoltage(feedback + 0);
+        
+        double feedback = rollerController.calculate(getLeftVelocity(), velSetpoint);
+        double feedforward = rollerFF.calculate(velSetpoint);
+        
+        m_leftRoller.setVoltage(feedback + feedforward);
+        m_rightRoller.setVoltage(feedback + feedforward);
         
     }
     public void setLauncherZero() {
@@ -120,6 +130,14 @@ public class Launcher extends SubsystemBase{
         m_leftRoller.setVoltage(feedback + feedforward);
         m_rightRoller.setVoltage(feedback + feedforward);
         
+    }
+
+    public void setLauncherReference() {
+        revController.setReference(1000, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(1000), SparkPIDController.ArbFFUnits.kVoltage);
+    }
+
+    public void setLauncherReferenceToZero() {
+        revController.setReference(0, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(0), SparkPIDController.ArbFFUnits.kVoltage);
     }
 
     @Override
@@ -133,30 +151,30 @@ public class Launcher extends SubsystemBase{
             
         }
 
-       double leftRollerV = SmartDashboard.getNumber("Left Launcher Volts", leftLauncherVolts);
-        leftLauncherVolts = leftRollerV;
+    //    double leftRollerV = SmartDashboard.getNumber("Left Launcher Volts", leftLauncherVolts);
+    //     leftLauncherVolts = leftRollerV;
 
-        if((leftLauncherVolts != leftRollerV)) { 
-            leftLauncherVolts = leftRollerV;
-         }
+    //     if((leftLauncherVolts != leftRollerV)) { 
+    //         leftLauncherVolts = leftRollerV;
+    //      }
 
-         double rightRollerV = SmartDashboard.getNumber("Right Launcher Volts", rightLauncherVolts);
+    //      double rightRollerV = SmartDashboard.getNumber("Right Launcher Volts", rightLauncherVolts);
 
-         if((rightLauncherVolts != rightRollerV)) { 
-            rightLauncherVolts = rightRollerV;
-         }
+    //      if((rightLauncherVolts != rightRollerV)) { 
+    //         rightLauncherVolts = rightRollerV;
+    //      }
 
-        double launcherKP = SmartDashboard.getNumber("launcher kP", kp);
+    //     double launcherKP = SmartDashboard.getNumber("launcher kP", kp);
 
-        if (kp != launcherKP) {
-            kp = launcherKP;
-        }
+    //     if (kp != launcherKP) {
+    //         kp = launcherKP;
+    //     }
 
-        double launcherRPM = SmartDashboard.getNumber("launcher setpoint", velSetpoint);
+    //     double launcherRPM = SmartDashboard.getNumber("launcher setpoint", velSetpoint);
         
-        if (velSetpoint != launcherRPM) {
-            velSetpoint = launcherRPM;
-        }
+    //     if (velSetpoint != launcherRPM) {
+    //         velSetpoint = launcherRPM;
+    //     }
     }
 
 

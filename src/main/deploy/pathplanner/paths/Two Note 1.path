@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.072354686019913,
-        "y": 4.513943614781817
+        "x": 1.932024832710634,
+        "y": 4.478861151454497
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 4.256672217048139
       },
       "prevControl": {
-        "x": 1.8969423693833134,
-        "y": 4.513943614781818
+        "x": 2.1659079215594326,
+        "y": 4.408696224799858
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,37 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "deployIntake",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Deploy Intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": null
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": null
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,

@@ -21,11 +21,11 @@ public class Mailbox extends SubsystemBase {
     }
 
     public void sendToLauncher() {
-        indexMotor.setVoltage(6);
+        indexMotor.setVoltage(12);
     }
 
     public void sendToIntake() {
-        indexMotor.setVoltage(-6);
+        indexMotor.setVoltage(-12);
     }
 
     public void stop() {
@@ -34,7 +34,7 @@ public class Mailbox extends SubsystemBase {
 
     public void config() {
         indexMotor.restoreFactoryDefaults();
-        indexMotor.setIdleMode(IdleMode.kBrake);
+        indexMotor.setIdleMode(IdleMode.kCoast);
         indexMotor.clearFaults();
         indexMotor.setInverted(false);
         indexMotor.burnFlash();

@@ -6,6 +6,8 @@ package frc.robot;
 
 import org.littletonrobotics.urcl.URCL;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.VideoSource;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,7 +23,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-
+  private VideoSource source;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -30,6 +32,10 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     DataLogManager.start();
     URCL.start();
+   
+    // CameraServer.getVideo("http://wpilibpi.local:1181/");
+    // CameraServer.putVideo("http://wpilibpi.local:1181/", 10, 10);
+    //CameraServer.addServer("http://wpilibpi.local:1181/");
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
