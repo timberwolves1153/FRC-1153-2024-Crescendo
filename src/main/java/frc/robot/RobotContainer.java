@@ -7,7 +7,8 @@ package frc.robot;
 import frc.robot.subsystems.Winch;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Mailbox;
-import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.PIDPivot;
+//import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Swerve;
 import frc.robot.Auto.TestAuto;
 import frc.robot.commands.RotateAndX;
@@ -46,7 +47,8 @@ public class RobotContainer {
     private final Swerve s_Swerve = new Swerve();
     private final Winch elevator = new Winch();
     private final Launcher launcher = new Launcher();
-    private final Pivot pivot = new Pivot();
+    //private final Pivot pivot = new Pivot();
+    private final PIDPivot pidPivot = new PIDPivot();
     private final Mailbox mailbox = new Mailbox();
     private final Collector collector = new Collector();
 
@@ -93,6 +95,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
+                () -> robotCentric.getAsBoolean(),
                 () -> robotCentric.getAsBoolean()
             )
         );
@@ -123,8 +126,8 @@ public class RobotContainer {
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
 
         
-       // opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
-       // opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
+        opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher()));
+        opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop()));
 
         // opRightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
         // opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
@@ -137,11 +140,11 @@ public class RobotContainer {
         // opA.onTrue(new InstantCommand(() -> collector.pivotDown()));
         // opA.onFalse(new InstantCommand(() -> collector.pivotStop()));
         
-        opY.onTrue(new InstantCommand(() -> pivot.pivotUp()));
-        opY.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+        opY.onTrue(new InstantCommand(() -> pidPivot.pivotUp()));
+        opY.onFalse(new InstantCommand(() -> pidPivot.pivotStop()));
 
-        opA.onTrue(new InstantCommand(() -> pivot.pivotDown()));
-        opA.onFalse(new InstantCommand(() -> pivot.pivotStop()));
+        opA.onTrue(new InstantCommand(() -> pidPivot.pivotDown()));
+        opA.onFalse(new InstantCommand(() -> pidPivot.pivotStop()));
     
         opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
@@ -163,12 +166,16 @@ public class RobotContainer {
        // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
        // opA.onFalse(new InstantCommand(() -> elevator.stop()));
 
-      // atari1.onTrue(Commands.runOnce(() -> pivot.setPivotPosition(30), pivot));
-        atari1.whileTrue( pivot.quasistaticRoutine(Direction.kForward));
-       atari2.whileTrue(pivot.quasistaticRoutine(Direction.kReverse));
+       atari1.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(30), pidPivot));
+       atari1.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
 
-       atari3.whileTrue(pivot.dynamicRoutine(Direction.kForward));
-       atari14.whileTrue(pivot.dynamicRoutine(Direction.kReverse));
+       atari2.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(50), pidPivot));
+       atari2.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
+    //     atari1.whileTrue(pivot.quasistaticRoutine(Direction.kForward));
+    //    atari2.whileTrue(pivot.quasistaticRoutine(Direction.kReverse));
+
+    //    atari3.whileTrue(pivot.dynamicRoutine(Direction.kForward));
+    //    atari14.whileTrue(pivot.dynamicRoutine(Direction.kReverse));
        //atari1.onFalse(Commands.runOnce(() -> pivot., null))
     }
 

@@ -3,6 +3,7 @@
   "robotLength": 0.71,
   "holonomicMode": true,
   "pathFolders": [
+    "One Note Path",
     "Three Note Paths",
     "Two Note Paths"
   ],

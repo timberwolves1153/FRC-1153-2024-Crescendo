@@ -5,19 +5,44 @@ package frc.robot;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.robot.lib.util.NEOSwerveConstants;
 import frc.robot.lib.util.SwerveModuleConstants;
+import frc.robot.subsystems.AprilTags.AprilTagCamera.Resolution;
 
 public final class Constants {
 
     public static final boolean launcherRollerTuningMode = false;
-    public static final boolean launcherPivotTuningMode = true;
+    public static final boolean launcherPivotTuningMode = false;
     public static final boolean collectorTuningMode = false;
     public static final double stickDeadband = 0.2;
+
+    public static final class Field {
+        public static final double FIELD_WIDTH = 8.21;
+        public static final double FIELD_LENGTH = 16.54;
+
+    public static final Translation2d CENTER = new Translation2d(FIELD_LENGTH / 2, FIELD_WIDTH / 2);
+    public static final Translation2d BLUE_SPEAKER = new Translation2d(0.00, 5.55);
+    public static final Translation2d RED_SPEAKER = new Translation2d(15.64, 5.55);
+
+    }
+
+     public static final class VisionSettings {
+        public static final String INTAKECAM_NAME = "intakeCam";
+        public static final Transform3d INTAKECAM_LOCATION = new Transform3d(
+            new Translation3d(0.33, 0.33, 0.2), 
+            new Rotation3d(0, Math.toRadians(21.7), Math.toRadians(23)));
+
+
+        public static final Resolution INTAKECAM_RESOLUTION = Resolution.RES_1280_720;
+        public static final Rotation2d INTAKECAM_FOV = Rotation2d.fromDegrees(75);
+    }
 
 
     public static final class Swerve {
