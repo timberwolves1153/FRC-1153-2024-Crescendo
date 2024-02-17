@@ -14,10 +14,10 @@ public class PIDPivot extends PIDSubsystem{
     
     private CANSparkMax m_leftPivot, m_rightPivot;
     private DutyCycleEncoder pivotEncoder;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(90+30);;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(116);;
 
     public PIDPivot() {
-        super(new PIDController(5, 0.0001, 0));
+        super(new PIDController(12, 0.01, 0.01));
 
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
@@ -75,10 +75,16 @@ public class PIDPivot extends PIDSubsystem{
     public void PIDmovePivot(double volts) {
         double adjustedVolts = volts;
             //negative goes up & positive goes down
-
+        double constantV;
         double clampedVolts = MathUtil.clamp(adjustedVolts, -12, 12);
-
-        m_leftPivot.setVoltage(clampedVolts);
+        if (clampedVolts > 0) {
+            constantV = 0.15;
+            m_leftPivot.setVoltage(clampedVolts + constantV);
+        } else if (clampedVolts < 0) {
+            constantV = 0.0;
+            m_leftPivot.setVoltage(clampedVolts - constantV);
+        }
+        
     }
 
 

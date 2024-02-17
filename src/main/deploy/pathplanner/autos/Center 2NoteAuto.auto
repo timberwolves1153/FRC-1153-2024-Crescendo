@@ -14,6 +14,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Subwoofer"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Run Launcher"
           }
         },
@@ -42,6 +48,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -61,15 +73,82 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Two Note Center"
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Podium"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "End Intake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "End Launcher"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Retract Intake"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "End Mailbox"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PivotHome"
+                }
+              }
+            ]
           }
         }
       ]

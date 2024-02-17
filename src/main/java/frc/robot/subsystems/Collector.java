@@ -22,7 +22,7 @@ public class Collector extends SubsystemBase{
 
 
     public double kP, kI, kD, kFF, kMaxOutput, kMinOutput, kInput, maxRPM;
-    private final double IntakeSetpoint = 15;
+    private final double IntakeSetpoint = 30;
 
     public Collector() {
         
@@ -32,12 +32,12 @@ public class Collector extends SubsystemBase{
 
         pivotEncoder = pivotMotor.getEncoder();
         pidController = pivotMotor.getPIDController();
-
+        pivotEncoder.setPosition(0);
         pivotMotor.restoreFactoryDefaults();
 
-        pidController.setP(0.02);
+        pidController.setP(0.03);
         pidController.setI(kI);
-        pidController.setD(kD);
+        pidController.setD(0.001);
         pidController.setFF(0);
        
         pivotMotor.setInverted(false);

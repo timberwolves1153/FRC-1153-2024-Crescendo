@@ -126,7 +126,7 @@ public class Vision extends SubsystemBase implements AutoCloseable{
     public double aimAtTarget() {
         var result = cam.getLatestResult();
         if (result.hasTargets()) {
-        double targetRotation = result.getBestTarget().getYaw() - CAMERA_OFFSET;
+        double targetRotation = result.getBestTarget().getYaw();
         return targetRotation;
         }else {
         return 0;

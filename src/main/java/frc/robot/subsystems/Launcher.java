@@ -81,9 +81,9 @@ public class Launcher extends SubsystemBase{
         // NEED TO TUNE
         rollerController = new PIDController(kp, 0, 0);
         revController = m_leftRoller.getPIDController();
-        revController.setP(0.015);
+        revController.setP(0.05);
         revController2 = m_rightRoller.getPIDController();
-        revController2.setP(0.015);
+        revController2.setP(0.05);
         revController2.setFeedbackDevice(m_rightRoller.getEncoder());
        // revController.setD(0.0001);
         revController.setFeedbackDevice(m_leftRoller.getEncoder());
@@ -104,8 +104,8 @@ public class Launcher extends SubsystemBase{
     }
 
     public void launchWithVolts() {
-        m_leftRoller.setVoltage(-12);
-        m_rightRoller.setVoltage(-10.8);
+        m_leftRoller.setVoltage(12);
+        m_rightRoller.setVoltage(7.5);
        
     }
 
@@ -115,7 +115,7 @@ public class Launcher extends SubsystemBase{
     }
 
     public double getLeftVelocity() {
-        return m_leftRoller.getEncoder().getVelocity()/ 1.33;
+        return m_leftRoller.getEncoder().getVelocity();
     }
 
     public double getRightVelocity() {
@@ -141,8 +141,8 @@ public class Launcher extends SubsystemBase{
     }
 
     public void setLauncherReference() {
-        double val = 4000;
-        double val2 = 3900;
+        double val = 4500;
+        double val2 = 3200;
         revController2.setReference(val, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(val), SparkPIDController.ArbFFUnits.kVoltage);
         revController.setReference(val2, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(val2), SparkPIDController.ArbFFUnits.kVoltage);
     }

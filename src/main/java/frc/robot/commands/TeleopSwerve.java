@@ -3,6 +3,7 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.AprilTags.Vision;
+import frc.robot.subsystems.AprilTags.WeekZeroVision;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -23,12 +24,12 @@ public class TeleopSwerve extends Command {
     private BooleanSupplier lockOnTag;
     private PIDController thetaController;
     private double rotationVal, translationVal, strafeVal;
-    private Vision vision;
+    private WeekZeroVision vision;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier lockOnTag) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier lockOnTag, WeekZeroVision vision) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
-
+        this.vision = vision;
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
@@ -40,7 +41,7 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void initialize() {
-        thetaController = new PIDController(0.08, 0, .01);
+        thetaController = new PIDController(0.01, 0, .01);
         thetaController.enableContinuousInput(-180, 180);
     }
 

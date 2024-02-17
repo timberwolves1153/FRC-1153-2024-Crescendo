@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0198807862003185,
-      "y": 6.537032333323926
+      "x": 0.6807503073695607,
+      "y": 6.6188914144210065
     },
-    "rotation": 30.0
+    "rotation": 59.04
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer"
+          }
+        },
         {
           "type": "named",
           "data": {
@@ -42,6 +48,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -69,7 +81,25 @@
         {
           "type": "named",
           "data": {
+            "name": "Podium"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End"
           }
         }
       ]

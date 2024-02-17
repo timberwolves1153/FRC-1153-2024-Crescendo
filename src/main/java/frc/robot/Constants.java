@@ -18,9 +18,9 @@ import frc.robot.subsystems.AprilTags.AprilTagCamera.Resolution;
 
 public final class Constants {
 
-    public static final boolean launcherRollerTuningMode = false;
+    public static final boolean launcherRollerTuningMode = true;
     public static final boolean launcherPivotTuningMode = false;
-    public static final boolean collectorTuningMode = false;
+    public static final boolean collectorTuningMode = true;
     public static final double stickDeadband = 0.2;
 
     public static final class Field {
@@ -129,7 +129,7 @@ public final class Constants {
         /* Swerve Profiling Values */
         /** Meters per Second */
         
-        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 3.6; //TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 11.5; //TODO: This must be tuned to specific robot
 
