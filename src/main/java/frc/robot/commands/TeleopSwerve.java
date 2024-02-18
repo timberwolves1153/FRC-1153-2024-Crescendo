@@ -26,7 +26,7 @@ public class TeleopSwerve extends Command {
     private double rotationVal, translationVal, strafeVal;
     private WeekZeroVision vision;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier lockOnTag, WeekZeroVision vision) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, BooleanSupplier lockOnTag) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
         this.vision = vision;
@@ -51,13 +51,13 @@ public class TeleopSwerve extends Command {
         boolean aimAtTag = lockOnTag.getAsBoolean();
         translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
         strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-        if(aimAtTag) {
-            vision.aimAtTarget();
-            thetaController.setSetpoint(vision.aimAtTarget());
-            rotationVal = thetaController.calculate(MathUtil.inputModulus(s_Swerve.getPose().getRotation().getDegrees(), -180, 180), rotationVal);
-        } else if (!aimAtTag){
+        // if(aimAtTag) {
+        //     vision.aimAtTarget();
+        //     thetaController.setSetpoint(vision.aimAtTarget());
+        //     rotationVal = thetaController.calculate(MathUtil.inputModulus(s_Swerve.getPose().getRotation().getDegrees(), -180, 180), rotationVal);
+        // } else if (!aimAtTag){
             rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
-        }
+        //}
 
         /* Drive */
         s_Swerve.drive(

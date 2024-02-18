@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.0666574039700785,
-        "y": 4.689355931418416
+        "x": 2.55,
+        "y": 5.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.5695060449949951,
-        "y": 4.303448834817897
+        "x": 5.136223149939177,
+        "y": 4.630885159206216
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5752033270448305,
-        "y": 1.9178413285601503
+        "x": 6.750016462995888,
+        "y": 3.98770666487202
       },
       "prevControl": {
-        "x": 2.271155311541392,
-        "y": 2.584408131779226
+        "x": 5.750016462995888,
+        "y": 3.98770666487202
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,21 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "One Note Path",
+  "folder": "Center Three Sprint Paths",
   "previewStartingState": {
-    "rotation": -60.0,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

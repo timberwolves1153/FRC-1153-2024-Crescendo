@@ -157,7 +157,7 @@ public class Launcher extends SubsystemBase{
         if (Constants.launcherRollerTuningMode) {
             SmartDashboard.putNumber("left velocity", getLeftVelocity());
             SmartDashboard.putNumber("right Velocity", getRightVelocity());
-            SmartDashboard.putNumber("current setpoint", rollerController.getSetpoint());
+            //SmartDashboard.putNumber("current setpoint", rollerController.getSetpoint());
             SmartDashboard.putNumber("left volts", m_leftRoller.getAppliedOutput() * 12);
             SmartDashboard.putNumber("right volts", m_rightRoller.getAppliedOutput() * 12);
             

@@ -17,7 +17,7 @@ public class Mailbox extends SubsystemBase {
         config();
 
         mailboxVolts = 0;
-        SmartDashboard.putNumber("Mailbox Volts", mailboxVolts);
+       // SmartDashboard.putNumber("Mailbox Volts", mailboxVolts);
     }
 
     public void sendToLauncher() {
@@ -34,21 +34,22 @@ public class Mailbox extends SubsystemBase {
 
     public void config() {
         indexMotor.restoreFactoryDefaults();
-        indexMotor.setIdleMode(IdleMode.kCoast);
+        indexMotor.setIdleMode(IdleMode.kBrake);
         indexMotor.clearFaults();
         indexMotor.setInverted(false);
+        indexMotor.setSmartCurrentLimit(40);
         indexMotor.burnFlash();
     }
 
     @Override
     public void periodic() {
 
-         double mailboxV = SmartDashboard.getNumber("Mailbox Volts", mailboxVolts);
-        mailboxVolts = mailboxV;
+        //  double mailboxV = SmartDashboard.getNumber("Mailbox Volts", mailboxVolts);
+        // mailboxVolts = mailboxV;
 
-        if((mailboxVolts != mailboxV)) { 
-            mailboxVolts = mailboxV;
-         }
+        // if((mailboxVolts != mailboxV)) { 
+        //     mailboxVolts = mailboxV;
+        //  }
 
         
     }

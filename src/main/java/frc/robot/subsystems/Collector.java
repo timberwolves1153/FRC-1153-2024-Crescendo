@@ -121,10 +121,10 @@ public class Collector extends SubsystemBase{
         if (Constants.collectorTuningMode) {
         SmartDashboard.putNumber("Intake Encoder", getIntakePosition());
 
-        SmartDashboard.putNumber("P Gain", kP);
-        SmartDashboard.putNumber("D Gain", kD);
-        SmartDashboard.putNumber("I Gain", kI);
-        SmartDashboard.putNumber("Feed Forward", kFF);
+        // SmartDashboard.putNumber("P Gain", kP);
+        // SmartDashboard.putNumber("D Gain", kD);
+        // SmartDashboard.putNumber("I Gain", kI);
+        // SmartDashboard.putNumber("Feed Forward", kFF);
      
         }
 

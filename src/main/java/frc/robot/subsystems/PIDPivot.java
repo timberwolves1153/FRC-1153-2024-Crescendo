@@ -9,6 +9,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import frc.robot.Constants;
 
 public class PIDPivot extends PIDSubsystem{
     
@@ -38,12 +39,14 @@ public class PIDPivot extends PIDSubsystem{
         m_leftPivot.clearFaults();
         m_leftPivot.setIdleMode(IdleMode.kBrake);
         m_leftPivot.setInverted(false);
+        m_leftPivot.setSmartCurrentLimit(40);
+
 
         
         m_rightPivot.clearFaults();
         m_rightPivot.setIdleMode(IdleMode.kBrake);
         m_rightPivot.follow(m_leftPivot, false);
-        
+        m_rightPivot.setSmartCurrentLimit(40);
         m_rightPivot.burnFlash();
         m_leftPivot.burnFlash();
     }
@@ -139,9 +142,12 @@ public class PIDPivot extends PIDSubsystem{
     @Override
     public void periodic() {
         super.periodic();
+        if (Constants.launcherPivotTuningMode) {
             SmartDashboard.putNumber("pivot degrees", getDegrees());
             SmartDashboard.putNumber("pivot absolute", getAbsoluteMeasurement());
             SmartDashboard.putNumber("pivot radians", getPivotRadians());
             SmartDashboard.putNumber("pivot setpoint", getController().getSetpoint());
     }
+
+}
 }
