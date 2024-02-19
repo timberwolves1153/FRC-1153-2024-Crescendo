@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6222795351573609,
-        "y": 4.490555305896938
+        "x": 0.6690561529271205,
+        "y": 4.385307915914978
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6747534349769553,
-        "y": 4.736132549188175
+        "x": 1.721530052746715,
+        "y": 4.630885159206215
       },
       "isLocked": false,
       "linkedName": null
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Right Three Note Paths",
+  "folder": "Non-AmpSide Three Note Paths",
   "previewStartingState": {
     "rotation": -60.0,
     "velocity": 0

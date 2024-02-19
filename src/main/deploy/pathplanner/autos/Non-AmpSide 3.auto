@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6222795351573609,
-      "y": 4.490555305896938
+      "x": 0.6690561529271205,
+      "y": 4.385307915914978
     },
     "rotation": -60.0
   },
@@ -32,19 +32,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Four Note 1"
+            "pathName": "Right Three Note 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Right Four Note 2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Four Note 3"
+            "pathName": "Right Three Note 2"
           }
         },
         {

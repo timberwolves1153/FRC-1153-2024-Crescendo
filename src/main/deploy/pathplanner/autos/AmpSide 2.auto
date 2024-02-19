@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2420697206066778,
-      "y": 5.589805823486292
+      "x": 0.6924444618120005,
+      "y": 6.665668032190766
     },
-    "rotation": 0
+    "rotation": 59.04
   },
   "command": {
     "type": "sequential",
@@ -73,21 +73,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Two Note Center"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "Two Note Left"
           }
         },
         {
@@ -111,44 +99,37 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 0.5
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "End Intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "End Launcher"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Retract Intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "End Mailbox"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "PivotHome"
-                }
-              }
-            ]
+            "name": "End Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Retract Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Mailbox"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
           }
         }
       ]
