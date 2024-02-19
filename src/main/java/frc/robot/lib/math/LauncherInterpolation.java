@@ -8,6 +8,8 @@ public class LauncherInterpolation {
 
     public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> launcherMap = new InterpolatingTreeMap<>();
 
+    public static InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> pivotMap = new InterpolatingTreeMap<>();
+
 // key = distance from speaker meters
 // value = rpm setpoint
     static {    

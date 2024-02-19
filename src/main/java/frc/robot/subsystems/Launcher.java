@@ -1,246 +1,78 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.Volts;
-import static edu.wpi.first.units.Units.RPM;
-import static edu.wpi.first.units.Units.Rotations;
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.MutableMeasure.mutable;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.NeutralOut;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import com.revrobotics.CANSparkBase;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkPIDController;
-import com.revrobotics.CANSparkBase.ControlType;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SparkPIDController.ArbFFUnits;
-
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.estimator.AngleStatistics;
-import edu.wpi.first.units.Angle;
-import edu.wpi.first.units.Measure;
-import edu.wpi.first.units.MutableMeasure;
-import edu.wpi.first.units.Velocity;
-import edu.wpi.first.units.Voltage;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.Constants;
 
 public class Launcher extends SubsystemBase{
     
-    private CANSparkMax m_leftRoller, m_rightRoller;
-
-    private SparkPIDController leftRollerPID;
-    private PIDController rollerController;
-    private final MutableMeasure<Voltage> mutableAppliedVoltage = mutable(Volts.of(0));
-    private final MutableMeasure<Velocity<Angle>> mutableVelocity = mutable(RPM.of(0));
-    private final MutableMeasure<Angle> mutablePosition = mutable(Rotations.of(0));
-    private SimpleMotorFeedforward rollerFF;
-    private double leftLauncherVolts, rightLauncherVolts, kp, velSetpoint;
-    private SparkPIDController revController, revController2;
-    
-    
-    private final SysIdRoutine launcherRoutine = new SysIdRoutine(
-      new SysIdRoutine.Config(),
-      new SysIdRoutine.Mechanism((Measure<Voltage> volts) -> {
-        m_leftRoller.setVoltage(volts.in(Volts));
-        m_rightRoller.setVoltage(volts.in(Volts));
-     }, 
-     log -> {
-        log.motor("left launcher")
-        // Log voltage
-        .voltage(
-            mutableAppliedVoltage.mut_replace(
-                // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
-                // by the voltage going into the spark max, called the bus voltage to receive the
-                // output voltage
-                m_leftRoller.getAppliedOutput() * 12, Volts))
-                .angularPosition(mutablePosition.mut_replace(m_leftRoller.getEncoder().getPosition(), Degrees))
-                .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
-
-        log.motor("right launcher")
-        .voltage(mutableAppliedVoltage.mut_replace(
-                m_rightRoller.getAppliedOutput() * 12, Volts))
-            .angularPosition(mutablePosition.mut_replace(m_rightRoller.getEncoder().getPosition(), Degrees))
-            .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
-      }, this)
-
-    );
-    
-    
-
+    private TalonFX m_leftLauncher, m_rightLauncher;
+    private VoltageOut leftOutput, rightOutput;
+    private VelocityVoltage m_leftRequest, m_rightRequest;
+    private Slot0Configs slot0Configs;
+    private TalonFXConfiguration motorConfigs;
+    private NeutralOut controlMode;
 
     public Launcher() {
-        m_leftRoller = new CANSparkMax(53, MotorType.kBrushless);
-        m_rightRoller = new CANSparkMax(54, MotorType.kBrushless);
 
-        // NEED TO TUNE
-        rollerController = new PIDController(kp, 0, 0);
-        revController = m_leftRoller.getPIDController();
-        revController.setP(0.05);
-        revController2 = m_rightRoller.getPIDController();
-        revController2.setP(0.05);
-        revController2.setFeedbackDevice(m_rightRoller.getEncoder());
-       // revController.setD(0.0001);
-        revController.setFeedbackDevice(m_leftRoller.getEncoder());
-        //rollerFF = new SimpleMotorFeedforward(0, 0.2, 1.14);
-        rollerFF = new SimpleMotorFeedforward(0.33329, 0.003, 0);
-        m_leftRoller.getEncoder().setPosition(0);
-        m_rightRoller.getEncoder().setPosition(0);
-        leftLauncherVolts = 0;
-        rightLauncherVolts = 0;
-        velSetpoint = 0;
+        m_leftLauncher = new TalonFX(53);
+        m_rightLauncher = new TalonFX(54);
 
-        // SmartDashboard.putNumber("Left Launcher Volts", leftLauncherVolts);
-        // SmartDashboard.putNumber("Right Launcher Volts", rightLauncherVolts);
-       // SmartDashboard.putNumber("launcher kP", kp);
-       // SmartDashboard.putNumber("launcher setpoint", velSetpoint);
-
-        configMotors();
+        motorConfigs = new TalonFXConfiguration();
+        slot0Configs = new Slot0Configs();
+        controlMode = new NeutralOut();
+        
+        leftOutput = new VoltageOut(0);
+        rightOutput = new VoltageOut(0);
+        
+        m_leftRequest = new VelocityVoltage(0).withSlot(0);
+        m_rightRequest = new VelocityVoltage(0).withSlot(0);
+        
+        
     }
+
 
     public void launchWithVolts() {
-        m_leftRoller.setVoltage(12);
-        m_rightRoller.setVoltage(7.5);
-       
+        m_leftLauncher.setControl(leftOutput.withOutput(12));
+        m_rightLauncher.setControl(rightOutput.withOutput(7.5));
     }
 
-    public void stopLauncher() {
-        m_leftRoller.setVoltage(0);
-        m_rightRoller.setVoltage(0);
+    public void stopLaunchWithVolts() {
+        m_leftLauncher.setControl(leftOutput.withOutput(0));
+        m_rightLauncher.setControl(rightOutput.withOutput(0));
     }
 
-    public double getLeftVelocity() {
-        return m_leftRoller.getEncoder().getVelocity();
-    }
-
-    public double getRightVelocity() {
-        return m_rightRoller.getEncoder().getVelocity();
-    }
-
-    public void setLauncherVelocity() {
-        
-        double feedback = rollerController.calculate(getLeftVelocity(), velSetpoint);
-        double feedforward = rollerFF.calculate(velSetpoint);
-        
-        m_leftRoller.setVoltage(feedback + feedforward);
-        m_rightRoller.setVoltage(feedback + feedforward);
-        
-    }
-    public void setLauncherZero() {
-        double feedback = rollerController.calculate(getLeftVelocity(), 0);
-        double feedforward = rollerFF.calculate(0);
-        double clampedOutput = MathUtil.clamp(feedforward + feedback, -12, 12);
-        m_leftRoller.setVoltage(clampedOutput);
-        m_rightRoller.setVoltage(clampedOutput);
-        
-    }
-
-    public void setLauncherReference() {
-        double val = 4500;
-        double val2 = 3200;
-        revController2.setReference(val, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(val), SparkPIDController.ArbFFUnits.kVoltage);
-        revController.setReference(val2, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(val2), SparkPIDController.ArbFFUnits.kVoltage);
-    }
-
-    public void setLauncherReferenceToZero() {
-        revController2.setReference(0, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(0), SparkPIDController.ArbFFUnits.kVoltage);
-        revController.setReference(0, CANSparkBase.ControlType.kVelocity, 0, rollerFF.calculate(0), SparkPIDController.ArbFFUnits.kVoltage);
-    }
-
-    @Override
-    public void periodic() {
-        if (Constants.launcherRollerTuningMode) {
-            SmartDashboard.putNumber("left velocity", getLeftVelocity());
-            SmartDashboard.putNumber("right Velocity", getRightVelocity());
-            //SmartDashboard.putNumber("current setpoint", rollerController.getSetpoint());
-            SmartDashboard.putNumber("left volts", m_leftRoller.getAppliedOutput() * 12);
-            SmartDashboard.putNumber("right volts", m_rightRoller.getAppliedOutput() * 12);
-            
-        }
-
-    //    double leftRollerV = SmartDashboard.getNumber("Left Launcher Volts", leftLauncherVolts);
-    //     leftLauncherVolts = leftRollerV;
-
-    //     if((leftLauncherVolts != leftRollerV)) { 
-    //         leftLauncherVolts = leftRollerV;
-    //      }
-
-    //      double rightRollerV = SmartDashboard.getNumber("Right Launcher Volts", rightLauncherVolts);
-
-    //      if((rightLauncherVolts != rightRollerV)) { 
-    //         rightLauncherVolts = rightRollerV;
-    //      }
-
-    //     double launcherKP = SmartDashboard.getNumber("launcher kP", kp);
-
-    //     if (kp != launcherKP) {
-    //         kp = launcherKP;
-    //     }
-
-    //     double launcherRPM = SmartDashboard.getNumber("launcher setpoint", velSetpoint);
-        
-    //     if (velSetpoint != launcherRPM) {
-    //         velSetpoint = launcherRPM;
-    //     }
+    public void launchWithVelocity() {
+        m_leftLauncher.setControl(m_leftRequest.withVelocity(4500));
+        m_rightLauncher.setControl(m_rightRequest.withVelocity(3200));
     }
 
 
-    public void configMotors() {
-        m_leftRoller.restoreFactoryDefaults();
-        m_leftRoller.clearFaults();
-        m_leftRoller.setIdleMode(IdleMode.kCoast);
-        m_leftRoller.setInverted(true);
-        m_leftRoller.setSmartCurrentLimit(40);
+    public void config() {
 
-        m_rightRoller.restoreFactoryDefaults();
-        m_rightRoller.clearFaults();
-        m_rightRoller.setIdleMode(IdleMode.kCoast);
-        m_rightRoller.setInverted(false);
-        m_rightRoller.setSmartCurrentLimit(40);
-        // m_rightRoller.follow(m_leftRoller, true);
+        motorConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        motorConfigs.CurrentLimits.SupplyCurrentLimit = 40;
+        motorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
+        motorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-        // m_rightRoller.getEncoder().setPositionConversionFactor(1 / m_rightRoller.getEncoder().getCountsPerRevolution());
-        // m_leftRoller.getEncoder().setPositionConversionFactor( 1 / m_leftRoller.getEncoder().getCountsPerRevolution());
+        slot0Configs.kP = 0.01;
+        slot0Configs.kI = 0;
+        slot0Configs.kD = 0;
+        slot0Configs.kS = 0; //tune
+        slot0Configs.kV = 0.12; //from CTRE docs + Windham
 
-        m_leftRoller.burnFlash();
-        m_rightRoller.burnFlash();
+        m_leftLauncher.getConfigurator().apply(slot0Configs);
+        m_leftLauncher.getConfigurator().apply(motorConfigs);
+        m_rightLauncher.getConfigurator().apply(slot0Configs);
+        m_rightLauncher.getConfigurator().apply(motorConfigs);
+
     }
-
-    /* Called by the SysIdRoutine */
-    private void voltageDrive(Measure<Voltage> voltage) {
-        m_leftRoller.setVoltage(voltage.in(Volts));
-        m_rightRoller.setVoltage(voltage.in(Volts));
-    }
-
-    public Command dynamicLauncher(SysIdRoutine.Direction direction) {
-        return launcherRoutine.dynamic(direction);
-    }
-
-    public Command quasistaticLauncher(SysIdRoutine.Direction direction) {
-        return launcherRoutine.quasistatic(direction);
-    }
-
-    /* Called by the SysId routine */
-    // private void logMotors(SysIdRoutineLog log) {
-    //     log.motor("left launcher")
-    //     // Log voltage
-    //     .voltage(
-    //         mutableAppliedVoltage.mut_replace(
-    //             // getAppliedOutput return the duty cycle which is from [-1, +1]. We multiply this
-    //             // by the voltage going into the spark max, called the bus voltage to receive the
-    //             // output voltage
-    //             m_leftRoller.getAppliedOutput() * m_leftRoller.getBusVoltage(), Volts))
-    //     .angularVelocity(mutableVelocity.mut_replace(getLeftVelocity(), RPM));
-
-    //     log.motor("right launcher")
-    //     .voltage(mutableAppliedVoltage.mut_replace(
-    //             m_rightRoller.getAppliedOutput() * m_rightRoller.getBusVoltage(), Volts))
-    //         .angularVelocity(mutableVelocity.mut_replace(getRightVelocity(), RPM));
-    // }
-    
 }

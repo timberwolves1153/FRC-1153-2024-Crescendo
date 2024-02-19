@@ -125,7 +125,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Run Intake", new InstantCommand(() -> collector.intake()));
         NamedCommands.registerCommand("PivotHome", Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
         NamedCommands.registerCommand("Podium", Commands.runOnce(() -> pidPivot.setSetpointDegrees(34.5), pidPivot));
-        NamedCommands.registerCommand("End Launcher", new InstantCommand(() -> launcher.stopLauncher()));
+        NamedCommands.registerCommand("End Launcher", new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         NamedCommands.registerCommand("End Mailbox", new InstantCommand(() -> mailbox.stop()));
         NamedCommands.registerCommand("Retract Intake", Commands.runOnce(() -> collector.retractIntake(), collector));
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
@@ -197,13 +197,13 @@ public class RobotContainer {
         opY.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
 
         opY.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-        opY.onFalse(new InstantCommand(() -> launcher.stopLauncher(), launcher));
+        opY.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
 
         opB.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(40), pidPivot));
         opB.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
 
         opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-        opB.onFalse(new InstantCommand(() -> launcher.stopLauncher(), launcher));
+        opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
         // opX.onTrue(new InstantCommand(() -> launcher.setLauncherReference()));
         // opX.onFalse(new InstantCommand(() -> launcher.setLauncherReferenceToZero()));
         
@@ -227,7 +227,7 @@ public class RobotContainer {
        opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
        opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
        opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-       opA.onFalse(new InstantCommand(() -> launcher.stopLauncher(), launcher));
+       opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
     //     atari1.whileTrue(pivot.quasistaticRoutine(Direction.kForward));
     //    atari2.whileTrue(pivot.quasistaticRoutine(Direction.kReverse));
 
