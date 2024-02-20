@@ -192,7 +192,7 @@ public class RobotContainer {
         povDown.onTrue(new InstantCommand(() -> pidPivot.pivotDown(), pidPivot));
         povDown.onFalse(new InstantCommand(() -> pidPivot.pivotStop(), pidPivot));
 
-        opX.whileTrue(new InstantCommand(() -> collector.resetIntakeEncoder(), collector));
+      //  opX.whileTrue(new InstantCommand(() -> collector.resetIntakeEncoder(), collector));
         opY.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(34.5), pidPivot));
         opY.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
 
@@ -202,12 +202,18 @@ public class RobotContainer {
         opB.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(40), pidPivot));
         opB.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
 
-        opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-        opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
-        // opX.onTrue(new InstantCommand(() -> launcher.setLauncherReference()));
-        // opX.onFalse(new InstantCommand(() -> launcher.setLauncherReferenceToZero()));
+        // opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
+        // opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
+
+        opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
+        opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         
        
+        opRightStick.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        opRightStick.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+
+        opRightStick.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+        opRightStick.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
 
         //opRightBumper.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
 
@@ -226,8 +232,8 @@ public class RobotContainer {
 
        opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
        opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
-       opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-       opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
+    //    opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
+    //    opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
     //     atari1.whileTrue(pivot.quasistaticRoutine(Direction.kForward));
     //    atari2.whileTrue(pivot.quasistaticRoutine(Direction.kReverse));
 
@@ -240,9 +246,9 @@ public class RobotContainer {
         return driver;
       }
 
-      public Launcher getLauncher() {
-        return launcher;
-      }
+    //   public Launcher getLauncher() {
+    //     return launcher;
+    //   }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

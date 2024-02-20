@@ -15,7 +15,7 @@ public class PIDPivot extends PIDSubsystem{
     
     private CANSparkMax m_leftPivot, m_rightPivot;
     private DutyCycleEncoder pivotEncoder;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(116);;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(119.5);;
 
     public PIDPivot() {
         super(new PIDController(12, 0.01, 0.01));
