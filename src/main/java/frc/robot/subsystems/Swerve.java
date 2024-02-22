@@ -250,8 +250,10 @@ if (Constants.swerveTuningMode) {
 
         }
 
-        SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
+        
     }
+
+    SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
     }
 }
 

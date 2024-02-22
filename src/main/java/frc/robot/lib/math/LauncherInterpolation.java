@@ -13,6 +13,12 @@ public class LauncherInterpolation {
 // key = distance from speaker meters
 // value = rpm setpoint
     static {    
-        launcherMap.put(new InterpolatingDouble(1.0), new InterpolatingDouble(5000.0));
+        pivotMap.put(new InterpolatingDouble(1.44), new InterpolatingDouble(56.0));
+        pivotMap.put(new InterpolatingDouble(2.05), new InterpolatingDouble(40.0));
+        pivotMap.put(new InterpolatingDouble(2.22), new InterpolatingDouble(34.5));
+        pivotMap.put(new InterpolatingDouble(2.5), new InterpolatingDouble(30.0));
+        pivotMap.put(new InterpolatingDouble(2.76), new InterpolatingDouble(26.0));
+        pivotMap.put(new InterpolatingDouble(2.97), new InterpolatingDouble(23.8));
+        pivotMap.put(new InterpolatingDouble(3.1), new InterpolatingDouble(22.8));
     }
 }

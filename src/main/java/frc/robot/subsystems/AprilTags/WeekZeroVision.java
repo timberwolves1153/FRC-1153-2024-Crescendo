@@ -20,24 +20,22 @@ package frc.robot.subsystems.AprilTags;
     import edu.wpi.first.units.Unit;
     import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     import edu.wpi.first.wpilibj2.command.SubsystemBase;
-    import frc.robot.subsystems.Swerve;
     
     public class WeekZeroVision extends SubsystemBase{
         
         private PhotonCamera cam;
-        private Swerve swerve;
         
         private PhotonTrackedTarget target;
     
     
-        final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(32);
+        final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(23.3);
         final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
         // Angle between horizontal and the camera.
        // final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(camResult.getBestTarget().getPitch());
     
         // How far from the target we want to be
         final double GOAL_RANGE_METERS = Units.feetToMeters(3);
-        final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(5.67);
+        final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(10.2037);
     
         private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
     ;
@@ -46,11 +44,11 @@ package frc.robot.subsystems.AprilTags;
         private PIDController rotationPID;
         private String fieldLayout;
     
-        public WeekZeroVision(Swerve swerve) {
+        public WeekZeroVision() {
     
             
-            cam = new PhotonCamera("intakeCam");
-            this.swerve = swerve;
+            cam = new PhotonCamera("launcherCam");
+
             
     
             tranlationPID = new PIDController(0, 0, 0);

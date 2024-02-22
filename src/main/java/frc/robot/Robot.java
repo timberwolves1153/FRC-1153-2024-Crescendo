@@ -38,12 +38,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    DataLogManager.start();
-    URCL.start();
+    //DataLogManager.start();
+    //URCL.start();
    
-    // CameraServer.getVideo("http://wpilibpi.local:1181/");
-    // CameraServer.putVideo("http://wpilibpi.local:1181/", 10, 10);
-    //CameraServer.addServer("http://wpilibpi.local:1181/");
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();

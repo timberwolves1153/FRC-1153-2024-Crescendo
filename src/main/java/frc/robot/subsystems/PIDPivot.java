@@ -10,12 +10,17 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
+import frc.robot.lib.Interpolation.InterpolatingDouble;
+import frc.robot.lib.math.LauncherInterpolation;
+import frc.robot.subsystems.AprilTags.WeekZeroVision;
 
 public class PIDPivot extends PIDSubsystem{
     
     private CANSparkMax m_leftPivot, m_rightPivot;
     private DutyCycleEncoder pivotEncoder;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(119.5);;
+    private LauncherInterpolation interpolation;    
+    private WeekZeroVision vision;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(116);;
 
     public PIDPivot() {
         super(new PIDController(12, 0.01, 0.01));
@@ -23,7 +28,8 @@ public class PIDPivot extends PIDSubsystem{
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
         m_rightPivot = new CANSparkMax(52, MotorType.kBrushless);
-
+        vision = new WeekZeroVision();
+        
         pivotEncoder = new DutyCycleEncoder(0);
 
         configMotors();
@@ -115,6 +121,14 @@ public class PIDPivot extends PIDSubsystem{
         setSetpoint(newSetpoint);
         getController().reset();
         enable();
+    }
+
+    public void interpolateSetpoint() {
+       double interpolatedSetpoint = interpolation.pivotMap.getInterpolated(new InterpolatingDouble(vision.calculateRange())).value;
+       double newSetpoint = Math.toRadians(interpolatedSetpoint);
+       setSetpoint(newSetpoint);
+       getController().reset();
+       enable();
     }
 
     public void holdPosition() {

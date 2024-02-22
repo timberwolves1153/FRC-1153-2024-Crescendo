@@ -14,10 +14,12 @@ import frc.robot.subsystems.PIDPivot;
 //import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Swerve;
 import frc.robot.Auto.TestAuto;
+import frc.robot.commands.ConstantInterpolation;
 import frc.robot.commands.RotateAndX;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.lib.math.LauncherInterpolation;
 import frc.robot.lib.util.AxisButton;
 import frc.robot.subsystems.Collector;
 
@@ -57,7 +59,7 @@ public class RobotContainer {
     private final PIDPivot pidPivot = new PIDPivot();
     private final Mailbox mailbox = new Mailbox();
     private final Collector collector = new Collector();
-    //private final WeekZeroVision vision = new WeekZeroVision(s_Swerve);
+    private final WeekZeroVision vision = new WeekZeroVision();
 
     private final TestAuto testAuto = new TestAuto();
     private SendableChooser<Command> autoChooser;
@@ -72,9 +74,9 @@ public class RobotContainer {
     private final Joystick operator = new Joystick(1);
     private final Joystick atari = new Joystick(2);
     // The robot's subsystems and commands are defined here...
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kRightStick.value);
+    private final JoystickButton rotateWithTag = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton rotateWithTag = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -112,23 +114,29 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean(),
-                () -> rotateWithTag.getAsBoolean()
+                () -> rotateWithTag.getAsBoolean(),
+                vision
             )
         );
+
+        pidPivot.setDefaultCommand(
+            new ConstantInterpolation(
+                pidPivot, 
+                () -> opX.getAsBoolean()));
        
 
         NamedCommands.registerCommand("Run Launcher", new InstantCommand(() -> launcher.launchWithVolts()));
-        NamedCommands.registerCommand("Subwoofer", Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
         NamedCommands.registerCommand("Index", new InstantCommand(() -> mailbox.sendToLauncher()));
         NamedCommands.registerCommand("Stop Index", new InstantCommand(() -> mailbox.stop()));
         NamedCommands.registerCommand("Deploy Intake", Commands.runOnce(() -> collector.deployIntake(), collector));
         NamedCommands.registerCommand("Run Intake", new InstantCommand(() -> collector.intake()));
         NamedCommands.registerCommand("PivotHome", Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
-        NamedCommands.registerCommand("Podium", Commands.runOnce(() -> pidPivot.setSetpointDegrees(34.5), pidPivot));
+        NamedCommands.registerCommand("Subwoofer", Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
         NamedCommands.registerCommand("End Launcher", new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         NamedCommands.registerCommand("End Mailbox", new InstantCommand(() -> mailbox.stop()));
         NamedCommands.registerCommand("Retract Intake", Commands.runOnce(() -> collector.retractIntake(), collector));
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
+        NamedCommands.registerCommand("Pivot Mailbox", new InstantCommand(() -> pidPivot.interpolateSetpoint()));
         
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -150,14 +158,7 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
 
-        // driveA.whileTrue(s_Swerve.sysIdDynamic(Direction.kReverse));
-        // driveY.whileTrue(s_Swerve.sysIdDynamic(Direction.kForward));
-
-        // driveB.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kReverse));
-        // driveX.whileTrue(s_Swerve.sysIdQuasistatic(Direction.kForward));
-        
-        
-
+        // INTAKE
         opLeftBumper.onTrue(new InstantCommand(() -> collector.intake(), collector));
         opLeftBumper.onTrue(Commands.runOnce(() -> collector.deployIntake(), collector));
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
@@ -175,11 +176,9 @@ public class RobotContainer {
         start.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
         start.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
 
-        // opRightBumper.onTrue(new InstantCommand(() -> collector.outtake()));
-        // opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop()));
-       // opX.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
+        opRightStick.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
         
-
+        //PIVOTS
         povRight.onTrue(new InstantCommand(() -> collector.pivotUp(), collector));
         povRight.onFalse(new InstantCommand(() -> collector.pivotStop(), collector));
 
@@ -192,63 +191,22 @@ public class RobotContainer {
         povDown.onTrue(new InstantCommand(() -> pidPivot.pivotDown(), pidPivot));
         povDown.onFalse(new InstantCommand(() -> pidPivot.pivotStop(), pidPivot));
 
-      //  opX.whileTrue(new InstantCommand(() -> collector.resetIntakeEncoder(), collector));
-        opY.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(34.5), pidPivot));
-        opY.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
-
-        opY.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-        opY.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
-
-        opB.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(40), pidPivot));
-        opB.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
-
-        // opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-        // opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
-
+    
+        //LAUNCHER
         opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         
-       
-        opRightStick.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
-        opRightStick.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        //AMP
+        opB.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
 
-        opRightStick.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
-        opRightStick.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
-
-        //opRightBumper.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
-
-
-
-       // opY.onTrue(new InstantCommand(() -> elevator.moveUp()));
-        //opY.onFalse(new InstantCommand(() -> elevator.stop()));
-
-       // opA.onTrue(new InstantCommand(() -> elevator.moveDown()));
-       // opA.onFalse(new InstantCommand(() -> elevator.stop()));
-
-    //    opY.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(26.7), pidPivot));
-    //    opY.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
-    //    opY.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-    //    opY.onFalse(new InstantCommand(() -> launcher.stopLauncher()));
-
-       opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
-       opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
-    //    opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts(), launcher));
-    //    opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
-    //     atari1.whileTrue(pivot.quasistaticRoutine(Direction.kForward));
-    //    atari2.whileTrue(pivot.quasistaticRoutine(Direction.kReverse));
-
-    //    atari3.whileTrue(pivot.dynamicRoutine(Direction.kForward));
-    //    atari14.whileTrue(pivot.dynamicRoutine(Direction.kReverse));
-       //atari1.onFalse(Commands.runOnce(() -> pivot., null))
+        opB.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+        opB.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
     }
 
     public Joystick getDriveController(){
         return driver;
       }
-
-    //   public Launcher getLauncher() {
-    //     return launcher;
-    //   }
 
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
