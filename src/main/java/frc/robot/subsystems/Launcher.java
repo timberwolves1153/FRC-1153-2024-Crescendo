@@ -9,13 +9,15 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Launcher extends SubsystemBase {
     
     private TalonFX m_leftLauncher, m_rightLauncher;
     private VoltageOut leftOutput, rightOutput;
-    private VelocityVoltage m_leftRequest, m_rightRequest;
+    private final VelocityVoltage m_leftRequest = new VelocityVoltage(0.0, 0.0, false, 0.0, 0, false, false, false);
+    private final VelocityVoltage m_rightRequest =  new VelocityVoltage(0.0, 0.0, false, 0.0, 0, false, false, false);
     private Slot0Configs slot0Configs;
     private TalonFXConfiguration leftMotorConfigs, rightMotorConfig;
 
@@ -24,15 +26,16 @@ public class Launcher extends SubsystemBase {
         m_leftLauncher = new TalonFX(53);
         m_rightLauncher = new TalonFX(54);
 
-        leftMotorConfigs = new TalonFXConfiguration();
-        rightMotorConfig = new TalonFXConfiguration();
+       var leftMotorConfigs = new TalonFXConfiguration();
+        var rightMotorConfig = new TalonFXConfiguration();
+
         slot0Configs = new Slot0Configs();
         
         leftOutput = new VoltageOut(0);
         rightOutput = new VoltageOut(0);
         
-        m_leftRequest = new VelocityVoltage(0).withSlot(0);
-        m_rightRequest = new VelocityVoltage(0).withSlot(0);
+        
+        
         
         
         leftMotorConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
@@ -43,18 +46,17 @@ public class Launcher extends SubsystemBase {
         rightMotorConfig.CurrentLimits.SupplyCurrentLimit = 40;
         rightMotorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-        slot0Configs.kP = 0.01;
+        slot0Configs.kP = 0.05;
         slot0Configs.kI = 0;
         slot0Configs.kD = 0;
         slot0Configs.kS = 0; //tune
-        slot0Configs.kV = 0.12; //from CTRE docs + Windham
+        slot0Configs.kV = 0.113; //from CTRE docs + Windham
 
         m_leftLauncher.getConfigurator().apply(slot0Configs);
         m_leftLauncher.getConfigurator().apply(leftMotorConfigs);
         m_rightLauncher.getConfigurator().apply(slot0Configs);
         m_rightLauncher.getConfigurator().apply(rightMotorConfig);
-        
-    //     config();
+
         
     }
 
@@ -75,8 +77,8 @@ public class Launcher extends SubsystemBase {
     }
 
     public void launchWithVelocity() {
-        m_leftLauncher.setControl(m_leftRequest.withVelocity(4500));
-        m_rightLauncher.setControl(m_rightRequest.withVelocity(3200));
+        m_leftLauncher.setControl(m_leftRequest.withVelocity(40));
+        m_rightLauncher.setControl(m_rightRequest.withVelocity(30));
     }
 
     public void stop() {
@@ -85,8 +87,10 @@ public class Launcher extends SubsystemBase {
     }
 
 
-    public void config() {
+   @Override
+   public void periodic() {
 
-
-    }
+    SmartDashboard.putNumber("left roller V", m_leftLauncher.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("right roller V", m_rightLauncher.getVelocity().getValueAsDouble());
+   }
 }

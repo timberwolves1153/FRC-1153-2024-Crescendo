@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Deploy Intake"
+            "name": "Pivot Mailbox"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Intake"
+            "name": "Run Launcher"
           }
         },
         {
@@ -30,22 +30,27 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Center Sprint Three 1"
+            "name": "Index"
           }
         },
         {
-          "type": "parallel",
+          "type": "wait",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Center Sprint Three 2"
-                }
-              }
-            ]
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Deploy Intake"
           }
         },
         {
@@ -55,9 +60,45 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Center Sprint Three 1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Deploy Intake"
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Sprint Three 2"
           }
         },
         {
@@ -82,6 +123,42 @@
           "type": "path",
           "data": {
             "pathName": "Center Sprint Three 4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
           }
         },
         {

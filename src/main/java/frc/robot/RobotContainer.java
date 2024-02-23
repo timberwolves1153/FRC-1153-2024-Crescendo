@@ -94,7 +94,8 @@ public class RobotContainer {
     private final POVButton povDown = new POVButton(operator, 180);
     private final POVButton povRight = new POVButton(operator, 90);
     private final POVButton povLeft = new POVButton(operator, 270);
-    private final JoystickButton start = new JoystickButton(operator, XboxController.Button.kStart.value);
+    private final JoystickButton opStart = new JoystickButton(operator, XboxController.Button.kStart.value);
+    private final JoystickButton opSelect = new JoystickButton(operator, XboxController.Button.kBack.value);
     private final JoystickButton opLeftBumper = new JoystickButton(operator, XboxController.Button.kLeftBumper.value);
     private final JoystickButton opRightBumper = new JoystickButton(operator, XboxController.Button.kRightBumper.value);
 
@@ -122,7 +123,11 @@ public class RobotContainer {
         pidPivot.setDefaultCommand(
             new ConstantInterpolation(
                 pidPivot, 
-                () -> opX.getAsBoolean()));
+                () -> opX.getAsBoolean(),
+                () -> opB.getAsBoolean(),
+                () -> povUp.getAsBoolean(),
+                () -> povDown.getAsBoolean(),
+                () -> opRightStick.getAsBoolean()));
        
 
         NamedCommands.registerCommand("Run Launcher", new InstantCommand(() -> launcher.launchWithVolts()));
@@ -130,7 +135,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Stop Index", new InstantCommand(() -> mailbox.stop()));
         NamedCommands.registerCommand("Deploy Intake", Commands.runOnce(() -> collector.deployIntake(), collector));
         NamedCommands.registerCommand("Run Intake", new InstantCommand(() -> collector.intake()));
-        NamedCommands.registerCommand("PivotHome", Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
+        NamedCommands.registerCommand("PivotHome", Commands.runOnce(() -> pidPivot.setSetpointDegrees(20), pidPivot));
         NamedCommands.registerCommand("Subwoofer", Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
         NamedCommands.registerCommand("End Launcher", new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         NamedCommands.registerCommand("End Mailbox", new InstantCommand(() -> mailbox.stop()));
@@ -173,10 +178,10 @@ public class RobotContainer {
         opLeftStick.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
         opLeftStick.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
-        start.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
-        start.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
+        opStart.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
+        opStart.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
 
-        opRightStick.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
+        opSelect.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
         
         //PIVOTS
         povRight.onTrue(new InstantCommand(() -> collector.pivotUp(), collector));
@@ -185,23 +190,19 @@ public class RobotContainer {
         povLeft.onTrue(new InstantCommand(() -> collector.pivotDown(), collector));
         povLeft.onFalse(new InstantCommand(() -> collector.pivotStop(), collector));
         
-        povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));
-        povUp.onFalse(new InstantCommand(() -> pidPivot.pivotStop(), pidPivot));
-
-        povDown.onTrue(new InstantCommand(() -> pidPivot.pivotDown(), pidPivot));
-        povDown.onFalse(new InstantCommand(() -> pidPivot.pivotStop(), pidPivot));
 
     
         //LAUNCHER
         opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        // back up if interpolation is wrong/messed up
+        opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
+        opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         
         //AMP
         opB.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
 
-        opB.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
-        opB.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(15), pidPivot));
     }
 
     public Joystick getDriveController(){

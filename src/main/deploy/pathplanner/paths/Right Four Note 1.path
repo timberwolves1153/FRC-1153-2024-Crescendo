@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.5050384003901907,
-        "y": 4.490555305896938
+        "x": 2.595897258302831,
+        "y": 4.309393131850397
       },
       "prevControl": {
-        "x": 1.8618599060559942,
-        "y": 5.250675344655534
+        "x": 2.1084093474600265,
+        "y": 4.650634669440361
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -55.0,
+    "rotation": -30.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Right Four Note Paths",
+  "folder": "NonAmp Four Note Paths",
   "previewStartingState": {
     "rotation": -60.0,
     "velocity": 0

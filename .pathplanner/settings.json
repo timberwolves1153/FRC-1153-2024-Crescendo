@@ -3,10 +3,12 @@
   "robotLength": 0.71,
   "holonomicMode": true,
   "pathFolders": [
+    "Center Three Paths",
     "Center Three Sprint Paths",
+    "Amp Three Paths",
     "One Note Path",
-    "Right Four Note Paths",
-    "Right Three Note Paths",
+    "NonAmp Four Note Paths",
+    "NonAmp Three Note Paths",
     "Two Note Paths"
   ],
   "autoFolders": [],

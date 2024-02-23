@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer"
+            "name": "Pivot Mailbox"
           }
         },
         {
@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -48,9 +48,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "PivotHome"
+            "waitTime": 0.25
           }
         },
         {
@@ -73,12 +73,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Two Note Center"
@@ -87,19 +81,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.75
+            "waitTime": 0.5
           }
         },
         {
@@ -111,7 +93,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 0.25
           }
         },
         {
@@ -139,7 +121,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "End Mailbox"
+                  "name": "Stop Index"
                 }
               },
               {

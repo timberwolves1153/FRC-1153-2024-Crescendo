@@ -20,10 +20,10 @@ public class PIDPivot extends PIDSubsystem{
     private DutyCycleEncoder pivotEncoder;
     private LauncherInterpolation interpolation;    
     private WeekZeroVision vision;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(116);;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(107);;
 
     public PIDPivot() {
-        super(new PIDController(12, 0.01, 0.01));
+        super(new PIDController(20, 0.01, 0.001));
 
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
@@ -59,12 +59,12 @@ public class PIDPivot extends PIDSubsystem{
 
     public void pivotUp() {
         disable();
-        m_leftPivot.setVoltage(3);
+        m_leftPivot.setVoltage(2);
     }
 
     public void pivotDown() {
         disable();
-        m_leftPivot.setVoltage(-3);
+        m_leftPivot.setVoltage(-2);
     }
 
     public void pivotStop() {
@@ -78,7 +78,8 @@ public class PIDPivot extends PIDSubsystem{
     @Override
     protected void useOutput(double output, double setpoint) {
         // TODO Auto-generated method stub
-        PIDmovePivot(output);
+        
+        PIDmovePivot(MathUtil.clamp(output, -8, 12));
     }
 
     public void PIDmovePivot(double volts) {

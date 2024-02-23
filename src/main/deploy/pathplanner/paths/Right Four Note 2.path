@@ -65,9 +65,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Right Four Note Paths",
+  "folder": "NonAmp Four Note Paths",
   "previewStartingState": {
-    "rotation": -55.0,
+    "rotation": -30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

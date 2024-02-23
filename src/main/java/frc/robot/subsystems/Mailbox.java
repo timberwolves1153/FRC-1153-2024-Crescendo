@@ -37,7 +37,7 @@ public class Mailbox extends SubsystemBase {
         indexMotor.setIdleMode(IdleMode.kBrake);
         indexMotor.clearFaults();
         indexMotor.setInverted(false);
-        indexMotor.setSmartCurrentLimit(30);
+        indexMotor.setSmartCurrentLimit(40);
         indexMotor.burnFlash();
     }
 
