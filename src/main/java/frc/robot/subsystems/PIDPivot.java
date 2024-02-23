@@ -23,7 +23,7 @@ public class PIDPivot extends PIDSubsystem{
     private final double UNIT_CIRCLE_OFFSET = Math.toRadians(107);;
 
     public PIDPivot() {
-        super(new PIDController(20, 0.01, 0.001));
+        super(new PIDController(20, 0.01, 0.01));
 
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);

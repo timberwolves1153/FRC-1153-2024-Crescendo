@@ -38,7 +38,6 @@ package frc.robot.subsystems.AprilTags;
         final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(10.2037);
     
         private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-    ;
     
         private PIDController tranlationPID;
         private PIDController rotationPID;
@@ -106,12 +105,6 @@ package frc.robot.subsystems.AprilTags;
             }
            
            // SmartDashboard.putNumber("target ID", targetID);
-    
-            
-    
-    
-    
-            
     
         }
     }

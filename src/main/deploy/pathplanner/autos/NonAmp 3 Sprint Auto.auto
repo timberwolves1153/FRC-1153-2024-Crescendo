@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6807503073695607,
-      "y": 6.6188914144210065
+      "x": 0.6556953731484674,
+      "y": 4.484888779753807
     },
-    "rotation": 0.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -39,12 +39,6 @@
           "type": "wait",
           "data": {
             "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
           }
         },
         {
@@ -66,27 +60,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.2
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Three Note Center 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
+            "pathName": "NonAmp Three Sprint 1"
           }
         },
         {
@@ -104,37 +80,13 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Stop Index"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Three Note Center 2 ALT"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
+            "pathName": "NonAmp Three Sprint 2"
           }
         },
         {

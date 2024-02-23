@@ -5,7 +5,7 @@
       "x": 0.6807503073695607,
       "y": 6.6188914144210065
     },
-    "rotation": 0.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -74,7 +74,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Three Note Center 1"
+            "pathName": "Amp Four Sprint 1"
           }
         },
         {
@@ -104,7 +104,43 @@
         {
           "type": "named",
           "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "PivotHome"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp Four Sprint 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.6
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {
@@ -114,15 +150,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Three Note Center 2 ALT"
+            "name": "PivotHome"
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.6
+            "pathName": "Amp Four Sprint 3"
           }
         },
         {
@@ -182,6 +218,6 @@
       ]
     }
   },
-  "folder": "3 Notes",
+  "folder": "4 Notes",
   "choreoAuto": false
 }

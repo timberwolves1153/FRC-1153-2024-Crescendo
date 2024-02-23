@@ -3,32 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.25,
-        "y": 5.6
+        "x": 0.6807503073695607,
+        "y": 6.6188914144210065
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9174893874713002,
-        "y": 5.6
+        "x": 1.721530052746715,
+        "y": 6.385008325572207
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.7506156436814293,
-        "y": 5.589805823486292
+        "x": 2.61028579037215,
+        "y": 6.922939429924444
       },
       "prevControl": {
-        "x": 2.352842456954309,
-        "y": 5.589805823486292
+        "x": 2.329626083753592,
+        "y": 6.653973877748326
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": 20.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,13 +45,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 30.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Two Note Paths",
+  "folder": "Amp Four Sprint Paths",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

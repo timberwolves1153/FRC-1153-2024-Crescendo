@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6807503073695607,
-      "y": 6.6188914144210065
+      "x": 1.25,
+      "y": 5.55
     },
     "rotation": 0.0
   },
@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -44,19 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Run Intake"
           }
         },
         {
@@ -66,75 +54,15 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.2
+            "name": "Run Intake"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Three Note Center 1"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Three Note Center 2 ALT"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
+            "pathName": "Center Four 1"
           }
         },
         {
@@ -153,6 +81,60 @@
           "type": "named",
           "data": {
             "name": "Stop Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Four 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Four 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Intake"
           }
         },
         {
@@ -164,24 +146,18 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "End Launcher"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "End Intake"
+            "name": "PivotHome"
           }
         }
       ]
     }
   },
-  "folder": "3 Notes",
+  "folder": "4 Notes",
   "choreoAuto": false
 }

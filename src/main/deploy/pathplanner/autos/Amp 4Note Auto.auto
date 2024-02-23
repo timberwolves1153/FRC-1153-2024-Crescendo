@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2420697206066778,
-      "y": 5.589805823486292
+      "x": 1.25,
+      "y": 5.55
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -50,19 +50,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Run Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Deploy Intake"
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Run Intake"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "Right Three Note 1"
+            "pathName": "Amp Four 1"
           }
         },
         {
@@ -86,7 +86,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Right Three Note 2"
+            "pathName": "Amp Four 2"
           }
         },
         {
@@ -105,6 +105,36 @@
           "type": "named",
           "data": {
             "name": "Stop Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Amp Four 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Intake"
           }
         },
         {
@@ -116,24 +146,18 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "End Launcher"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "End Intake"
+            "name": "PivotHome"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "4 Notes",
   "choreoAuto": false
 }

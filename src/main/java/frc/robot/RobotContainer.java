@@ -10,6 +10,7 @@ import frc.robot.subsystems.AprilTags.WeekZeroVision;
 import frc.robot.subsystems.AprilTags.Vision.Hardware;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Mailbox;
+import frc.robot.subsystems.ObjectDetecting;
 import frc.robot.subsystems.PIDPivot;
 //import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Swerve;
@@ -60,6 +61,7 @@ public class RobotContainer {
     private final Mailbox mailbox = new Mailbox();
     private final Collector collector = new Collector();
     private final WeekZeroVision vision = new WeekZeroVision();
+    private final ObjectDetecting objectDetecting = new ObjectDetecting();
 
     private final TestAuto testAuto = new TestAuto();
     private SendableChooser<Command> autoChooser;
@@ -116,6 +118,8 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> robotCentric.getAsBoolean(),
                 () -> rotateWithTag.getAsBoolean(),
+                () -> driveA.getAsBoolean(),
+                objectDetecting,
                 vision
             )
         );
