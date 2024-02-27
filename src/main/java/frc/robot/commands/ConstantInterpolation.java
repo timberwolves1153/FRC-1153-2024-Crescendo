@@ -38,13 +38,13 @@ public class ConstantInterpolation extends Command{
     } else if (togglerOverride.getAsBoolean()) {
         pidPivot.holdPosition();
     } else {
-        pidPivot.setSetpointDegrees(20);
+        pidPivot.setSetpointDegrees(22);
     }
 }
 
 @Override
 public void end(boolean interrupted) {
-    pidPivot.setSetpointDegrees(20);
+    pidPivot.setSetpointDegrees(22);
 }
 
 

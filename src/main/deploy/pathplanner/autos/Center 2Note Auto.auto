@@ -20,7 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Close Launcher"
           }
         },
         {
@@ -48,12 +48,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -73,9 +67,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Two Note Center"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {

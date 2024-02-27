@@ -12,8 +12,8 @@ public class Winch extends SubsystemBase{
 
 
     public Winch() {
-        leftMotor = new CANSparkMax(61, MotorType.kBrushless);
-        rightMotor = new CANSparkMax(60, MotorType.kBrushless);
+        leftMotor = new CANSparkMax(60, MotorType.kBrushless);
+        rightMotor = new CANSparkMax(61, MotorType.kBrushless);
         
 
         leftMotor.restoreFactoryDefaults();
@@ -28,7 +28,7 @@ public class Winch extends SubsystemBase{
 
         // leftMotor.setInverted(false);
         
-        rightMotor.follow(leftMotor, true);
+        //rightMotor.follow(leftMotor, true);
          
         
         
@@ -36,21 +36,21 @@ public class Winch extends SubsystemBase{
         rightMotor.burnFlash();
     }
 
-    public void moveUp() {
+    public void winchUp() {
         // sets both left and right motors bc follow()
-        leftMotor.setVoltage(-6);
-        //rightMotor.setVoltage(6);
+        leftMotor.setVoltage(-8);
+        rightMotor.setVoltage(8);
     }
 
-    public void moveDown() {
+    public void winchDown() {
         // sets both left and right motors bc follow()
-        leftMotor.setVoltage(6);
-        //rightMotor.setVoltage(-6);
+        leftMotor.setVoltage(8);
+        rightMotor.setVoltage(-8);
     }
 
     public void stop() {
         leftMotor.setVoltage(0);
-        //rightMotor.setVoltage(0);
+        rightMotor.setVoltage(0);
     }
 
 }

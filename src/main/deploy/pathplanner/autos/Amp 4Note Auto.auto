@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.25,
-      "y": 5.55
+      "x": 0.6807503073695607,
+      "y": 6.6188914144210065
     },
     "rotation": 60.0
   },
@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
+            "name": "Subwoofer"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Subwoofer No Spin"
           }
         },
         {
@@ -39,6 +39,12 @@
           "type": "wait",
           "data": {
             "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
           }
         },
         {
@@ -68,6 +74,18 @@
         {
           "type": "named",
           "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Index"
           }
         },
@@ -80,7 +98,19 @@
         {
           "type": "named",
           "data": {
+            "name": "Close Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
           }
         },
         {
@@ -92,13 +122,25 @@
         {
           "type": "named",
           "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Index"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -108,9 +150,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Amp Four 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {

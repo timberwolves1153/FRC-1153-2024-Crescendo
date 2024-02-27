@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
+            "name": "Subwoofer"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Close Launcher"
           }
         },
         {
@@ -76,6 +76,18 @@
           "type": "path",
           "data": {
             "pathName": "Two Note Left"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {

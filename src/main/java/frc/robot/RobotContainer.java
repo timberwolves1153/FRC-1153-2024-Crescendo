@@ -14,8 +14,13 @@ import frc.robot.subsystems.ObjectDetecting;
 import frc.robot.subsystems.PIDPivot;
 //import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Winch;
 import frc.robot.Auto.TestAuto;
 import frc.robot.commands.ConstantInterpolation;
+import frc.robot.commands.InterpolateToSpeaker;
+import frc.robot.commands.MailboxCheck;
+import frc.robot.commands.MailboxClimbingPosition;
+import frc.robot.commands.PivotToAmp;
 import frc.robot.commands.RotateAndX;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
@@ -54,7 +59,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 public class RobotContainer {
 
     private final Swerve s_Swerve = new Swerve();
-   // private final Winch elevator = new Winch();
+    private final Winch winch = new Winch();
     private final Launcher launcher = new Launcher();
     //private final Pivot pivot = new Pivot();
     private final PIDPivot pidPivot = new PIDPivot();
@@ -67,6 +72,10 @@ public class RobotContainer {
     private SendableChooser<Command> autoChooser;
 
     private final RotateAndX rotateAndX = new RotateAndX(s_Swerve);
+    private final InterpolateToSpeaker interpolateToSpeaker = new InterpolateToSpeaker(pidPivot);
+    private final PivotToAmp pivotToAmp = new PivotToAmp(pidPivot);
+    private final MailboxClimbingPosition PivotToClimb = new MailboxClimbingPosition(pidPivot);
+    private final MailboxCheck mailboxCheck = new MailboxCheck(collector, mailbox);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -77,7 +86,7 @@ public class RobotContainer {
     private final Joystick atari = new Joystick(2);
     // The robot's subsystems and commands are defined here...
     private final JoystickButton rotateWithTag = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    //private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
@@ -116,7 +125,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
-                () -> robotCentric.getAsBoolean(),
+                () -> false,
                 () -> rotateWithTag.getAsBoolean(),
                 () -> driveA.getAsBoolean(),
                 objectDetecting,
@@ -124,17 +133,18 @@ public class RobotContainer {
             )
         );
 
-        pidPivot.setDefaultCommand(
-            new ConstantInterpolation(
-                pidPivot, 
-                () -> opX.getAsBoolean(),
-                () -> opB.getAsBoolean(),
-                () -> povUp.getAsBoolean(),
-                () -> povDown.getAsBoolean(),
-                () -> opRightStick.getAsBoolean()));
+        // pidPivot.setDefaultCommand(
+        //     new ConstantInterpolation(
+        //         pidPivot, 
+        //         () -> opX.getAsBoolean(),
+        //         () -> opB.getAsBoolean(),
+        //         () -> povUp.getAsBoolean(),
+        //         () -> povDown.getAsBoolean(),
+        //         () -> opRightStick.getAsBoolean()));
        
 
         NamedCommands.registerCommand("Run Launcher", new InstantCommand(() -> launcher.launchWithVolts()));
+        NamedCommands.registerCommand("Subwoofer No Spin", new InstantCommand(() -> launcher.subwooferNoSpin()));
         NamedCommands.registerCommand("Index", new InstantCommand(() -> mailbox.sendToLauncher()));
         NamedCommands.registerCommand("Stop Index", new InstantCommand(() -> mailbox.stop()));
         NamedCommands.registerCommand("Deploy Intake", Commands.runOnce(() -> collector.deployIntake(), collector));
@@ -146,7 +156,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Retract Intake", Commands.runOnce(() -> collector.retractIntake(), collector));
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
         NamedCommands.registerCommand("Pivot Mailbox", new InstantCommand(() -> pidPivot.interpolateSetpoint()));
-        
+        NamedCommands.registerCommand("Close Launcher", new InstantCommand(() -> launcher.closeLaunchSpeed()));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autoChooser);
@@ -172,7 +182,9 @@ public class RobotContainer {
         opLeftBumper.onTrue(Commands.runOnce(() -> collector.deployIntake(), collector));
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opLeftBumper.onFalse(Commands.runOnce(() -> collector.retractIntake(), collector));
-        
+        opLeftBumper.whileTrue(mailboxCheck);
+
+                
         opRightBumper.onTrue(new InstantCommand(() -> collector.outtake(), collector));
         opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
@@ -199,13 +211,35 @@ public class RobotContainer {
         //LAUNCHER
         opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
-        // back up if interpolation is wrong/messed up
-        opA.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opX.whileTrue(interpolateToSpeaker);
+        opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         
-        //AMP
-        opB.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        // back up if interpolation is wrong/messed up
+        opB.onTrue(new InstantCommand(() -> launcher.closeLaunchSpeed()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        // mailbox pivot override
+        povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));
+        povUp.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
+        povDown.onTrue(new InstantCommand(() -> pidPivot.pivotDown(), pidPivot));
+        povDown.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
+
+        //AMP
+        opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opA.whileTrue(pivotToAmp);
+        opA.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+
+
+        // CLIMB
+
+        // opY.whileTrue(PivotToClimb);
+        // opY.whileFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
+
+        driveLeftBumper.onTrue(new InstantCommand(() -> winch.winchUp(), winch));
+        driveLeftBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
+
+        driveRightBumper.onTrue(new InstantCommand(() -> winch.winchDown(), winch));
+        driveRightBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
 
     }
 

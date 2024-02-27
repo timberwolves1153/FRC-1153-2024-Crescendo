@@ -40,13 +40,13 @@ public class Launcher extends SubsystemBase {
         
         leftMotorConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         leftMotorConfigs.CurrentLimits.SupplyCurrentLimit = 40;
-        leftMotorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        leftMotorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
         rightMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         rightMotorConfig.CurrentLimits.SupplyCurrentLimit = 40;
-        rightMotorConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        rightMotorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
-        slot0Configs.kP = 0.05;
+        slot0Configs.kP = 0.01;
         slot0Configs.kI = 0;
         slot0Configs.kD = 0;
         slot0Configs.kS = 0; //tune
@@ -62,13 +62,13 @@ public class Launcher extends SubsystemBase {
 
 
     public void launchWithVolts() {
-        m_leftLauncher.setControl(new VoltageOut(12));
-        m_rightLauncher.setControl(new VoltageOut(7.5));
+        m_leftLauncher.setControl(new VoltageOut(10));
+        m_rightLauncher.setControl(new VoltageOut(6.25));
     }
 
     public void slowLaunchWithVolts() {
         m_leftLauncher.setControl(new VoltageOut(2.5));
-        m_rightLauncher.setControl(new VoltageOut(2.5));
+        m_rightLauncher.setControl(new VoltageOut(2));
     }
 
     public void stopLaunchWithVolts() {
@@ -76,14 +76,30 @@ public class Launcher extends SubsystemBase {
         m_rightLauncher.setControl(rightOutput.withOutput(0));
     }
 
+    public void closeLaunchSpeed() {
+        m_leftLauncher.setControl(leftOutput.withOutput(7));
+        m_rightLauncher.setControl(rightOutput.withOutput(4.375));
+    }
+
+    public void subwooferNoSpin() {
+        m_leftLauncher.setControl(leftOutput.withOutput(7));
+        m_rightLauncher.setControl(rightOutput.withOutput(7));
+    }
+
+
+    public void idleLaunchWithVolts() {
+        m_leftLauncher.setControl(leftOutput.withOutput(2.5));
+        m_rightLauncher.setControl(rightOutput.withOutput(2.5));
+    }
+
     public void launchWithVelocity() {
-        m_leftLauncher.setControl(m_leftRequest.withVelocity(40));
-        m_rightLauncher.setControl(m_rightRequest.withVelocity(30));
+        m_leftLauncher.setControl(m_leftRequest.withVelocity(20).withFeedForward(20));
+        m_rightLauncher.setControl(m_rightRequest.withVelocity(10).withFeedForward(20));
     }
 
     public void stop() {
-        m_leftLauncher.setControl(m_leftRequest.withVelocity(0));
-        m_rightLauncher.setControl(m_rightRequest.withVelocity(0));
+        m_leftLauncher.setControl(m_leftRequest.withVelocity(0).withFeedForward(0));
+        m_rightLauncher.setControl(m_rightRequest.withVelocity(0).withFeedForward(0));
     }
 
 

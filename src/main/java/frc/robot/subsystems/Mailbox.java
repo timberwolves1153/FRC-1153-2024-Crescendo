@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -12,20 +13,28 @@ public class Mailbox extends SubsystemBase {
     private CANSparkMax indexMotor;
     private double mailboxVolts;
 
+    public DigitalInput bannerSensor;
+
     public Mailbox() {
         indexMotor = new CANSparkMax(55, MotorType.kBrushless);
         config();
 
         mailboxVolts = 0;
+
+        bannerSensor = new DigitalInput(1);
        // SmartDashboard.putNumber("Mailbox Volts", mailboxVolts);
     }
 
     public void sendToLauncher() {
-        indexMotor.setVoltage(12);
+        indexMotor.setVoltage(-12);
     }
 
     public void sendToIntake() {
-        indexMotor.setVoltage(-12);
+        indexMotor.setVoltage(12);
+    }
+
+    public void intake() {
+        indexMotor.setVoltage(-4);
     }
 
     public void stop() {
@@ -41,6 +50,10 @@ public class Mailbox extends SubsystemBase {
         indexMotor.burnFlash();
     }
 
+    public boolean getBannerSensor() {
+        return !bannerSensor.get();
+      }
+
     @Override
     public void periodic() {
 
@@ -50,6 +63,8 @@ public class Mailbox extends SubsystemBase {
         // if((mailboxVolts != mailboxV)) { 
         //     mailboxVolts = mailboxV;
         //  }
+
+        SmartDashboard.putBoolean("Banner Sensor", getBannerSensor());
 
         
     }
