@@ -14,9 +14,9 @@ public class TestAuto extends SequentialCommandGroup{
     private Collector collector;
     private PathPlannerPath path1;
     public TestAuto() {
-        NamedCommands.registerCommand("intake", new InstantCommand(() -> collector.intake()));
+        //NamedCommands.registerCommand("intake", new InstantCommand(() -> collector.intake()));
 
-        path1 = PathPlannerPath.fromPathFile("Three Note 1");
+       // path1 = PathPlannerPath.fromPathFile("Three Note 1");
         
 
         addCommands(
