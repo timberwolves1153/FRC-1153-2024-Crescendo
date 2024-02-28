@@ -67,8 +67,8 @@ public class Launcher extends SubsystemBase {
     }
 
     public void slowLaunchWithVolts() {
-        m_leftLauncher.setControl(new VoltageOut(2.5));
-        m_rightLauncher.setControl(new VoltageOut(2));
+        m_leftLauncher.setControl(new VoltageOut(6));
+        m_rightLauncher.setControl(new VoltageOut(6));
     }
 
     public void stopLaunchWithVolts() {
@@ -92,6 +92,16 @@ public class Launcher extends SubsystemBase {
         m_rightLauncher.setControl(rightOutput.withOutput(2.5));
     }
 
+    public double getLeftLauncherAppliedVolts() {
+       return m_leftLauncher.getMotorVoltage().getValueAsDouble();
+       
+    }
+
+    public double getRightLauncherAppliedVolts() {
+       
+       return m_rightLauncher.getMotorVoltage().getValueAsDouble();
+    }
+
     public void launchWithVelocity() {
         m_leftLauncher.setControl(m_leftRequest.withVelocity(20).withFeedForward(20));
         m_rightLauncher.setControl(m_rightRequest.withVelocity(10).withFeedForward(20));
@@ -106,7 +116,7 @@ public class Launcher extends SubsystemBase {
    @Override
    public void periodic() {
 
-    SmartDashboard.putNumber("left roller V", m_leftLauncher.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("right roller V", m_rightLauncher.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("left roller V", getLeftLauncherAppliedVolts());
+    SmartDashboard.putNumber("right roller V", getRightLauncherAppliedVolts());
    }
 }

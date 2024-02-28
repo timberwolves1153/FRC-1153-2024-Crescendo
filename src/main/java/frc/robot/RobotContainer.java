@@ -22,6 +22,7 @@ import frc.robot.commands.MailboxCheck;
 import frc.robot.commands.MailboxClimbingPosition;
 import frc.robot.commands.PivotToAmp;
 import frc.robot.commands.RotateAndX;
+import frc.robot.commands.ShootWhenReady;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
@@ -76,6 +77,7 @@ public class RobotContainer {
     private final PivotToAmp pivotToAmp = new PivotToAmp(pidPivot);
     private final MailboxClimbingPosition PivotToClimb = new MailboxClimbingPosition(pidPivot);
     private final MailboxCheck mailboxCheck = new MailboxCheck(collector, mailbox);
+    private final ShootWhenReady shootWhenReady = new ShootWhenReady();
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -212,6 +214,8 @@ public class RobotContainer {
         opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         opX.whileTrue(interpolateToSpeaker);
+        opX.whileTrue(shootWhenReady);
+        opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
         opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         
         // back up if interpolation is wrong/messed up
