@@ -22,11 +22,11 @@ public class Mailbox extends SubsystemBase {
         mailboxVolts = 0;
 
         bannerSensor = new DigitalInput(1);
-       // SmartDashboard.putNumber("Mailbox Volts", mailboxVolts);
+        SmartDashboard.putNumber("Mailbox Volts", mailboxVolts);
     }
 
     public void sendToLauncher() {
-        indexMotor.setVoltage(-12);
+        indexMotor.setVoltage(-mailboxVolts);
     }
 
     public void sendToIntake() {
@@ -57,12 +57,12 @@ public class Mailbox extends SubsystemBase {
     @Override
     public void periodic() {
 
-        //  double mailboxV = SmartDashboard.getNumber("Mailbox Volts", mailboxVolts);
-        // mailboxVolts = mailboxV;
+         double mailboxV = SmartDashboard.getNumber("Mailbox Volts", mailboxVolts);
+        mailboxVolts = mailboxV;
 
-        // if((mailboxVolts != mailboxV)) { 
-        //     mailboxVolts = mailboxV;
-        //  }
+        if((mailboxVolts != mailboxV)) { 
+            mailboxVolts = mailboxV;
+         }
 
         SmartDashboard.putBoolean("Banner Sensor", getBannerSensor());
 

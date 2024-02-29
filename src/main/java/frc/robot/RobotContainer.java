@@ -66,7 +66,7 @@ public class RobotContainer {
     private final Mailbox mailbox = new Mailbox();
     private final Collector collector = new Collector();
     private final WeekZeroVision vision = new WeekZeroVision();
-    private final ObjectDetecting objectDetecting = new ObjectDetecting();
+   // private final ObjectDetecting objectDetecting = new ObjectDetecting();
 
     private final TestAuto testAuto = new TestAuto();
     private SendableChooser<Command> autoChooser;
@@ -128,7 +128,8 @@ public class RobotContainer {
                 () -> false,
                 () -> rotateWithTag.getAsBoolean(),
                 () -> driveA.getAsBoolean(),
-                objectDetecting,
+                () -> driveA.getAsBoolean(),
+                
                 vision
             )
         );
@@ -176,6 +177,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
+        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.resetOdometry(s_Swerve.getPose())));
 
         // INTAKE
         opLeftBumper.onTrue(new InstantCommand(() -> collector.intake(), collector));
@@ -183,6 +185,8 @@ public class RobotContainer {
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opLeftBumper.onFalse(Commands.runOnce(() -> collector.retractIntake(), collector));
         opLeftBumper.whileTrue(mailboxCheck);
+        // opLeftBumper.onTrue(new InstantCommand(() -> mailbox.sendToLauncher(), mailbox));
+        // opLeftBumper.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
 
                 
         opRightBumper.onTrue(new InstantCommand(() -> collector.outtake(), collector));
@@ -215,7 +219,7 @@ public class RobotContainer {
         opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         
         // back up if interpolation is wrong/messed up
-        opB.onTrue(new InstantCommand(() -> launcher.closeLaunchSpeed()));
+        opB.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));

@@ -4,6 +4,7 @@ package frc.robot;
 //import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -43,6 +44,22 @@ public final class Constants {
 
         public static final Resolution INTAKECAM_RESOLUTION = Resolution.RES_1280_720;
         public static final Rotation2d INTAKECAM_FOV = Rotation2d.fromDegrees(75);
+    }
+
+    public static final class FieldConstants {
+        public static final double FIELD_LENGTH = 16.5417;
+    public static final double FIELD_WIDTH = 8.0136;
+
+    public static final double NOTE_VELOCITY = 10.0;
+
+    public static final Translation2d BLUE_SPEAKER = new Translation2d(0.0241, 5.547868);
+    public static final Translation2d RED_SPEAKER = new Translation2d(FIELD_LENGTH - BLUE_SPEAKER.getX(), BLUE_SPEAKER.getY());
+    public static final Translation2d STAGE = new Translation2d(4.981067, 4.105783);
+
+    public static final double SPEAKER_HEIGHT = 2.08;
+    public static final Pose3d BLUE_SPEAKER_3D = new Pose3d(BLUE_SPEAKER.getX(), BLUE_SPEAKER.getY(), SPEAKER_HEIGHT, new Rotation3d());
+    public static final Pose3d RED_SPEAKER_3D = new Pose3d(RED_SPEAKER.getX(), RED_SPEAKER.getY(), SPEAKER_HEIGHT, new Rotation3d());
+
     }
 
 

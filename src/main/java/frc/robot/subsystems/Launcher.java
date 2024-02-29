@@ -20,6 +20,7 @@ public class Launcher extends SubsystemBase {
     private final VelocityVoltage m_rightRequest =  new VelocityVoltage(0.0, 0.0, false, 0.0, 0, false, false, false);
     private Slot0Configs slot0Configs;
     private TalonFXConfiguration leftMotorConfigs, rightMotorConfig;
+    private double launcherVolts;
 
     public Launcher() {
 
@@ -33,6 +34,9 @@ public class Launcher extends SubsystemBase {
         
         leftOutput = new VoltageOut(0);
         rightOutput = new VoltageOut(0);
+
+        launcherVolts = 0;
+        SmartDashboard.putNumber("Launcher Volts", launcherVolts);
         
         
         
@@ -67,8 +71,8 @@ public class Launcher extends SubsystemBase {
     }
 
     public void slowLaunchWithVolts() {
-        m_leftLauncher.setControl(new VoltageOut(2.5));
-        m_rightLauncher.setControl(new VoltageOut(2));
+        m_leftLauncher.setControl(new VoltageOut(launcherVolts));
+        m_rightLauncher.setControl(new VoltageOut(launcherVolts));
     }
 
     public void stopLaunchWithVolts() {
@@ -106,7 +110,13 @@ public class Launcher extends SubsystemBase {
    @Override
    public void periodic() {
 
-    SmartDashboard.putNumber("left roller V", m_leftLauncher.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("right roller V", m_rightLauncher.getVelocity().getValueAsDouble());
+    double launcherV = SmartDashboard.getNumber("Launcher Volts", launcherVolts);
+
+        if((launcherVolts != launcherV)) { 
+            launcherVolts = launcherV;
+         }
+
+    SmartDashboard.putNumber("left roller Vel", m_leftLauncher.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("right roller Vel", m_rightLauncher.getVelocity().getValueAsDouble());
    }
 }

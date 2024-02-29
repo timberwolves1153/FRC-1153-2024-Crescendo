@@ -16,6 +16,6 @@ public class PivotToAmp extends Command{
 
     @Override
     public void execute() {
-         pidPivot.setSetpointDegrees(49.7);
+         pidPivot.setSetpointDegrees(42);
     }
 }

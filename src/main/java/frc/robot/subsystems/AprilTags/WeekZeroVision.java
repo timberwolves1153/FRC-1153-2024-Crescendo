@@ -23,39 +23,37 @@ package frc.robot.subsystems.AprilTags;
     
     public class WeekZeroVision extends SubsystemBase{
         
-        private PhotonCamera cam;
+        public final PhotonCamera cam = new PhotonCamera("launcherCam");
         
         private PhotonTrackedTarget target;
     
     
         final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(23.3);
         final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
-        // Angle between horizontal and the camera.
-       // final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(camResult.getBestTarget().getPitch());
-    
-        // How far from the target we want to be
         final double GOAL_RANGE_METERS = Units.feetToMeters(3);
         final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(10.2037);
+        // Angle between horizontal and the camera.
+       // final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(camResult.getBestTarget().getPitch());
+        public final Transform3d cameraLocation = new Transform3d(new Translation3d(Units.inchesToMeters(-2), Units.inchesToMeters(4.5), CAMERA_HEIGHT_METERS), new Rotation3d(0,CAMERA_PITCH_RADIANS, Math.toRadians(180)));
+        // How far from the target we want to be
+        
     
-        private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
+        //private final AprilTagFieldLayout aprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
     
         private PIDController tranlationPID;
         private PIDController rotationPID;
         private String fieldLayout;
     
         public WeekZeroVision() {
-    
-            
-            cam = new PhotonCamera("launcherCam");
 
             
     
             tranlationPID = new PIDController(0, 0, 0);
             rotationPID = new PIDController(0, 0, 0);
     
-            fieldLayout = AprilTagFields.k2024Crescendo.m_resourceFile;
+            //fieldLayout = AprilTagFields.k2024Crescendo.m_resourceFile;
     
-            Transform3d robotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0)); //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
+             //Cam mounted facing forward, half a meter forward of center, half a meter up from center.
     
     
         
@@ -103,8 +101,10 @@ package frc.robot.subsystems.AprilTags;
                 SmartDashboard.putNumber("target yaw", result.getBestTarget().getYaw());
                 SmartDashboard.putNumber("range", calculateRange());
             }
-           
-           // SmartDashboard.putNumber("target ID", targetID);
+        
+            SmartDashboard.putNumber("vision timestamp secs", result.getTimestampSeconds());
+            SmartDashboard.putBoolean("has targets", result.hasTargets());
+            SmartDashboard.putBoolean("multitag pose", result.getMultiTagResult().estimatedPose.isPresent);
     
         }
     }
