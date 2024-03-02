@@ -51,7 +51,7 @@ public class Mailbox extends SubsystemBase {
     }
 
     public boolean getBannerSensor() {
-        return bannerSensor.get();
+        return !bannerSensor.get();
       }
 
     @Override
