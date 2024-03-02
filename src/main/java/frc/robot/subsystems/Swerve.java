@@ -116,6 +116,7 @@ public class Swerve extends SubsystemBase {
             vision.cam,
             vision.cameraLocation
             );
+        photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
         }
 
         // Drive base radius needs to be configured
@@ -224,9 +225,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public double getAngleAsDouble() {
-        return (Constants.Swerve.invertGyro) ? 
-        360 - gyro.getAngle() : 
-        gyro.getAngle();
+        return 360 - gyro.getAngle();
     }
 
     public void resetModulesToAbsolute(){
@@ -319,6 +318,7 @@ public class Swerve extends SubsystemBase {
 
     return MathUtil.angleModulus(angleToSpeaker); 
   }
+
 
   public double getSpeakerDistance() {
     return getPosition().getTranslation().getDistance(getSpeakerPosition());

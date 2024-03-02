@@ -31,10 +31,10 @@ package frc.robot.subsystems.AprilTags;
         final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(23.3);
         final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
         final double GOAL_RANGE_METERS = Units.feetToMeters(3);
-        final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(10.2037);
+        final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(-1.8237);
         // Angle between horizontal and the camera.
        // final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(camResult.getBestTarget().getPitch());
-        public final Transform3d cameraLocation = new Transform3d(new Translation3d(Units.inchesToMeters(-2), Units.inchesToMeters(4.5), CAMERA_HEIGHT_METERS), new Rotation3d(0,CAMERA_PITCH_RADIANS, Math.toRadians(180)));
+        public final Transform3d cameraLocation = new Transform3d(new Translation3d(Units.inchesToMeters(-2), Units.inchesToMeters(4.5), CAMERA_HEIGHT_METERS), new Rotation3d(0,CAMERA_PITCH_RADIANS, 0));
         // How far from the target we want to be
         
     

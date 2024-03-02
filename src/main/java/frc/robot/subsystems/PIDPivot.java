@@ -20,7 +20,7 @@ public class PIDPivot extends PIDSubsystem{
     private DutyCycleEncoder pivotEncoder;
     private LauncherInterpolation interpolation;    
     private WeekZeroVision vision;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(109.6);;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(100.2);;
 
     public PIDPivot() {
         super(new PIDController(20, 0.01, 0.01));
@@ -154,9 +154,18 @@ public class PIDPivot extends PIDSubsystem{
         enable();
     }
 
+    public boolean isPivotReadyToShoot() {
+        if (getController().getSetpoint() > 0.4 && getController().atSetpoint()) {
+            return true;
+        } else {
+            return false;
+        }
+     }
+
     @Override
     public void periodic() {
         super.periodic();
+        SmartDashboard.putBoolean("Pivot Ready", isPivotReadyToShoot());
         if (Constants.launcherPivotTuningMode) {
             SmartDashboard.putNumber("pivot degrees", getDegrees());
             SmartDashboard.putNumber("pivot absolute", getAbsoluteMeasurement());

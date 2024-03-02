@@ -127,7 +127,7 @@ public class RobotContainer {
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> false,
                 () -> rotateWithTag.getAsBoolean(),
-                () -> driveA.getAsBoolean(),
+                () -> driveY.getAsBoolean(),
                 () -> driveA.getAsBoolean(),
                 
                 vision
@@ -219,7 +219,7 @@ public class RobotContainer {
         opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         
         // back up if interpolation is wrong/messed up
-        opB.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));

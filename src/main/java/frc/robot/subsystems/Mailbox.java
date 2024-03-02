@@ -26,7 +26,7 @@ public class Mailbox extends SubsystemBase {
     }
 
     public void sendToLauncher() {
-        indexMotor.setVoltage(-mailboxVolts);
+        indexMotor.setVoltage(-12);
     }
 
     public void sendToIntake() {
@@ -51,7 +51,7 @@ public class Mailbox extends SubsystemBase {
     }
 
     public boolean getBannerSensor() {
-        return !bannerSensor.get();
+        return bannerSensor.get();
       }
 
     @Override

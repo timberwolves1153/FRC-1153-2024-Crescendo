@@ -60,7 +60,7 @@ public class TeleopSwerve extends Command {
     public void initialize() {
         thetaController = new PIDController(0.015, 0.001, 0.0);
         thetaController.enableContinuousInput(-180, 180);
-        translationController = new PIDController(0.01, 0, 0);
+        translationController = new PIDController(0.05, 0, 0);
     }
 
     @Override
@@ -75,10 +75,8 @@ public class TeleopSwerve extends Command {
             strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
             thetaController.setSetpoint(0);
             rotationVal = thetaController.calculate(vision.aimAtTarget(), 0);
-        } else if (!aimAtTag){
-            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-            rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
+        }
+           
         // } else if (lockOnObject) {
         //     //translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
         //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
@@ -91,17 +89,21 @@ public class TeleopSwerve extends Command {
         //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
         //     rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
         
-         } else if(aimAtSpeaker) {
-
+            else if(aimAtSpeaker) {
+            
             boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
             .equals(DriverStation.Alliance.Blue);
-            double directionFlip = isBlue ? -1.0 : 1.0;
+            double directionFlip = isBlue ? 1.0 : -1.0;
 
-            translationVal = Math.pow(MathUtil.applyDeadband(directionFlip*translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = Math.pow(MathUtil.applyDeadband(directionFlip* strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+            translationVal = Math.pow(directionFlip* MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = Math.pow(directionFlip* MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
 
-            thetaController.setSetpoint(s_Swerve.getSpeakerAngle());
-            rotationVal = thetaController.calculate(Math.toRadians(s_Swerve.getAngleAsDouble()), s_Swerve.getSpeakerAngle());
+            thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle()));
+            rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), Math.toDegrees(s_Swerve.getSpeakerAngle()) + 180);
+        } else {
+             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+            rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
         }
 
         /* Drive */

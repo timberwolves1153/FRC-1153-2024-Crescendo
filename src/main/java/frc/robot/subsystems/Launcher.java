@@ -105,6 +105,13 @@ public class Launcher extends SubsystemBase {
         m_leftLauncher.setControl(m_leftRequest.withVelocity(0).withFeedForward(0));
         m_rightLauncher.setControl(m_rightRequest.withVelocity(0).withFeedForward(0));
     }
+    public boolean isLauncherReadyToShoot() {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 9) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
    @Override
@@ -116,6 +123,7 @@ public class Launcher extends SubsystemBase {
             launcherVolts = launcherV;
          }
 
+    SmartDashboard.putBoolean("Launcher Ready", isLauncherReadyToShoot());
     SmartDashboard.putNumber("left roller Vel", m_leftLauncher.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("right roller Vel", m_rightLauncher.getVelocity().getValueAsDouble());
    }
