@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Run Launcher"
           }
         },
@@ -98,7 +92,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 1.0
           }
         },
         {

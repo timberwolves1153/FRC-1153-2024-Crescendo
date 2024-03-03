@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6807503073695607,
-      "y": 6.6188914144210065
+      "x": 0.8210801606788397,
+      "y": 6.525338178881486
     },
     "rotation": 60.0
   },
@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -72,9 +72,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Amp Four Sprint 1"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Four Sprint 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
           }
         },
         {
@@ -98,7 +117,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -114,9 +133,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Amp Four Sprint 2"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Four Sprint 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
@@ -140,7 +178,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -156,9 +194,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Amp Four Sprint 3"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Four Sprint 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
           }
         },
         {
@@ -182,7 +239,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.7
           }
         },
         {

@@ -23,6 +23,7 @@ public class Collector extends SubsystemBase{
 
     public double kP, kI, kD, kFF, kMaxOutput, kMinOutput, kInput, maxRPM;
     private final double IntakeSetpoint = 30;
+    private boolean isCollecting = false;
 
     public Collector() {
         
@@ -112,6 +113,10 @@ public class Collector extends SubsystemBase{
 
     public double getIntakePosition() {
         return pivotEncoder.getPosition();
+    }
+
+    public boolean isRunning() {
+        return collectorMotor1.get() != 0;
     }
 
 

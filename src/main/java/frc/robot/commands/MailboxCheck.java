@@ -34,4 +34,13 @@ public class MailboxCheck extends Command{
     
         mailbox.stop();
     }
+
+    @Override
+    public boolean isFinished() {
+    if (mailbox.getBannerSensor()) {
+        return true;
+    } else {
+        return false;
+    }
+}
 }

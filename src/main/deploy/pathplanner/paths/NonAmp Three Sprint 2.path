@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.23,
-        "y": 3.31
+        "x": 3.03,
+        "y": 3.12
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.7073696950244264,
-        "y": 1.7842057536846667
+        "x": 3.5073696950244204,
+        "y": 1.5942057536846668
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.016762826874823,
-        "y": 2.4276897959971695
+        "x": 8.539222092689199,
+        "y": 2.7715146028582662
       },
       "prevControl": {
-        "x": 6.97353869767122,
-        "y": 1.7354569626003848
+        "x": 7.132145875500986,
+        "y": 1.571711023317291
       },
       "nextControl": {
-        "x": 8.553005134923891,
-        "y": 2.783514131244684
+        "x": 9.02892287256047,
+        "y": 3.1890788693964778
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.321604462686361,
-        "y": 4.689633702307785
+        "x": 4.937422524417698,
+        "y": 4.174813135951059
       },
       "prevControl": {
-        "x": 4.653096242059469,
-        "y": 4.611635636572936
+        "x": 5.581382572735517,
+        "y": 4.610433168636643
+      },
+      "nextControl": {
+        "x": 4.142220022331783,
+        "y": 3.6368820315988213
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.820780570336069,
+        "y": 3.31
+      },
+      "prevControl": {
+        "x": 4.025278477907382,
+        "y": 2.713043830646066
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +62,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.6,
-      "rotationDegrees": -5.0,
+      "waypointRelativePos": 1.0499999999999998,
+      "rotationDegrees": 10.0,
       "rotateFast": false
     }
   ],
@@ -61,13 +77,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -7.5,
+    "rotation": -45.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "NonAmp Three Sprint Paths",
   "previewStartingState": {
-    "rotation": -30.0,
+    "rotation": -35.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

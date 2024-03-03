@@ -67,8 +67,8 @@ public class Launcher extends SubsystemBase {
     }
 
     public void slowLaunchWithVolts() {
-        m_leftLauncher.setControl(new VoltageOut(6));
-        m_rightLauncher.setControl(new VoltageOut(6));
+        m_leftLauncher.setControl(new VoltageOut(2));
+        m_rightLauncher.setControl(new VoltageOut(2));
     }
 
     public void stopLaunchWithVolts() {
@@ -113,10 +113,34 @@ public class Launcher extends SubsystemBase {
     }
 
 
+    public boolean isLauncherReadyToShootFar() {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 9.5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isLauncherReadyToShootClose() {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 6.75) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
    @Override
    public void periodic() {
 
-    SmartDashboard.putNumber("left roller V", getLeftLauncherAppliedVolts());
-    SmartDashboard.putNumber("right roller V", getRightLauncherAppliedVolts());
+    // double launcherV = SmartDashboard.getNumber("Launcher Volts", launcherVolts);
+
+    //     if((launcherVolts != launcherV)) { 
+    //         launcherVolts = launcherV;
+    //      }
+
+    SmartDashboard.putBoolean("Launcher Far Ready", isLauncherReadyToShootFar());
+    SmartDashboard.putBoolean("Launcher Close Ready", isLauncherReadyToShootClose());
+    SmartDashboard.putNumber("left roller Vel", m_leftLauncher.getVelocity().getValueAsDouble());
+    SmartDashboard.putNumber("right roller Vel", m_rightLauncher.getVelocity().getValueAsDouble());
    }
 }

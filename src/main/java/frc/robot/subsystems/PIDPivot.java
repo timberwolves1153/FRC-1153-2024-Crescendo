@@ -17,10 +17,10 @@ import frc.robot.subsystems.AprilTags.WeekZeroVision;
 public class PIDPivot extends PIDSubsystem{
     
     private CANSparkMax m_leftPivot, m_rightPivot;
-    private DutyCycleEncoder pivotEncoder;
-    private LauncherInterpolation interpolation;    
+    private DutyCycleEncoder pivotEncoder;   
     private WeekZeroVision vision;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(114.7);;
+    private static LauncherInterpolation pivotMap;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(38.1);;
 
     public PIDPivot() {
         super(new PIDController(20, 0.01, 0.01));
@@ -29,7 +29,7 @@ public class PIDPivot extends PIDSubsystem{
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
         m_rightPivot = new CANSparkMax(52, MotorType.kBrushless);
         vision = new WeekZeroVision();
-        
+        pivotMap = new LauncherInterpolation();
         pivotEncoder = new DutyCycleEncoder(0);
 
         configMotors();
@@ -73,6 +73,8 @@ public class PIDPivot extends PIDSubsystem{
         
     }
 
+    
+
 
 
     @Override
@@ -89,10 +91,10 @@ public class PIDPivot extends PIDSubsystem{
         double clampedVolts = MathUtil.clamp(adjustedVolts, -12, 12);
         if (clampedVolts > 0) {
             constantV = 0.15;
-            m_leftPivot.setVoltage(clampedVolts + constantV);
+            m_leftPivot.setVoltage(clampedVolts + 0);
         } else if (clampedVolts < 0) {
             constantV = 0.0;
-            m_leftPivot.setVoltage(clampedVolts - constantV);
+            m_leftPivot.setVoltage(clampedVolts - 0);
         }
         
     }
@@ -106,11 +108,11 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public double getAbsoluteMeasurement() {
-        return (pivotEncoder.getAbsolutePosition() + 0.7) %1;
+        return (pivotEncoder.getAbsolutePosition() + 0.4) %1;
     }
 
     public double getPivotRadians() {
-        return UNIT_CIRCLE_OFFSET -((getAbsoluteMeasurement() * 2 * Math.PI)/2);
+        return ((getAbsoluteMeasurement() * 2 * Math.PI)/2) - UNIT_CIRCLE_OFFSET;
     }
 
     public double getDegrees() {
@@ -125,7 +127,7 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public void interpolateSetpoint() {
-       double interpolatedSetpoint = interpolation.pivotMap.getInterpolated(new InterpolatingDouble(vision.calculateRange())).value;
+       double interpolatedSetpoint = pivotMap.pivotMap.getInterpolated(new InterpolatingDouble(vision.calculateRange())).value;
        double newSetpoint = Math.toRadians(interpolatedSetpoint);
        setSetpoint(newSetpoint);
        getController().reset();
@@ -154,9 +156,18 @@ public class PIDPivot extends PIDSubsystem{
         enable();
     }
 
+    public boolean isPivotReadyToShoot() {
+        if (getController().getSetpoint() > 0.36 && getController().atSetpoint()) {
+            return true;
+        } else {
+            return false;
+        }
+     }
+
     @Override
     public void periodic() {
         super.periodic();
+        SmartDashboard.putBoolean("Pivot Ready", isPivotReadyToShoot());
         if (Constants.launcherPivotTuningMode) {
             SmartDashboard.putNumber("pivot degrees", getDegrees());
             SmartDashboard.putNumber("pivot absolute", getAbsoluteMeasurement());

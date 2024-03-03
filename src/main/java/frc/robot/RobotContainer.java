@@ -16,13 +16,14 @@ import frc.robot.subsystems.PIDPivot;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Winch;
 import frc.robot.Auto.TestAuto;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ConstantInterpolation;
+import frc.robot.commands.DriverIntakeFeedback;
 import frc.robot.commands.InterpolateToSpeaker;
 import frc.robot.commands.MailboxCheck;
 import frc.robot.commands.MailboxClimbingPosition;
 import frc.robot.commands.PivotToAmp;
 import frc.robot.commands.RotateAndX;
-import frc.robot.commands.ShootWhenReady;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
@@ -67,7 +68,7 @@ public class RobotContainer {
     private final Mailbox mailbox = new Mailbox();
     private final Collector collector = new Collector();
     private final WeekZeroVision vision = new WeekZeroVision();
-    private final ObjectDetecting objectDetecting = new ObjectDetecting();
+   // private final ObjectDetecting objectDetecting = new ObjectDetecting();
 
     private final TestAuto testAuto = new TestAuto();
     private SendableChooser<Command> autoChooser;
@@ -77,7 +78,7 @@ public class RobotContainer {
     private final PivotToAmp pivotToAmp = new PivotToAmp(pidPivot);
     private final MailboxClimbingPosition PivotToClimb = new MailboxClimbingPosition(pidPivot);
     private final MailboxCheck mailboxCheck = new MailboxCheck(collector, mailbox);
-    private final ShootWhenReady shootWhenReady = new ShootWhenReady();
+    private final AutoShoot autoShoot = new AutoShoot(launcher, pidPivot, mailbox, vision);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -130,7 +131,6 @@ public class RobotContainer {
                 () -> false,
                 () -> rotateWithTag.getAsBoolean(),
                 () -> driveA.getAsBoolean(),
-                objectDetecting,
                 vision
             )
         );
@@ -185,6 +185,7 @@ public class RobotContainer {
         opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
         opLeftBumper.onFalse(Commands.runOnce(() -> collector.retractIntake(), collector));
         opLeftBumper.whileTrue(mailboxCheck);
+        opLeftBumper.whileTrue(new DriverIntakeFeedback(collector, mailbox, driver, operator));
 
                 
         opRightBumper.onTrue(new InstantCommand(() -> collector.outtake(), collector));
@@ -214,22 +215,22 @@ public class RobotContainer {
         opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         opX.whileTrue(interpolateToSpeaker);
-        opX.whileTrue(shootWhenReady);
+        //opX.whileTrue(autoShoot);
         opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
         opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         
         // back up if interpolation is wrong/messed up
-        opB.onTrue(new InstantCommand(() -> launcher.closeLaunchSpeed()));
+        opB.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
         opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));
-        povUp.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
+        povUp.onFalse(Commands.runOnce(() -> pidPivot.pivotStop(), pidPivot));
         povDown.onTrue(new InstantCommand(() -> pidPivot.pivotDown(), pidPivot));
-        povDown.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
+        povDown.onFalse(Commands.runOnce(() -> pidPivot.pivotStop(), pidPivot));
 
         //AMP
-        opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
-        opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+       // opA.onTrue(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+        opA.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
         opA.whileTrue(pivotToAmp);
         opA.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
 
