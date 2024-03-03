@@ -50,7 +50,7 @@ public final class Constants {
         public static final double FIELD_LENGTH = 16.5417;
     public static final double FIELD_WIDTH = 8.0136;
 
-    public static final double NOTE_VELOCITY = 10;
+    public static final double NOTE_VELOCITY = 17;
 
     public static final Translation2d BLUE_SPEAKER = new Translation2d(0.0241, 5.547868);
     public static final Translation2d RED_SPEAKER = new Translation2d(FIELD_LENGTH - BLUE_SPEAKER.getX(), BLUE_SPEAKER.getY());

@@ -38,25 +38,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.7
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Run Launcher"
           }
         },
         {
@@ -72,9 +60,34 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Amp Three Sprint 1"
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Launcher"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Three Sprint 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
           }
         },
         {
@@ -98,7 +111,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 1.0
           }
         },
         {
@@ -114,9 +127,22 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Amp Three Sprint 2"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Three Sprint 2"
+                }
+              }
+            ]
           }
         },
         {
@@ -140,7 +166,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 1.0
           }
         },
         {

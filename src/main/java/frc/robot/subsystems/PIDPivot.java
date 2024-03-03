@@ -20,10 +20,10 @@ public class PIDPivot extends PIDSubsystem{
     private DutyCycleEncoder pivotEncoder;
     private LauncherInterpolation interpolation;    
     private WeekZeroVision vision;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(100.2);;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(69.4);;
 
     public PIDPivot() {
-        super(new PIDController(20, 0.01, 0.01));
+        super(new PIDController(13, 0.01, 0.01));
 
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
@@ -155,7 +155,7 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public boolean isPivotReadyToShoot() {
-        if (getController().getSetpoint() > 0.4 && getController().atSetpoint()) {
+        if (getController().getSetpoint() > 0.36 && getController().atSetpoint()) {
             return true;
         } else {
             return false;

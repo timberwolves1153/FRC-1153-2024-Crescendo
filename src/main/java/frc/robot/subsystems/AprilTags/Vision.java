@@ -205,15 +205,15 @@ public class Vision extends SubsystemBase implements AutoCloseable{
     @Override
     public void periodic() {
         var result = cam.getLatestResult();
-        photonPoseEstimator.update();
+        //photonPoseEstimator.update();
                 //int targetID = target.getFiducialId();
         //Transform3d pose3d = target.getBestCameraToTarget();
         // SmartDashboard.putNumber("target x", result.getBestTarget());
         // SmartDashboard.putNumber("target y", result.getBestTarget());
-        if (result.hasTargets()) {
-            SmartDashboard.putNumber("target yaw", result.getBestTarget().getYaw());
-            SmartDashboard.putNumber("target pitch radians", Units.degreesToRadians(result.getBestTarget().getPitch()));
-            SmartDashboard.putNumber("range", calculateRange());
+        // if (result.hasTargets()) {
+        //     SmartDashboard.putNumber("target yaw", result.getBestTarget().getYaw());
+        //     SmartDashboard.putNumber("target pitch radians", Units.degreesToRadians(result.getBestTarget().getPitch()));
+        //     SmartDashboard.putNumber("range", calculateRange());
         }
        
        // SmartDashboard.putNumber("target ID", targetID);
@@ -225,4 +225,3 @@ public class Vision extends SubsystemBase implements AutoCloseable{
         
 
     }
-}

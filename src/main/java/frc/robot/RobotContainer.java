@@ -16,12 +16,15 @@ import frc.robot.subsystems.PIDPivot;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Winch;
 import frc.robot.Auto.TestAuto;
+import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ConstantInterpolation;
 import frc.robot.commands.InterpolateToSpeaker;
 import frc.robot.commands.MailboxCheck;
 import frc.robot.commands.MailboxClimbingPosition;
 import frc.robot.commands.PivotToAmp;
 import frc.robot.commands.RotateAndX;
+import frc.robot.commands.RunShooter;
+import frc.robot.commands.ShootInAuto;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
@@ -30,6 +33,7 @@ import frc.robot.lib.util.AxisButton;
 import frc.robot.subsystems.Collector;
 
 import com.fasterxml.jackson.core.sym.Name;
+import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -76,6 +80,8 @@ public class RobotContainer {
     private final PivotToAmp pivotToAmp = new PivotToAmp(pidPivot);
     private final MailboxClimbingPosition PivotToClimb = new MailboxClimbingPosition(pidPivot);
     private final MailboxCheck mailboxCheck = new MailboxCheck(collector, mailbox);
+    private final RunShooter shoot = new RunShooter(vision, launcher);
+    private final AutoShoot autoShoot = new AutoShoot(launcher, pidPivot, mailbox, vision);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -158,6 +164,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
         NamedCommands.registerCommand("Pivot Mailbox", new InstantCommand(() -> pidPivot.interpolateSetpoint()));
         NamedCommands.registerCommand("Close Launcher", new InstantCommand(() -> launcher.closeLaunchSpeed()));
+        NamedCommands.registerCommand("Mailbox Check", mailboxCheck);
+        NamedCommands.registerCommand("Ready To Shoot", new ShootInAuto(launcher, pidPivot, mailbox, vision).withTimeout(1.5));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autoChooser);
@@ -213,14 +221,15 @@ public class RobotContainer {
 
     
         //LAUNCHER
-        opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opX.whileTrue(shoot);
+        opX.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+        opX.whileTrue(autoShoot);
         opX.whileTrue(interpolateToSpeaker);
-        opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+        opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(21), pidPivot));
         
         // back up if interpolation is wrong/messed up
-        opB.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        opB.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opB.whileTrue(shoot);
+        opB.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));
         povUp.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
@@ -231,7 +240,7 @@ public class RobotContainer {
         opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
         opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         opA.whileTrue(pivotToAmp);
-        opA.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+        opA.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(21), pidPivot));
 
 
         // CLIMB

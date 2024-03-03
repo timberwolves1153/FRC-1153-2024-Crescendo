@@ -20,13 +20,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Close Launcher"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.7
           }
         },
         {
@@ -38,13 +38,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
           }
         },
         {
@@ -68,19 +74,37 @@
         {
           "type": "named",
           "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.7
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Index"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
           }
         },
         {
@@ -90,6 +114,24 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.7
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Index"
@@ -98,13 +140,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
           }
         },
         {
@@ -116,13 +164,25 @@
         {
           "type": "named",
           "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.7
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Index"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {

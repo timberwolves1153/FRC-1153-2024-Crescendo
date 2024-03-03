@@ -105,14 +105,21 @@ public class Launcher extends SubsystemBase {
         m_leftLauncher.setControl(m_leftRequest.withVelocity(0).withFeedForward(0));
         m_rightLauncher.setControl(m_rightRequest.withVelocity(0).withFeedForward(0));
     }
-    public boolean isLauncherReadyToShoot() {
-        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 9) {
+    public boolean isLauncherReadyToShootFar() {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 9.5) {
             return true;
         } else {
             return false;
         }
     }
 
+    public boolean isLauncherReadyToShootClose() {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 6.75) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
    @Override
    public void periodic() {
@@ -123,7 +130,8 @@ public class Launcher extends SubsystemBase {
             launcherVolts = launcherV;
          }
 
-    SmartDashboard.putBoolean("Launcher Ready", isLauncherReadyToShoot());
+    SmartDashboard.putBoolean("Launcher Far Ready", isLauncherReadyToShootFar());
+    SmartDashboard.putBoolean("Launcher Close Ready", isLauncherReadyToShootClose());
     SmartDashboard.putNumber("left roller Vel", m_leftLauncher.getVelocity().getValueAsDouble());
     SmartDashboard.putNumber("right roller Vel", m_rightLauncher.getVelocity().getValueAsDouble());
    }
