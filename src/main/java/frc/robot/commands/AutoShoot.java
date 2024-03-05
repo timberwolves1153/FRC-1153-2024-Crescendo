@@ -21,29 +21,40 @@ public class AutoShoot extends Command{
         this.pidPivot = pidPivot;
         this.mailbox = mailbox;
         this.vision = vision;
+
+        addRequirements(mailbox);
     }
 
     @Override
     public void execute() {
 
         if (vision.calculateRange() > 2) {
-                if (launcher.isLauncherReadyToShootFar() && pidPivot.isPivotReadyToShoot() && Math.abs(vision.aimAtTarget()) < 2) {
+                if (launcher.isLauncherReadyToShootFar() && pidPivot.isPivotReadyToShoot() && vision.isOnTarget()) {
                 
-                    //new WaitCommand(0.5);
-                    new InstantCommand(() -> mailbox.sendToLauncher());
+                    new WaitCommand(0.5);
+                    mailbox.sendToLauncher();
 
             }   else {
                     mailbox.stop();
             }
         } else if (vision.calculateRange() <= 2){
 
-            if (launcher.isLauncherReadyToShootClose() && pidPivot.isPivotReadyToShoot() && Math.abs(vision.aimAtTarget()) < 2) {
+            if (launcher.isLauncherReadyToShootClose() && pidPivot.isPivotReadyToShoot() && vision.isOnTarget()) {
                 
-                   // new WaitCommand(0.5);
-                   new InstantCommand(() -> mailbox.sendToLauncher());
+                   new WaitCommand(0.5);
+                   mailbox.sendToLauncher();
             } else {
                 mailbox.stop();
             }
     }
     }
-}
+
+//     @Override
+//     public boolean isFinished() {
+//         if (mailbox.getBannerSensor()) {
+//             return true;
+//         } else {
+//             return false;
+//         }
+//     }
+ }

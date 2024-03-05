@@ -16,7 +16,7 @@ public class Collector extends SubsystemBase{
     
     private CANSparkMax pivotMotor;
     private CANSparkMax collectorMotor1;
-    private CANSparkMax collectorMotor2;
+   
     private RelativeEncoder pivotEncoder;
     private SparkPIDController pidController;
 
@@ -29,7 +29,7 @@ public class Collector extends SubsystemBase{
         
         pivotMotor = new CANSparkMax(41, MotorType.kBrushless);
         collectorMotor1 = new CANSparkMax(40, MotorType.kBrushless);
-        collectorMotor2 = new CANSparkMax(42, MotorType.kBrushless);
+       
 
         pivotEncoder = pivotMotor.getEncoder();
         pidController = pivotMotor.getPIDController();
@@ -52,12 +52,6 @@ public class Collector extends SubsystemBase{
         collectorMotor1.setSmartCurrentLimit(40);
         collectorMotor1.burnFlash();
 
-        collectorMotor2.restoreFactoryDefaults();
-        collectorMotor2.setInverted(false);
-        collectorMotor2.setIdleMode(IdleMode.kCoast);
-        collectorMotor2.setSmartCurrentLimit(40);
-        collectorMotor2.burnFlash();
-
        
 
         kP = 0.01;
@@ -74,17 +68,17 @@ public class Collector extends SubsystemBase{
 
     public void intake(){
         collectorMotor1.setVoltage(-12);
-        collectorMotor2.setVoltage(12);
+        
     }
 
     public void outtake(){
         collectorMotor1.setVoltage(12);
-        collectorMotor2.setVoltage(-12);
+        
     }
 
     public void collectorStop(){
         collectorMotor1.setVoltage(0);
-        collectorMotor2.setVoltage(0);
+        
     }
 
     public void pivotUp(){

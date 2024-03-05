@@ -24,7 +24,7 @@ public class LauncherInterpolation {
         pivotMap.put(new InterpolatingDouble(4.21), new InterpolatingDouble(24.0));
         pivotMap.put(new InterpolatingDouble(4.68), new InterpolatingDouble(23.0));
         pivotMap.put(new InterpolatingDouble(5.12), new InterpolatingDouble(20.5));
-        // pivotMap.put(new InterpolatingDouble(5.25), new InterpolatingDouble(22.5));
+        pivotMap.put(new InterpolatingDouble(5.2), new InterpolatingDouble(19.6));
         // pivotMap.put(new InterpolatingDouble(5.58), new InterpolatingDouble(22.3));
     }
 }

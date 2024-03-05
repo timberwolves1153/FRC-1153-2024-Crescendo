@@ -20,7 +20,8 @@ public class PIDPivot extends PIDSubsystem{
     private DutyCycleEncoder pivotEncoder;   
     private WeekZeroVision vision;
     private static LauncherInterpolation pivotMap;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(38.1);;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(46.1);;
+    private final double SUBWOOFER_DEGREES = 56;
 
     public PIDPivot() {
         super(new PIDController(20, 0.01, 0.01));
@@ -63,8 +64,12 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public void pivotDown() {
-        disable();
-        m_leftPivot.setVoltage(-2);
+        // disable();
+        // if (getDegrees() < 18.1) {
+        //     m_leftPivot.setVoltage(0);
+        // } else {
+            m_leftPivot.setVoltage(-2);
+      //  }
     }
 
     public void pivotStop() {
@@ -108,11 +113,11 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public double getAbsoluteMeasurement() {
-        return (pivotEncoder.getAbsolutePosition() + 0.4) %1;
+        return (pivotEncoder.getAbsolutePosition() + 0.6) %1;
     }
 
     public double getPivotRadians() {
-        return ((getAbsoluteMeasurement() * 2 * Math.PI)/2) - UNIT_CIRCLE_OFFSET;
+        return UNIT_CIRCLE_OFFSET - ((getAbsoluteMeasurement() * 2 * Math.PI)/2);
     }
 
     public double getDegrees() {
@@ -127,8 +132,11 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public void interpolateSetpoint() {
-       double interpolatedSetpoint = pivotMap.pivotMap.getInterpolated(new InterpolatingDouble(vision.calculateRange())).value;
-       double newSetpoint = Math.toRadians(interpolatedSetpoint);
+       double newSetpoint =  Math.toRadians(SUBWOOFER_DEGREES);
+       if (vision.isConnected()) {
+           double interpolatedSetpoint = pivotMap.pivotMap.getInterpolated(new InterpolatingDouble(vision.calculateRange())).value;
+           newSetpoint = Math.toRadians(interpolatedSetpoint);
+       }
        setSetpoint(newSetpoint);
        getController().reset();
        enable();
@@ -157,7 +165,7 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public boolean isPivotReadyToShoot() {
-        if (getController().getSetpoint() > 0.36 && getController().atSetpoint()) {
+        if (getController().getSetpoint() > 0.3 && getController().atSetpoint()) {
             return true;
         } else {
             return false;

@@ -6,21 +6,21 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.BaseClef;
 import frc.robot.subsystems.PIDPivot;
 
-public class PivotToAmp extends SequentialCommandGroup{
+public class ReturnFromAmp extends SequentialCommandGroup{
     
     private PIDPivot pidPivot;
     private BaseClef baseClef;
 
-    public PivotToAmp(PIDPivot pidPivot, BaseClef baseClef) {
+    public ReturnFromAmp(PIDPivot pidPivot, BaseClef baseClef) {
 
         this.pidPivot = pidPivot;
         this.baseClef = baseClef;
 
         addRequirements(pidPivot);
-        addCommands(Commands.runOnce(() -> baseClef.retractClef(), baseClef), 
+        addCommands(Commands.runOnce(() -> pidPivot.setSetpointDegrees(20), pidPivot), 
         new WaitCommand(7),
-        Commands.runOnce(() -> pidPivot.setSetpointDegrees(49.7), pidPivot));
+        Commands.runOnce(() -> baseClef.retractClef(), baseClef));
     }
 
-   
+    
 }

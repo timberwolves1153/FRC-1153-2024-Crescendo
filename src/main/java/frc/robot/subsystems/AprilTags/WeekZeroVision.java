@@ -64,10 +64,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         }
     
         public double aimAtTarget() {
+
+            boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+            .equals(DriverStation.Alliance.Blue);
             var result = cam.getLatestResult();
+            PhotonTrackedTarget preferredTarget = getPreferredTarget(result);
             if (result.hasTargets()) {
-                double targetRotation = result.getBestTarget().getYaw();
-                return targetRotation;
+                double targetRotation = preferredTarget.getYaw();
+                if (isBlue) {
+                    return targetRotation + 3;
+                } else {
+                    return targetRotation - 3;
+                }
+               
             } else {
                 return 0;
             }
@@ -138,7 +147,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         public boolean isOnTarget() {
             var result = cam.getLatestResult();
             if(result.hasTargets()) {
-            if (Math.abs(result.getBestTarget().getYaw()) < 2) {
+            if (Math.abs(result.getBestTarget().getYaw()) < 4) {
                 return true;
             } else {
                 return false;
@@ -146,6 +155,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         } else {
             return false;
         }
+        }
+
+        public boolean isConnected() {
+            return cam.isConnected();
         }
     
         @Override
@@ -165,6 +178,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
             SmartDashboard.putNumber("vision timestamp secs", result.getTimestampSeconds());
             SmartDashboard.putBoolean("has targets", result.hasTargets());
             SmartDashboard.putBoolean("multitag pose", result.getMultiTagResult().estimatedPose.isPresent);
+         
             //SmartDashboard.putNumber("seen tags", result.getMultiTagResult().fiducialIDsUsed.i);
     
         }
