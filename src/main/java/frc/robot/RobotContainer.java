@@ -28,10 +28,13 @@ import frc.robot.commands.RotateAndX;
 //import frc.robot.Constants.OperatorConstants;
 //import frc.robot.commands.Autos;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.WaitCommand;
 import frc.robot.lib.math.LauncherInterpolation;
 import frc.robot.lib.util.AxisButton;
 import frc.robot.subsystems.BaseClef;
 import frc.robot.subsystems.Collector;
+
+import java.time.Instant;
 
 import com.fasterxml.jackson.core.sym.Name;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -70,7 +73,7 @@ public class RobotContainer {
     private final Mailbox mailbox = new Mailbox();
     private final Collector collector = new Collector();
     private final WeekZeroVision vision = new WeekZeroVision();
-    private final BaseClef baseClef = new BaseClef();
+   // private final BaseClef baseClef = new BaseClef();
    // private final ObjectDetecting objectDetecting = new ObjectDetecting();
 
     private final TestAuto testAuto = new TestAuto();
@@ -78,11 +81,11 @@ public class RobotContainer {
 
     private final RotateAndX rotateAndX = new RotateAndX(s_Swerve);
     private final InterpolateToSpeaker interpolateToSpeaker = new InterpolateToSpeaker(pidPivot);
-    private final PivotToAmp pivotToAmp = new PivotToAmp(pidPivot, baseClef);
+   // private final PivotToAmp pivotToAmp = new PivotToAmp(pidPivot, baseClef);
     private final MailboxClimbingPosition PivotToClimb = new MailboxClimbingPosition(pidPivot);
     private final MailboxCheck mailboxCheck = new MailboxCheck(collector, mailbox);
     private final AutoShoot autoShoot = new AutoShoot(launcher, pidPivot, mailbox, vision);
-    private final ReturnFromAmp returnFromAmp = new ReturnFromAmp(pidPivot, baseClef);
+   // private final ReturnFromAmp returnFromAmp = new ReturnFromAmp(pidPivot, baseClef);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
@@ -208,7 +211,7 @@ public class RobotContainer {
         opStart.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
 
         opSelect.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
-        opSelect.onTrue(new InstantCommand(() -> baseClef.resetEncoder()));
+       // opSelect.onTrue(new InstantCommand(() -> baseClef.resetEncoder()));
         
         //PIVOTS
         povRight.onTrue(new InstantCommand(() -> collector.pivotUp(), collector));
@@ -220,12 +223,12 @@ public class RobotContainer {
 
     
         //LAUNCHER
-        // opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        // opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
-        // opX.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
-        // opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
-        // opX.whileTrue(interpolateToSpeaker); 
-        // opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(19.5), pidPivot));
+        opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
+        opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opX.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
+        opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
+        opX.whileTrue(interpolateToSpeaker); 
+        opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(19.5), pidPivot));
         
         
         
@@ -233,10 +236,10 @@ public class RobotContainer {
 
         // back up if interpolation is wrong/messed up
         // BASE CLEF (AMP MECH)
-        opY.onTrue(new InstantCommand(() -> baseClef.manualDeploy()));
-        opY.onFalse(new InstantCommand(() -> baseClef.stop()));
-        opB.onTrue(new InstantCommand(() -> baseClef.manualRetract()));
-        opB.onFalse(new InstantCommand(() -> baseClef.stop()));
+        // opY.onTrue(new InstantCommand(() -> baseClef.manualDeploy()));
+        // opY.onFalse(new InstantCommand(() -> baseClef.stop()));
+        // opB.onTrue(new InstantCommand(() -> baseClef.manualRetract()));
+        // opB.onFalse(new InstantCommand(() -> baseClef.stop()));
 
         //launcher override
         opLeftTrigger.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
@@ -252,16 +255,26 @@ public class RobotContainer {
         povDown.onFalse(Commands.runOnce(() -> pidPivot.pivotStop(), pidPivot));
 
         //AMP
-       opA.onTrue(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
-        opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+    //    opA.onTrue(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+    //     opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
         // opA.whileTrue(pivotToAmp);
         // opA.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(19.5), pidPivot));
-        opA.whileTrue(pivotToAmp);
-        opA.whileFalse(returnFromAmp);
+        // opA.whileTrue(pivotToAmp);
+        // opA.whileFalse(returnFromAmp);
         // opA.onTrue(Commands.runOnce(() -> baseClef.deployClef(), baseClef));
         // opA.onFalse(Commands.runOnce(() -> baseClef.retractClef(), baseClef));
-
-
+        // opA.onTrue(
+        //     Commands.runOnce(() -> baseClef.deployClef())
+        //     .andThen(new WaitCommand(2))
+        //     .andThen(new InstantCommand(() -> launcher.slowLaunchWithVolts())
+        //     .andThen(new WaitCommand(2))
+        //     .andThen(new InstantCommand(() -> pidPivot.setSetpointDegrees(49.7)))));
+        // opA.onFalse(
+        //     new InstantCommand(() -> pidPivot.setSetpointDegrees(20))
+        //     .andThen(new WaitCommand(2))
+        //     .andThen(new InstantCommand(() -> launcher.stopLaunchWithVolts())
+        //     .andThen(new WaitCommand(2))
+        //     .andThen(new InstantCommand(() -> baseClef.retractClef()))));
 
         // CLIMB
 

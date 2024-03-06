@@ -67,8 +67,8 @@ public class Launcher extends SubsystemBase {
     }
 
     public void slowLaunchWithVolts() {
-        m_leftLauncher.setControl(new VoltageOut(2));
-        m_rightLauncher.setControl(new VoltageOut(2));
+        m_leftLauncher.setControl(new VoltageOut(3));
+        m_rightLauncher.setControl(new VoltageOut(3));
     }
 
     public void stopLaunchWithVolts() {

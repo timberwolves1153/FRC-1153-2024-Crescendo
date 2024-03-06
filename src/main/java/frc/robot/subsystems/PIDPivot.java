@@ -20,7 +20,8 @@ public class PIDPivot extends PIDSubsystem{
     private DutyCycleEncoder pivotEncoder;   
     private WeekZeroVision vision;
     private static LauncherInterpolation pivotMap;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(46.1);;
+    //private final double UNIT_CIRCLE_OFFSET = Math.toRadians(112);
+    private final double FINAL_UNIT_CIRCLE_OFFSET =  Math.toRadians(74);
     private final double SUBWOOFER_DEGREES = 56;
 
     public PIDPivot() {
@@ -117,7 +118,7 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public double getPivotRadians() {
-        return UNIT_CIRCLE_OFFSET - ((getAbsoluteMeasurement() * 2 * Math.PI)/2);
+        return ((getAbsoluteMeasurement() * 2 * Math.PI)/2) - FINAL_UNIT_CIRCLE_OFFSET;
     }
 
     public double getDegrees() {
