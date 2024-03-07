@@ -73,7 +73,7 @@ public class RobotContainer {
     private final Mailbox mailbox = new Mailbox();
     private final Collector collector = new Collector();
     private final WeekZeroVision vision = new WeekZeroVision();
-   // private final BaseClef baseClef = new BaseClef();
+    private final BaseClef baseClef = new BaseClef();
    // private final ObjectDetecting objectDetecting = new ObjectDetecting();
 
     private final TestAuto testAuto = new TestAuto();
@@ -144,14 +144,6 @@ public class RobotContainer {
             )
         );
 
-        // pidPivot.setDefaultCommand(
-        //     new ConstantInterpolation(
-        //         pidPivot, 
-        //         () -> opX.getAsBoolean(),
-        //         () -> opB.getAsBoolean(),
-        //         () -> povUp.getAsBoolean(),
-        //         () -> povDown.getAsBoolean(),
-        //         () -> opRightStick.getAsBoolean()));
        
 
         NamedCommands.registerCommand("Run Launcher", new InstantCommand(() -> launcher.launchWithVolts()));
@@ -236,10 +228,10 @@ public class RobotContainer {
 
         // back up if interpolation is wrong/messed up
         // BASE CLEF (AMP MECH)
-        // opY.onTrue(new InstantCommand(() -> baseClef.manualDeploy()));
-        // opY.onFalse(new InstantCommand(() -> baseClef.stop()));
-        // opB.onTrue(new InstantCommand(() -> baseClef.manualRetract()));
-        // opB.onFalse(new InstantCommand(() -> baseClef.stop()));
+        opY.onTrue(new InstantCommand(() -> baseClef.manualDeploy()));
+        opY.onFalse(new InstantCommand(() -> baseClef.stop()));
+        opB.onTrue(new InstantCommand(() -> baseClef.manualRetract()));
+        opB.onFalse(new InstantCommand(() -> baseClef.stop()));
 
         //launcher override
         opLeftTrigger.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
