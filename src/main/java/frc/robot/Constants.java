@@ -20,10 +20,10 @@ import frc.robot.subsystems.AprilTags.AprilTagCamera.Resolution;
 public final class Constants {
 
     public static final boolean launcherRollerTuningMode = false;
-    public static final boolean launcherPivotTuningMode = true;
+    public static final boolean launcherPivotTuningMode = false;
     public static final boolean collectorTuningMode = false;
-    public static final boolean swerveTuningMode = false;
-    public static final double stickDeadband = 0.2;
+    public static final boolean swerveTuningMode = true;
+    public static final double stickDeadband = 0.3;
 
     public static final class Field {
         public static final double FIELD_WIDTH = 8.21;
@@ -163,7 +163,7 @@ public final class Constants {
             public static final int driveMotorID = 01;
             public static final int angleMotorID = 02;
             public static final int absoluteEncoderPorts = 0;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(180.77);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(178.28);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -173,7 +173,7 @@ public final class Constants {
             public static final int driveMotorID = 11;
             public static final int angleMotorID = 12;
             public static final int absoluteEncoderPorts = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(32.9);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(32.21);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -183,7 +183,7 @@ public final class Constants {
             public static final int driveMotorID = 21;
             public static final int angleMotorID = 22;
             public static final int absoluteEncoderPorts = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(4.77);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(4.96);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }
@@ -193,7 +193,7 @@ public final class Constants {
             public static final int driveMotorID = 31;
             public static final int angleMotorID = 32;
             public static final int absoluteEncoderPorts = 3; //MIGHT SWAP WITH 1
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(34.74+ 180);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(215.34);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }

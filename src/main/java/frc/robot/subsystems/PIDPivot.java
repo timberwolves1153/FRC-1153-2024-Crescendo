@@ -20,7 +20,7 @@ public class PIDPivot extends PIDSubsystem{
     private DutyCycleEncoder pivotEncoder;
     private LauncherInterpolation interpolation;    
     private WeekZeroVision vision;
-    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(69.4);;
+    private final double UNIT_CIRCLE_OFFSET = Math.toRadians(133.8);;
 
     public PIDPivot() {
         super(new PIDController(13, 0.01, 0.01));
