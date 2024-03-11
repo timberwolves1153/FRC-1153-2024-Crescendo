@@ -1,7 +1,11 @@
 package frc.robot.subsystems.AprilTags;
 
     import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import javax.swing.text.html.Option;
 
 import org.photonvision.PhotonCamera;
     import org.photonvision.PhotonUtils;
@@ -68,9 +72,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
             boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
             .equals(DriverStation.Alliance.Blue);
             var result = cam.getLatestResult();
-            PhotonTrackedTarget preferredTarget = getPreferredTarget(result);
-            if (result.hasTargets()) {
-                double targetRotation = preferredTarget.getYaw();
+            Optional<PhotonTrackedTarget> preferredTarget = getPreferredTarget(result);
+            if (preferredTarget.isPresent()) {
+                double targetRotation = preferredTarget.get().getYaw();
                 if (isBlue) {
                     return targetRotation + 3;
                 } else {
@@ -90,23 +94,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     
         public double calculateRange() {
             PhotonPipelineResult result = cam.getLatestResult();
-            PhotonTrackedTarget preferredTarget = getPreferredTarget(result);
-            if (result.hasTargets()) {
+            Optional<PhotonTrackedTarget> preferredTarget = getPreferredTarget(result);
+            if (preferredTarget.isPresent()) {
                 double range = PhotonUtils.calculateDistanceToTargetMeters(
                     CAMERA_HEIGHT_METERS, 
                     Units.inchesToMeters(57), 
                     CAMERA_PITCH_RADIANS, 
-                    Units.degreesToRadians(preferredTarget.getPitch()));
+                    Units.degreesToRadians(preferredTarget.get().getPitch()));
                 return range;
             }else {
                 return 0;
             }
         }
 
-        public PhotonTrackedTarget getPreferredTarget(PhotonPipelineResult result) {
+        public Optional<PhotonTrackedTarget> getPreferredTarget(PhotonPipelineResult result) {
              
             List<PhotonTrackedTarget> seenTags = result.getTargets();
-            List<Integer> tagIds = result.getMultiTagResult().fiducialIDsUsed;
+            List<Integer> tagIds = new ArrayList<>();
+            for (PhotonTrackedTarget tag : seenTags) {
+                tagIds.add(tag.getFiducialId());
+            }
+            SmartDashboard.putString("seenTags", tagIds.toString());
+
             //4 for Red (3 back up)
             // 7 for Blue (8 back up)
             boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
@@ -132,16 +141,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
             }
 
             if (preferredTag == 0) {
-                return result.getBestTarget();
+                return Optional.empty();
             }
 
             for (PhotonTrackedTarget tag : seenTags) {
                 if (tag.getFiducialId() == preferredTag) {
-                    return tag;
+                    return Optional.of(tag);
                 }
             }
 
-            return result.getBestTarget();
+            return Optional.empty();
         }
 
         public boolean isOnTarget() {
@@ -168,16 +177,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
             //Transform3d pose3d = target.getBestCameraToTarget();
             // SmartDashboard.putNumber("target x", result.getBestTarget());
             // SmartDashboard.putNumber("target y", result.getBestTarget());
-            if (result.hasTargets()) {
-                SmartDashboard.putNumber("calculated rotation", aimAtTarget());
-                SmartDashboard.putBoolean("robot on target", isOnTarget());
-                SmartDashboard.putNumber("target yaw", result.getBestTarget().getYaw());
-                SmartDashboard.putNumber("range", calculateRange());
-            }
+            SmartDashboard.putNumber("calculated rotation", aimAtTarget());
+            SmartDashboard.putBoolean("robot on target", isOnTarget());
+            SmartDashboard.putNumber("range", calculateRange());
         
-            SmartDashboard.putNumber("vision timestamp secs", result.getTimestampSeconds());
+            //SmartDashboard.putNumber("vision timestamp secs", result.getTimestampSeconds());
             SmartDashboard.putBoolean("has targets", result.hasTargets());
-            SmartDashboard.putBoolean("multitag pose", result.getMultiTagResult().estimatedPose.isPresent);
+            //SmartDashboard.putBoolean("multitag pose", result.getMultiTagResult().estimatedPose.isPresent);
          
             //SmartDashboard.putNumber("seen tags", result.getMultiTagResult().fiducialIDsUsed.i);
     

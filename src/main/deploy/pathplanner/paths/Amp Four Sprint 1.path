@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 2.61028579037215,
-        "y": 7.074963437676163
+        "x": 2.77400395256631,
+        "y": 6.993104356579084
       },
       "prevControl": {
-        "x": 2.329626083753592,
-        "y": 6.805997885500045
+        "x": 2.4933442459477515,
+        "y": 6.724138804402966
       },
       "nextControl": null,
       "isLocked": false,
@@ -36,7 +36,25 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.05,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Mailbox Check"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.0,

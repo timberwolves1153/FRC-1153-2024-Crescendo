@@ -82,11 +82,11 @@ public class Collector extends SubsystemBase{
     }
 
     public void pivotUp(){
-        pivotMotor.setVoltage(-1);
+        pivotMotor.setVoltage(-2.5);
     }
 
     public void pivotDown(){
-        pivotMotor.setVoltage(1);
+        pivotMotor.setVoltage(2.5);
     }
 
     public void pivotStop(){

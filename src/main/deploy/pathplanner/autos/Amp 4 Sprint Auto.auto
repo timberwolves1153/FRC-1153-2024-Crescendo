@@ -14,19 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
+            "name": "Subwoofer"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Subwoofer No Spin"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 1.0
           }
         },
         {
@@ -38,13 +38,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.4
           }
         },
         {
           "type": "named",
           "data": {
             "name": "PivotHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Deploy Intake"
           }
         },
         {
@@ -62,7 +68,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Deploy Intake"
+            "name": "Run Launcher"
           }
         },
         {
@@ -93,7 +99,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 1.25
           }
         },
         {
@@ -105,7 +111,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -117,7 +123,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.3
           }
         },
         {
@@ -152,12 +158,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Pivot Mailbox"
@@ -166,7 +166,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -178,7 +178,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.4
           }
         },
         {
@@ -213,12 +213,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.3
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Pivot Mailbox"
@@ -227,7 +221,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -239,7 +233,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.7
+            "waitTime": 0.6
           }
         },
         {

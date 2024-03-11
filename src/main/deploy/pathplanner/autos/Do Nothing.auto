@@ -12,6 +12,60 @@
     "data": {
       "commands": [
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 7.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Close Launcher"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Do Nothing"

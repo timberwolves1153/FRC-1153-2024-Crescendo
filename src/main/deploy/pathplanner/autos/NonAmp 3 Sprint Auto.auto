@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6556953731484674,
-      "y": 4.484888779753807
+      "x": 0.8093860062363999,
+      "y": 4.560720232551577
     },
     "rotation": -60.0
   },
@@ -14,7 +14,86 @@
         {
           "type": "named",
           "data": {
+            "name": "Subwoofer"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer No Spin"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.4
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Run Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Deploy Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NonAmp Three Sprint 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {
@@ -32,7 +111,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.4
           }
         },
         {
@@ -44,19 +123,38 @@
         {
           "type": "named",
           "data": {
-            "name": "Run Intake"
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "NonAmp Three Sprint 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Deploy Intake"
+            "name": "Pivot Mailbox"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "NonAmp Three Sprint 1"
+            "waitTime": 0.5
           }
         },
         {
@@ -68,31 +166,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "NonAmp Three Sprint 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "waitTime": 0.4
           }
         },
         {

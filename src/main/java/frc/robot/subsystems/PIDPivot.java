@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -21,8 +22,9 @@ public class PIDPivot extends PIDSubsystem{
     private WeekZeroVision vision;
     private static LauncherInterpolation pivotMap;
     //private final double UNIT_CIRCLE_OFFSET = Math.toRadians(112);
-    private final double FINAL_UNIT_CIRCLE_OFFSET =  Math.toRadians(74);
+    private final double FINAL_UNIT_CIRCLE_OFFSET =  Math.toRadians(80);
     private final double SUBWOOFER_DEGREES = 56;
+    private final Pigeon2 encoder = new Pigeon2(7);
 
     public PIDPivot() {
         super(new PIDController(20, 0.01, 0.01));
@@ -35,7 +37,7 @@ public class PIDPivot extends PIDSubsystem{
         pivotEncoder = new DutyCycleEncoder(0);
 
         configMotors();
-        getController().setSetpoint(getMeasurement());
+        getController().setSetpoint(Math.toRadians(getPigeonMeasurement()));
         disable();
     }
     
@@ -65,7 +67,7 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public void pivotDown() {
-        // disable();
+        disable();
         // if (getDegrees() < 18.1) {
         //     m_leftPivot.setVoltage(0);
         // } else {
@@ -87,17 +89,18 @@ public class PIDPivot extends PIDSubsystem{
     protected void useOutput(double output, double setpoint) {
         // TODO Auto-generated method stub
         
-        PIDmovePivot(MathUtil.clamp(output, -8, 12));
+        //PIDmovePivot(MathUtil.clamp(output, -8, 12.3));
+        PIDmovePivot(MathUtil.clamp(output, -4, 4));
     }
 
     public void PIDmovePivot(double volts) {
         double adjustedVolts = volts;
-            //negative goes up & positive goes down
+            //negative goes up & positive goes down PLIMPTON ABS ENCODER THEORY
         double constantV;
-        double clampedVolts = MathUtil.clamp(adjustedVolts, -12, 12);
+        double clampedVolts = MathUtil.clamp(adjustedVolts, -2, 2);
         if (clampedVolts > 0) {
-            constantV = 0.15;
-            m_leftPivot.setVoltage(clampedVolts + 0);
+            constantV = 0.18;
+            m_leftPivot.setVoltage(clampedVolts + constantV);
         } else if (clampedVolts < 0) {
             constantV = 0.0;
             m_leftPivot.setVoltage(clampedVolts - 0);
@@ -105,25 +108,40 @@ public class PIDPivot extends PIDSubsystem{
         
     }
 
+    public double getPitch() {
+        return encoder.getPitch().getValueAsDouble();
+    }
+    public double getYaw() {
+        return encoder.getYaw().getValueAsDouble();
+    }
+    public double getRoll() {
+        return encoder.getRoll().getValueAsDouble();
+    }
+
+
 
 
     @Override
     protected double getMeasurement() {
         // TODO Auto-generated method stub
-       return getPivotRadians();
+       return Math.toRadians(getPigeonMeasurement());
     }
 
-    public double getAbsoluteMeasurement() {
-        return (pivotEncoder.getAbsolutePosition() + 0.6) %1;
+ //   public double getAbsoluteMeasurement() {
+ //       return (pivotEncoder.getAbsolutePosition() + 0.6) %1;
+ //   }
+
+      public double getPigeonMeasurement() {
+        return 180 - (encoder.getRoll().getValueAsDouble());
     }
 
-    public double getPivotRadians() {
-        return ((getAbsoluteMeasurement() * 2 * Math.PI)/2) - FINAL_UNIT_CIRCLE_OFFSET;
-    }
+ //   public double getPivotRadians() {
+ //       return ((getAbsoluteMeasurement() * 2 * Math.PI)/2) - FINAL_UNIT_CIRCLE_OFFSET;
+ //   }
 
-    public double getDegrees() {
-        return Math.toDegrees(getPivotRadians());
-    }
+//    public double getDegrees() {
+//        return Math.toDegrees(getPivotRadians());
+//    }
 
     public void setSetpointDegrees(double degrees) {
         double newSetpoint = Math.toRadians(degrees);
@@ -166,7 +184,7 @@ public class PIDPivot extends PIDSubsystem{
     }
 
     public boolean isPivotReadyToShoot() {
-        if (getController().getSetpoint() > 0.3 && getController().atSetpoint()) {
+        if (getController().atSetpoint()) {
             return true;
         } else {
             return false;
@@ -177,11 +195,15 @@ public class PIDPivot extends PIDSubsystem{
     public void periodic() {
         super.periodic();
         SmartDashboard.putBoolean("Pivot Ready", isPivotReadyToShoot());
+        SmartDashboard.putNumber("adjusted pigeon", getPigeonMeasurement());
+        SmartDashboard.putNumber("adjusted pigeon rads", Math.toRadians(getPigeonMeasurement()));
+        SmartDashboard.putNumber("Pivot PID Controller", getController().getSetpoint());
+        SmartDashboard.putNumber("Pivot PID measure", getMeasurement());
         if (Constants.launcherPivotTuningMode) {
-            SmartDashboard.putNumber("pivot degrees", getDegrees());
-            SmartDashboard.putNumber("pivot absolute", getAbsoluteMeasurement());
-            SmartDashboard.putNumber("pivot radians", getPivotRadians());
-            SmartDashboard.putNumber("pivot setpoint", getController().getSetpoint());
+            //SmartDashboard.putNumber("pivot degrees", getDegrees());
+            // SmartDashboard.putNumber("pivot absolute", getAbsoluteMeasurement());
+            // SmartDashboard.putNumber("pivot radians", getPivotRadians());
+            // SmartDashboard.putNumber("pivot setpoint", getController().getSetpoint());
     }
 
 }

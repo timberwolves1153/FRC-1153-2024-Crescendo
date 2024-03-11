@@ -19,7 +19,7 @@ public class PivotToAmp extends SequentialCommandGroup{
         addRequirements(pidPivot);
         addCommands(Commands.runOnce(() -> baseClef.retractClef(), baseClef), 
         new WaitCommand(7),
-        Commands.runOnce(() -> pidPivot.setSetpointDegrees(49.7), pidPivot));
+        Commands.runOnce(() -> pidPivot.setSetpointDegrees(40.2), pidPivot));
     }
 
    

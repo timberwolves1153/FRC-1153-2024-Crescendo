@@ -67,8 +67,8 @@ public class Launcher extends SubsystemBase {
     }
 
     public void slowLaunchWithVolts() {
-        m_leftLauncher.setControl(new VoltageOut(3.5));
-        m_rightLauncher.setControl(new VoltageOut(3.5));
+        m_leftLauncher.setControl(new VoltageOut(3.25));
+        m_rightLauncher.setControl(new VoltageOut(3.25));
     }
 
     public void stopLaunchWithVolts() {
@@ -114,7 +114,7 @@ public class Launcher extends SubsystemBase {
 
 
     public boolean isLauncherReadyToShootFar() {
-        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 9.5) {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 9.75) {
             return true;
         } else {
             return false;
@@ -140,7 +140,7 @@ public class Launcher extends SubsystemBase {
 
     SmartDashboard.putBoolean("Launcher Far Ready", isLauncherReadyToShootFar());
     SmartDashboard.putBoolean("Launcher Close Ready", isLauncherReadyToShootClose());
-    SmartDashboard.putNumber("left roller Vel", m_leftLauncher.getVelocity().getValueAsDouble());
-    SmartDashboard.putNumber("right roller Vel", m_rightLauncher.getVelocity().getValueAsDouble());
+    // SmartDashboard.putNumber("left roller Vel", m_leftLauncher.getVelocity().getValueAsDouble());
+    // SmartDashboard.putNumber("right roller Vel", m_rightLauncher.getVelocity().getValueAsDouble());
    }
 }

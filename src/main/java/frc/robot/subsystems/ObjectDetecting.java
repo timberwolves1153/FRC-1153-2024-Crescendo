@@ -70,8 +70,8 @@ public class ObjectDetecting extends SubsystemBase {
             // SmartDashboard.putNumber("target x", result.getBestTarget());
             // SmartDashboard.putNumber("target y", result.getBestTarget());
             if (result.hasTargets()) {
-                SmartDashboard.putNumber("object target yaw", result.getBestTarget().getYaw());
-                SmartDashboard.putNumber("object range", calculateRange());
+                //SmartDashboard.putNumber("object target yaw", result.getBestTarget().getYaw());
+                //SmartDashboard.putNumber("object range", calculateRange());
             }
            
             // SmartDashboard.putNumber("target ID", targetID);

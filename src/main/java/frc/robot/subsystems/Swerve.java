@@ -140,7 +140,7 @@ public class Swerve extends SubsystemBase {
                 }, 
             this);
 
-        SmartDashboard.putData("Raw Odometry Field", m_field);
+        //SmartDashboard.putData("Raw Odometry Field", m_field);
         SmartDashboard.putData("Pose Estimator Field", m_poseEstimatorField);
         
     }
@@ -339,7 +339,7 @@ public class Swerve extends SubsystemBase {
 
         swervePoseEstimator.update(getAngle(), getModulePositions());
 
-        SmartDashboard.putData("Raw Odometry Field", m_field);
+       // SmartDashboard.putData("Raw Odometry Field", m_field);
         SmartDashboard.putData("Pose Estimator Field", m_poseEstimatorField);
         SmartDashboard.putBoolean("Pose Present", pose.isPresent());
 
@@ -347,8 +347,7 @@ public class Swerve extends SubsystemBase {
             for(SwerveModule mod : mSwerveMods){
                 SmartDashboard.putNumber("Mod " + mod.moduleNumber + " absoluteEncoderPorts", mod.getAbsoluteEncoder().getDegrees());
                 SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
-                SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-            
+                
                 
                 SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position", mod.getPosition().distanceMeters);
                 SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
@@ -357,8 +356,13 @@ public class Swerve extends SubsystemBase {
         }
 
         
+
+        
     }
 
+    for (SwerveModule mod : mSwerveMods) {
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+        }
     SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
     }
 

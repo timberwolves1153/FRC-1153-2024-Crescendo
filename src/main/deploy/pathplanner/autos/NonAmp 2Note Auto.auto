@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
+            "name": "Subwoofer"
           }
         },
         {
@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {
@@ -38,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.75
           }
         },
         {
@@ -67,6 +67,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Two Note Right"
@@ -75,7 +81,19 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.9
           }
         },
         {
@@ -87,7 +105,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 1.0
           }
         },
         {

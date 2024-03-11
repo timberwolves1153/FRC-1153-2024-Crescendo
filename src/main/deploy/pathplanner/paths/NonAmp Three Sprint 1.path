@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6556953731484674,
-        "y": 4.484888779753807
+        "x": 0.8093860062363999,
+        "y": 4.560720232551577
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.183598948394478,
-        "y": 2.713043830646066
+        "x": 1.3372895814824108,
+        "y": 2.788875283443836
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.773105181537998,
-        "y": 1.0056972820498358
+        "x": 8.808187644865317,
+        "y": 0.877061583182996
       },
       "prevControl": {
-        "x": 8.699545806717122,
-        "y": 0.8953582198185239
+        "x": 8.73462827004444,
+        "y": 0.7667225209516841
       },
       "nextControl": {
-        "x": 8.851103247272844,
-        "y": 1.1226943806521086
+        "x": 8.886185710600163,
+        "y": 0.9940586817852688
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.031275350299988,
-        "y": 3.1223392361314644
+        "x": 3.03,
+        "y": 3.12
       },
       "prevControl": {
-        "x": 3.7603946683961085,
-        "y": 2.4544807982768213
+        "x": 3.75911931809612,
+        "y": 2.452141562145357
       },
       "nextControl": null,
       "isLocked": false,
@@ -52,7 +52,42 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.45,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Mailbox Check"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.75,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Mailbox"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.0,

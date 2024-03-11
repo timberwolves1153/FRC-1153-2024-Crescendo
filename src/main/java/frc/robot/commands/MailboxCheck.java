@@ -27,14 +27,7 @@ public class MailboxCheck extends Command{
             mailbox.intake();
         }
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        
     
-        mailbox.stop();
-    }
-
     @Override
     public boolean isFinished() {
     if (mailbox.getBannerSensor()) {

@@ -22,7 +22,7 @@ public final class Constants {
     public static final boolean launcherRollerTuningMode = false;
     public static final boolean launcherPivotTuningMode = true;
     public static final boolean collectorTuningMode = false;
-    public static final boolean swerveTuningMode = false;
+    public static final boolean swerveTuningMode = true;
     public static final double stickDeadband = 0.2;
 
     public static final class Field {
@@ -104,7 +104,7 @@ public final class Constants {
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveContinuousCurrentLimit = 40;
+        public static final int driveContinuousCurrentLimit = 50;
         public static final int drivePeakCurrentLimit = 60;
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
@@ -147,7 +147,7 @@ public final class Constants {
         /* Swerve Profiling Values */
         /** Meters per Second */
         
-        public static final double maxSpeed = 5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 10; //TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 11.5; //TODO: This must be tuned to specific robot
 
@@ -193,7 +193,7 @@ public final class Constants {
             public static final int driveMotorID = 31;
             public static final int angleMotorID = 32;
             public static final int absoluteEncoderPorts = 3; //MIGHT SWAP WITH 1
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(357.92);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(177.12+180);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, absoluteEncoderPorts, angleOffset);
         }

@@ -96,6 +96,7 @@ public class TeleopSwerve extends Command {
             translationVal = Math.pow(directionFlip* MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
             strafeVal = Math.pow(directionFlip* MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
 
+            
             thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle()));
             rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), Math.toDegrees(s_Swerve.getSpeakerAngle()) + 180);
         } else {

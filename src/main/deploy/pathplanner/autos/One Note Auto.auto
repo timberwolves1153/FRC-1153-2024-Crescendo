@@ -14,19 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Run Launcher"
+            "name": "Close Launcher"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 1.0
           }
         },
         {
@@ -36,40 +30,21 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "PivotHome"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Stop Index"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "End Launcher"
-                }
-              }
-            ]
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "One Note Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
           }
         }
       ]

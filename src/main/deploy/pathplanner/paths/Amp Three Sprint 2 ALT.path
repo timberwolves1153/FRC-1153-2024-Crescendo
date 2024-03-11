@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.51,
-        "y": 4.49
+        "x": 2.717,
+        "y": 6.99
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6396709716496354,
-        "y": 4.665967622533537
+        "x": 3.9200310879254237,
+        "y": 7.71814193201036
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.6045885083223155,
-        "y": 5.5196408968316515
+        "x": 6.258861976413411,
+        "y": 6.256372626705367
       },
       "prevControl": {
-        "x": 1.2937177075105468,
-        "y": 5.454194412450227
+        "x": 5.303988836593181,
+        "y": 6.256372626705367
       },
       "nextControl": {
-        "x": 1.8267774427286743,
-        "y": 5.566417514601411
+        "x": 6.761710617438328,
+        "y": 6.256372626705367
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.51,
-        "y": 5.55
+        "x": 8.41058639382236,
+        "y": 7.262069908755202
       },
       "prevControl": {
-        "x": 2.1776020760018726,
-        "y": 5.578111669043852
+        "x": 7.667292247575196,
+        "y": 6.593105177132756
+      },
+      "nextControl": {
+        "x": 8.761411027095559,
+        "y": 7.57781207870108
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.6627596901917445,
+        "y": 6.256372626705367
+      },
+      "prevControl": {
+        "x": 4.820480979993299,
+        "y": 6.583808951093687
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +62,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.95,
-      "rotationDegrees": 0.0,
+      "waypointRelativePos": 1.45,
+      "rotationDegrees": 40.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
@@ -55,7 +76,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 1.2,
       "command": {
         "type": "parallel",
         "data": {
@@ -78,14 +99,14 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0,
+    "velocity": 0,
+    "rotation": 13.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmp Four Note Paths",
+  "folder": "Amp Three Sprint Paths",
   "previewStartingState": {
-    "rotation": -30.0,
+    "rotation": 30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

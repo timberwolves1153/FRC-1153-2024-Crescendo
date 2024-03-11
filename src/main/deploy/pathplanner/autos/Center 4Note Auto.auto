@@ -50,6 +50,12 @@
         {
           "type": "named",
           "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Deploy Intake"
           }
         },

@@ -32,28 +32,12 @@
     },
     {
       "anchor": {
-        "x": 4.937422524417698,
-        "y": 4.174813135951059
+        "x": 4.153914176774222,
+        "y": 4.9934039469218545
       },
       "prevControl": {
-        "x": 5.581382572735517,
-        "y": 4.610433168636643
-      },
-      "nextControl": {
-        "x": 4.142220022331783,
-        "y": 3.6368820315988213
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 2.820780570336069,
-        "y": 3.31
-      },
-      "prevControl": {
-        "x": 4.025278477907382,
-        "y": 2.713043830646066
+        "x": 5.042669914399658,
+        "y": 3.4146930971924627
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,13 +46,48 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0499999999999998,
+      "waypointRelativePos": 1.05,
       "rotationDegrees": 10.0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.5499999999999999,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Mailbox Check"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.8,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Pivot Mailbox"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
@@ -77,7 +96,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.0,
+    "rotation": -10.0,
     "rotateFast": false
   },
   "reversed": false,

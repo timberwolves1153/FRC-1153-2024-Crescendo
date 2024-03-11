@@ -14,7 +14,7 @@ public class BaseClef extends SubsystemBase{
     private CANSparkMax m_Clef;
     private RelativeEncoder encoder;
     private SparkPIDController controller;
-    private final double setpoint = 30;
+    private final double setpoint = -30;
 
     public BaseClef() {
         m_Clef = new CANSparkMax(56, MotorType.kBrushless);
@@ -33,11 +33,11 @@ public class BaseClef extends SubsystemBase{
     }
 
     public void manualDeploy() {
-        m_Clef.setVoltage(3);
+        m_Clef.setVoltage(-3);
     }
 
     public void manualRetract() {
-        m_Clef.setVoltage(-3);
+        m_Clef.setVoltage(3);
     }
 
     public void stop() {
@@ -52,12 +52,16 @@ public class BaseClef extends SubsystemBase{
         controller.setReference(0, ControlType.kPosition);
     }
 
+    public void stowingClef() {
+        controller.setReference(-15, ControlType.kPosition);
+    }
+
     public void resetEncoder() {
         encoder.setPosition(0);
     }
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Clef Encoder", encoder.getPosition());
+        //SmartDashboard.putNumber("Clef Encoder", encoder.getPosition());
     }
 }
