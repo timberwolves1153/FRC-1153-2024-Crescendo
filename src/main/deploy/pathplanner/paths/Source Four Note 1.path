@@ -3,43 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7509152340242001,
-        "y": 6.560420642208806
+        "x": 0.7626093884666401,
+        "y": 4.537331923666697
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7916949794013541,
-        "y": 6.326537553360007
+        "x": 1.8150832882862344,
+        "y": 4.782909166957935
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.72,
-        "y": 6.99
+        "x": 2.595897258302831,
+        "y": 4.309393131850397
       },
       "prevControl": {
-        "x": 2.294543620426272,
-        "y": 6.759221267730286
+        "x": 2.1084093474600265,
+        "y": 4.650634669440361
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": 20.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.05,
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
@@ -63,13 +57,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 30.0,
+    "rotation": -30.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Three Sprint Paths",
+  "folder": "Source Four Note Paths",
   "previewStartingState": {
-    "rotation": 59.0362434679265,
+    "rotation": -60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6807503073695607,
-      "y": 6.6188914144210065
+      "x": 0.8093860062363999,
+      "y": 4.560720232551577
     },
     "rotation": -60.0
   },
@@ -14,13 +14,86 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
+            "name": "Subwoofer"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Subwoofer No Spin"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.4
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Intake"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Run Launcher"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Deploy Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Source Three Sprint N54 Path1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {
@@ -38,7 +111,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.4
           }
         },
         {
@@ -50,19 +123,38 @@
         {
           "type": "named",
           "data": {
-            "name": "Deploy Intake"
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Source Three Sprint N54 Path2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Intake"
+            "name": "Pivot Mailbox"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Right Four Note 1"
+            "waitTime": 0.5
           }
         },
         {
@@ -74,67 +166,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.4
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Stop Index"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Four Note 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Right Four Note 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "End Intake"
           }
         },
         {
@@ -146,18 +184,24 @@
         {
           "type": "named",
           "data": {
+            "name": "PivotHome"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "End Launcher"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "End Intake"
           }
         }
       ]
     }
   },
-  "folder": "4 Notes",
+  "folder": "3 Notes",
   "choreoAuto": false
 }

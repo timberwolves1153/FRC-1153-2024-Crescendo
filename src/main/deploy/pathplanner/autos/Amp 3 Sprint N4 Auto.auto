@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6807503073695607,
-      "y": 6.6188914144210065
+      "x": 0.7509152340242001,
+      "y": 6.560420642208806
     },
-    "rotation": 0.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Run Launcher"
+            "name": "Subwoofer No Spin"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -38,13 +32,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
+            "waitTime": 0.3
           }
         },
         {
@@ -56,7 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Run Intake"
+            "name": "Ready Close Shot"
           }
         },
         {
@@ -66,75 +54,52 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.2
+            "name": "Run Launcher"
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Three Note Center 1"
+            "name": "Run Intake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Three Sprint 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.7
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Three Note Center 2 ALT"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
           }
         },
         {
@@ -158,13 +123,62 @@
         {
           "type": "named",
           "data": {
-            "name": "Retract Intake"
+            "name": "Ready Wing Shot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Amp Three Sprint 2 N4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Mailbox Check"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "End Intake"
           }
         },
         {
@@ -176,12 +190,12 @@
         {
           "type": "named",
           "data": {
-            "name": "End Intake"
+            "name": "PivotHome"
           }
         }
       ]
     }
   },
-  "folder": "Unused Autos",
+  "folder": "3 Notes",
   "choreoAuto": false
 }

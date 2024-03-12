@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8093860062363999,
-        "y": 4.560720232551577
+        "x": 2.717,
+        "y": 6.99
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3372895814824108,
-        "y": 2.788875283443836
+        "x": 3.717,
+        "y": 6.99
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.808187644865317,
-        "y": 0.877061583182996
+        "x": 8.55,
+        "y": 7.601200387585961
       },
       "prevControl": {
-        "x": 8.73462827004444,
-        "y": 0.7667225209516841
+        "x": 7.557722123286335,
+        "y": 7.477165652996753
       },
       "nextControl": {
-        "x": 8.886185710600163,
-        "y": 0.9940586817852688
+        "x": 9.32998065734849,
+        "y": 7.698697969754522
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.03,
-        "y": 3.12
+        "x": 5.0,
+        "y": 6.443479097784407
       },
       "prevControl": {
-        "x": 3.75911931809612,
-        "y": 2.452141562145357
+        "x": 5.958920664280075,
+        "y": 7.297152372082522
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": -10.0,
+      "waypointRelativePos": 1.05,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     }
   ],
@@ -55,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.45,
+      "waypointRelativePos": 0.6,
       "command": {
         "type": "parallel",
         "data": {
@@ -64,23 +64,6 @@
               "type": "named",
               "data": {
                 "name": "Mailbox Check"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.75,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Mailbox"
               }
             }
           ]
@@ -96,13 +79,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -40.0,
+    "rotation": 13.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmp Three Sprint Paths",
+  "folder": "Amp Four Sprint N12 Paths",
   "previewStartingState": {
-    "rotation": -60.0,
+    "rotation": 30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

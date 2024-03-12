@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7509152340242001,
-        "y": 6.560420642208806
+        "x": 2.6,
+        "y": 4.31
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7916949794013541,
-        "y": 6.326537553360007
+        "x": 1.7296709716496357,
+        "y": 4.485967622533536
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.72,
-        "y": 6.99
+        "x": 1.6045885083223155,
+        "y": 5.5196408968316515
       },
       "prevControl": {
-        "x": 2.294543620426272,
-        "y": 6.759221267730286
+        "x": 1.2937177075105468,
+        "y": 5.454194412450227
+      },
+      "nextControl": {
+        "x": 1.8267774427286743,
+        "y": 5.566417514601411
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.51,
+        "y": 5.55
+      },
+      "prevControl": {
+        "x": 2.1776020760018726,
+        "y": 5.578111669043852
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": 20.0,
+      "waypointRelativePos": 0.95,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     }
   ],
@@ -39,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.05,
+      "waypointRelativePos": 0,
       "command": {
         "type": "parallel",
         "data": {
@@ -62,14 +78,14 @@
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 30.0,
+    "velocity": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Three Sprint Paths",
+  "folder": "Source Four Note Paths",
   "previewStartingState": {
-    "rotation": 59.0362434679265,
+    "rotation": -30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

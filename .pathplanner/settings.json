@@ -3,24 +3,27 @@
   "robotLength": 0.71,
   "holonomicMode": true,
   "pathFolders": [
+    "Amp 4 Sprint N23 Paths",
     "Amp Four Note Paths",
-    "Amp Three Sprint Paths",
+    "Amp Four Sprint N12 Paths",
     "Amp Three Note Paths",
-    "Amp Four Sprint Paths",
+    "Amp Three Sprint Paths",
     "Center Four Note Paths",
     "Center Three Paths",
     "Center Three Sprint Paths",
-    "NonAmp Four Note Paths",
+    "Source Four Note Paths",
     "NonAmp Three Note Paths",
-    "NonAmp Three Sprint Paths",
     "One Note Path",
+    "Source 3 Sprint N43 Paths",
+    "Source Three Sprint N54 Paths",
     "Two Note Paths"
   ],
   "autoFolders": [
+    "1 Note",
     "2 Notes",
     "3 Notes",
     "4 Notes",
-    "1 Note"
+    "Unused Autos"
   ],
   "defaultMaxVel": 4.0,
   "defaultMaxAccel": 3.0,

@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.03,
-        "y": 3.12
+        "x": 2.72,
+        "y": 6.99
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.5073696950244204,
-        "y": 1.5942057536846668
+        "x": 3.615983072421985,
+        "y": 7.086657592118603
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.539222092689199,
-        "y": 2.7715146028582662
+        "x": 5.842566744515913,
+        "y": 6.542087763510444
       },
       "prevControl": {
-        "x": 7.132145875500986,
-        "y": 1.571711023317291
+        "x": 5.323329621018216,
+        "y": 6.677362186633205
       },
       "nextControl": {
-        "x": 9.02892287256047,
-        "y": 3.1890788693964778
+        "x": 6.212575601081168,
+        "y": 6.445691083925958
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.153914176774222,
-        "y": 4.9934039469218545
+        "x": 8.3053390038404,
+        "y": 5.765218140122891
       },
       "prevControl": {
-        "x": 5.042669914399658,
-        "y": 3.4146930971924627
+        "x": 9.018761568609257,
+        "y": 5.576766896599043
+      },
+      "nextControl": {
+        "x": 7.685548818391084,
+        "y": 5.928936302317049
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.335023775460655,
+        "y": 6.396702480014646
+      },
+      "prevControl": {
+        "x": 6.056505883508006,
+        "y": 6.533199095050631
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +62,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.05,
-      "rotationDegrees": 10.0,
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -20.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.15,
+      "rotationDegrees": -20.0,
       "rotateFast": false
     }
   ],
@@ -55,7 +76,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.5499999999999999,
+      "waypointRelativePos": 0.44999999999999996,
       "command": {
         "type": "parallel",
         "data": {
@@ -69,41 +90,24 @@
           ]
         }
       }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.8,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Mailbox"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -10.0,
+    "rotation": 5.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmp Three Sprint Paths",
+  "folder": "Amp Three Sprint Paths",
   "previewStartingState": {
-    "rotation": -35.0,
+    "rotation": 30.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

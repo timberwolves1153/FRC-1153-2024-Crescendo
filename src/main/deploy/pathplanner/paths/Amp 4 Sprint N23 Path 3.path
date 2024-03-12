@@ -1,0 +1,79 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.87,
+        "y": 6.35
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.44596844749245,
+        "y": 6.958021893251764
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.223479922743321,
+        "y": 4.280060525933018
+      },
+      "prevControl": {
+        "x": 7.9545143705672015,
+        "y": 4.771215012515496
+      },
+      "nextControl": {
+        "x": 8.703794545608908,
+        "y": 3.402964258091515
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.352714802295702,
+        "y": 5.203898726885772
+      },
+      "prevControl": {
+        "x": 4.785398516665979,
+        "y": 3.9877066648720176
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -40.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.35,
+      "rotationDegrees": -40.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -10.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Amp 4 Sprint N23 Paths",
+  "previewStartingState": {
+    "rotation": 13.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

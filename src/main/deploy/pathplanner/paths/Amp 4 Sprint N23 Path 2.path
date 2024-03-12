@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.717,
-        "y": 6.99
+        "x": 2.9,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.717,
-        "y": 6.99
+        "x": 4.984199142187458,
+        "y": 6.946327738809324
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.55,
-        "y": 7.601200387585961
+        "x": 8.281950694955519,
+        "y": 5.765218140122891
       },
       "prevControl": {
-        "x": 7.557722123286335,
-        "y": 7.477165652996753
+        "x": 7.149428441913763,
+        "y": 6.482482233716001
       },
       "nextControl": {
-        "x": 9.32998065734849,
-        "y": 7.698697969754522
+        "x": 8.632775328228718,
+        "y": 5.5430292057165325
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.0,
-        "y": 6.443479097784407
+        "x": 4.867257597763059,
+        "y": 6.349925862244887
       },
       "prevControl": {
-        "x": 5.958920664280075,
-        "y": 7.297152372082522
+        "x": 5.9080373431402124,
+        "y": 6.607197259978566
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,16 +46,21 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.05,
-      "rotationDegrees": 0.0,
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": -20.0,
       "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -30.0,
+      "rotateFast": true
     }
   ],
   "constraintZones": [],
   "eventMarkers": [
     {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0.6,
+      "name": "interpolate",
+      "waypointRelativePos": 1.85,
       "command": {
         "type": "parallel",
         "data": {
@@ -63,7 +68,7 @@
             {
               "type": "named",
               "data": {
-                "name": "Mailbox Check"
+                "name": "Pivot Mailbox"
               }
             }
           ]
@@ -79,11 +84,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 13.0,
+    "rotation": 10.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp Four Sprint Paths",
+  "folder": "Amp 4 Sprint N23 Paths",
   "previewStartingState": {
     "rotation": 30.0,
     "velocity": 0

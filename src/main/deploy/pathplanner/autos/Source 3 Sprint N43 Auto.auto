@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8093860062363999,
-      "y": 4.560720232551577
+      "x": 0.7509152340242001,
+      "y": 4.549026078109137
     },
     "rotation": -60.0
   },
@@ -14,19 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Subwoofer No Spin"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.75
           }
         },
         {
@@ -38,7 +32,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.3
           }
         },
         {
@@ -50,13 +44,13 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "Ready Close Shot"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Intake"
+            "name": "Deploy Intake"
           }
         },
         {
@@ -68,7 +62,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Deploy Intake"
+            "name": "Run Intake"
           }
         },
         {
@@ -78,7 +72,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "NonAmp Three Sprint 1"
+                  "pathName": "Source 3 Sprint N43 Path1"
                 }
               },
               {
@@ -88,6 +82,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
@@ -111,7 +111,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.25
           }
         },
         {
@@ -123,7 +123,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "Ready Wing Shot"
           }
         },
         {
@@ -133,7 +133,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "NonAmp Three Sprint 2"
+                  "pathName": "Source 3 Sprint N43 Path2"
                 }
               },
               {
@@ -146,15 +146,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -166,7 +160,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.3
           }
         },
         {
@@ -178,13 +172,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Retract Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
+            "name": "End Intake"
           }
         },
         {
@@ -196,7 +184,7 @@
         {
           "type": "named",
           "data": {
-            "name": "End Intake"
+            "name": "PivotHome"
           }
         }
       ]

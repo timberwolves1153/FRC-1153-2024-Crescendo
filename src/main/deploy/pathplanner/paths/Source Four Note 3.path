@@ -3,25 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6222795351573609,
-        "y": 4.490555305896938
+        "x": 2.51,
+        "y": 5.55
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6747534349769553,
-        "y": 4.736132549188175
+        "x": 2.271155311541392,
+        "y": 5.531335051274091
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.595897258302831,
-        "y": 4.309393131850397
+        "x": 1.6513651260920754,
+        "y": 6.303149244475128
       },
       "prevControl": {
-        "x": 2.1084093474600265,
-        "y": 4.650634669440361
+        "x": 1.4836220061358132,
+        "y": 6.243240987347891
+      },
+      "nextControl": {
+        "x": 1.9788014504803932,
+        "y": 6.420090788899527
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.62197994481459,
+        "y": 6.794303731057604
+      },
+      "prevControl": {
+        "x": 2.481650091505311,
+        "y": 6.700750495518085
       },
       "nextControl": null,
       "isLocked": false,
@@ -57,13 +73,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -30.0,
+    "rotation": 30.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "NonAmp Four Note Paths",
+  "folder": "Source Four Note Paths",
   "previewStartingState": {
-    "rotation": -60.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
