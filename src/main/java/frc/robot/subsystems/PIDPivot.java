@@ -78,7 +78,6 @@ public class PIDPivot extends PIDSubsystem{
     public void pivotStop() {
         disable();
         m_leftPivot.setVoltage(0);
-        
     }
 
     

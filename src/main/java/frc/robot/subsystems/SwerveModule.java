@@ -78,17 +78,17 @@ public class SwerveModule {
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
-        if(isOpenLoop){
-            double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
-            mDriveMotor.set(percentOutput);
-        }
-        else {
+        // if(isOpenLoop){
+        //     double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+        //     mDriveMotor.set(percentOutput);
+        // }
+        // else {
             driveController.setReference(
           desiredState.speedMetersPerSecond,
           ControlType.kVelocity,
           0,
           feedforward.calculate(desiredState.speedMetersPerSecond));
-        }
+        //}
     }
 
     private void setAngle(SwerveModuleState desiredState){

@@ -144,6 +144,7 @@ public class RobotContainer {
                 () -> false,
                 () -> rotateWithTag.getAsBoolean(),
                 () -> driveA.getAsBoolean(),
+                () -> driveX.getAsBoolean(),
                 vision
             )
         );
@@ -164,6 +165,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
         NamedCommands.registerCommand("Pivot Mailbox", new InstantCommand(() -> pidPivot.interpolateSetpoint()));
         NamedCommands.registerCommand("Close Launcher", new InstantCommand(() -> launcher.closeLaunchSpeed()));
+        NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(26), pidPivot));
+        NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(42), pidPivot));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autoChooser);
@@ -220,17 +223,16 @@ public class RobotContainer {
         
 
     
-        //LAUNCHER
+        //LAUNCHER - when auto shoot is not working
         opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
-        //opX.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
-      //  opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
         opX.whileTrue(interpolateToSpeaker); 
         opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         
                     // driveX.whileTrue(Commands.runOnce(() -> 
                     // pidPivot.setSetpointDegrees(SmartDashboard.getNumber("PIGEON MAIL",20)), pidPivot));
         // back up if interpolation is wrong/messed up
+
         // BASE CLEF (AMP MECH)
         opY.onTrue(new InstantCommand(() -> baseClef.manualDeploy()));
         opY.onFalse(new InstantCommand(() -> baseClef.stop()));
@@ -241,8 +243,12 @@ public class RobotContainer {
         opLeftTrigger.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opLeftTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
 
-        opRightTrigger.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        opRightTrigger.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opRightTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
+        opRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
+        opRightTrigger.whileTrue(interpolateToSpeaker); 
+        opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
 
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));

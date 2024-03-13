@@ -294,6 +294,25 @@ public class Swerve extends SubsystemBase {
     return new Translation2d(x, y);
   }
 
+  public double getRobotToSpeakerDistance() {
+     boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+        .equals(DriverStation.Alliance.Blue);
+    Translation2d goalPose = isBlue ? FieldConstants.BLUE_SPEAKER : FieldConstants.RED_SPEAKER;
+    ChassisSpeeds robotVel = getFieldRelativeSpeeds();
+    double distanceToSpeaker = getPosition().getTranslation().getDistance(goalPose);
+    
+    return distanceToSpeaker;
+  }
+
+  // from 3467
+  public Rotation2d getAngleToSpeaker(Translation2d pose) {
+    return getSpeakerPosition().minus(pose).getAngle();
+}
+public double getDistToSpeaker(Translation2d robotPose) {
+    return getSpeakerPosition().getDistance(robotPose);
+}
+
+
   /**
    * Gets the angle for the robot to face to score in the speaker, in radians.
    */
