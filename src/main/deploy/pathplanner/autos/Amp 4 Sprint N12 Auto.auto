@@ -14,19 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Subwoofer No Spin"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.6
           }
         },
         {
@@ -38,13 +32,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
+            "waitTime": 0.25
           }
         },
         {
@@ -56,25 +44,25 @@
         {
           "type": "named",
           "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Run Intake"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Ready Close Shot"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.2
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Run Launcher"
           }
         },
         {
@@ -94,12 +82,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.25
           }
         },
         {
@@ -123,7 +105,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {
@@ -135,7 +117,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "Ready Wing Shot"
           }
         },
         {
@@ -178,7 +160,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.25
           }
         },
         {
@@ -190,7 +172,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "Ready Wing Shot"
           }
         },
         {
@@ -233,7 +215,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.25
           }
         },
         {

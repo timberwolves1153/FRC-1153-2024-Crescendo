@@ -2,21 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.6222795351573609,
-      "y": 4.490555305896938
+      "x": 0.68,
+      "y": 6.6188914144210065
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "named",
-          "data": {
-            "name": "Subwoofer"
-          }
-        },
         {
           "type": "named",
           "data": {
@@ -26,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.75
           }
         },
         {
@@ -91,12 +85,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.25
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Pivot Mailbox"
@@ -105,7 +93,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -124,12 +112,6 @@
           "type": "named",
           "data": {
             "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
           }
         },
         {
@@ -152,12 +134,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Pivot Mailbox"
@@ -166,7 +142,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {
@@ -178,19 +154,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
           }
         },
         {
@@ -213,12 +183,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "Pivot Mailbox"
@@ -227,7 +191,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {

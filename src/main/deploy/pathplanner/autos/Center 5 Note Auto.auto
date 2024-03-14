@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7509152340242001,
-      "y": 4.549026078109137
+      "x": 1.25,
+      "y": 5.55
     },
-    "rotation": -60.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,13 +14,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer No Spin"
+            "name": "Close Launcher"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -32,7 +32,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {
@@ -44,19 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Ready Close Shot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "Deploy Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Run Launcher"
           }
         },
         {
@@ -66,28 +54,21 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Source 3 Sprint N43 Path1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
+            "name": "Ready Close Shot"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 0.5
+            "name": "Run Launcher"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Four 1"
           }
         },
         {
@@ -99,7 +80,67 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Four 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Four 3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {
@@ -127,22 +168,9 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Source 3 Sprint N43 Path2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
+            "pathName": "5 Note path"
           }
         },
         {
@@ -154,7 +182,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.2
           }
         },
         {
@@ -166,7 +194,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {
@@ -184,6 +212,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Retract Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "End Launcher"
           }
         },
@@ -196,6 +230,6 @@
       ]
     }
   },
-  "folder": "3 Notes",
+  "folder": null,
   "choreoAuto": false
 }

@@ -89,14 +89,14 @@ public class PIDPivot extends PIDSubsystem{
         // TODO Auto-generated method stub
         
         //PIDmovePivot(MathUtil.clamp(output, -8, 12.3));
-        PIDmovePivot(MathUtil.clamp(output, -4, 4));
+        PIDmovePivot(MathUtil.clamp(output, -5, 5));
     }
 
     public void PIDmovePivot(double volts) {
         double adjustedVolts = volts;
             //negative goes up & positive goes down PLIMPTON ABS ENCODER THEORY
         double constantV;
-        double clampedVolts = MathUtil.clamp(adjustedVolts, -2, 2);
+        double clampedVolts = MathUtil.clamp(adjustedVolts, -5, 5);
         if (clampedVolts > 0) {
             constantV = 0.18;
             m_leftPivot.setVoltage(clampedVolts + constantV);

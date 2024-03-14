@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7509152340242001,
-      "y": 4.549026078109137
+      "x": 0.77430354290908,
+      "y": 6.560420642208806
     },
     "rotation": 60.0
   },
@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 0.6
           }
         },
         {
@@ -32,7 +32,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {
@@ -82,12 +82,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
           }
         },
         {
@@ -146,9 +140,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.3
           }
         },
         {
@@ -160,7 +160,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {
@@ -203,7 +203,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.4
           }
         },
         {
@@ -215,7 +215,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {

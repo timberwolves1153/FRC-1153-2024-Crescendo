@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.05,
-      "rotationDegrees": 10.0,
+      "rotationDegrees": 40.0,
       "rotateFast": false
     }
   ],
@@ -64,23 +64,6 @@
               "type": "named",
               "data": {
                 "name": "Mailbox Check"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.8,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Mailbox"
               }
             }
           ]

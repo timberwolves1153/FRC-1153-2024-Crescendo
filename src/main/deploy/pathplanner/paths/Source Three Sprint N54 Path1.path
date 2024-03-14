@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 8.3638097760526,
-        "y": 0.8068966565283563
+        "x": 8.480751320477,
+        "y": 1.1343329809166744
       },
       "prevControl": {
-        "x": 8.3638097760526,
-        "y": 0.9395077053822268
+        "x": 8.39889223937992,
+        "y": 1.9412296374450306
       },
       "nextControl": {
-        "x": 8.3638097760526,
-        "y": 0.5496252587946778
+        "x": 8.506718035267806,
+        "y": 0.8783753636930139
       },
       "isLocked": false,
       "linkedName": null
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.85,
-      "rotationDegrees": -30.0,
+      "rotationDegrees": -45.0,
       "rotateFast": false
     }
   ],
@@ -64,23 +64,6 @@
               "type": "named",
               "data": {
                 "name": "Mailbox Check"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 1.75,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Pivot Mailbox"
               }
             }
           ]

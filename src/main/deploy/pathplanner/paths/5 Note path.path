@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.9,
+        "x": 2.61,
         "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.984199142187458,
-        "y": 6.946327738809324
+        "x": 3.61,
+        "y": 7.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.34042146716772,
-        "y": 5.659970750140931
+        "x": 8.37550393049504,
+        "y": 5.84707722121997
       },
       "prevControl": {
-        "x": 7.207899214125964,
-        "y": 6.377234843734041
+        "x": 7.418403291817893,
+        "y": 6.804177859897103
       },
       "nextControl": {
-        "x": 8.69124610044092,
-        "y": 5.4377818157345725
+        "x": 8.50413962936188,
+        "y": 5.718441522353131
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.0,
-        "y": 6.35
+        "x": 4.072055095677142,
+        "y": 6.537032333323926
       },
       "prevControl": {
-        "x": 6.0407797453771535,
-        "y": 6.607271397733679
+        "x": 4.434573883392781,
+        "y": 6.583808951093686
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,14 +46,9 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.4,
-      "rotationDegrees": -20.0,
-      "rotateFast": false
-    },
-    {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": -30.0,
-      "rotateFast": true
+      "rotationDegrees": -45.0,
+      "rotateFast": false
     }
   ],
   "constraintZones": [],
@@ -66,11 +61,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 10.0,
+    "rotation": 15.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Amp 4 Sprint N23 Paths",
+  "folder": null,
   "previewStartingState": {
     "rotation": 30.0,
     "velocity": 0
