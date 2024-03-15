@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     
     public class WeekZeroVision extends SubsystemBase{
         
-        public final PhotonCamera cam = new PhotonCamera("launcherCam");
+        public final PhotonCamera cam = new PhotonCamera("launchercam");
         
         private PhotonTrackedTarget target;
     
@@ -76,9 +76,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
             if (preferredTarget.isPresent()) {
                 double targetRotation = preferredTarget.get().getYaw();
                 if (isBlue) {
-                    return targetRotation + 3;
+                    return targetRotation -2;
                 } else {
-                    return targetRotation - 3;
+                    return targetRotation + 2;
                 }
                
             } else {
@@ -156,7 +156,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         public boolean isOnTarget() {
             var result = cam.getLatestResult();
             if(result.hasTargets()) {
-            if (Math.abs(result.getBestTarget().getYaw()) < 4) {
+            if (Math.abs(result.getBestTarget().getYaw()) < 3) {
                 return true;
             } else {
                 return false;

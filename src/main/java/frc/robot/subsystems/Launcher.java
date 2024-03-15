@@ -66,6 +66,11 @@ public class Launcher extends SubsystemBase {
         m_rightLauncher.setControl(new VoltageOut(6.25));
     }
 
+     public void launchAtWing() {
+        m_leftLauncher.setControl(new VoltageOut(10));
+        m_rightLauncher.setControl(new VoltageOut(5));
+    }
+
     public void slowLaunchWithVolts() {
         m_leftLauncher.setControl(new VoltageOut(3.25));
         m_rightLauncher.setControl(new VoltageOut(3.25));
@@ -88,8 +93,8 @@ public class Launcher extends SubsystemBase {
 
 
     public void idleLaunchWithVolts() {
-        m_leftLauncher.setControl(leftOutput.withOutput(2.5));
-        m_rightLauncher.setControl(rightOutput.withOutput(2.5));
+        m_leftLauncher.setControl(leftOutput.withOutput(3));
+        m_rightLauncher.setControl(rightOutput.withOutput(3));
     }
 
     public double getLeftLauncherAppliedVolts() {

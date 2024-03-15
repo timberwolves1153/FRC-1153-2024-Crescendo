@@ -20,6 +20,7 @@ import frc.robot.commands.AutoShoot;
 import frc.robot.commands.ConstantInterpolation;
 import frc.robot.commands.DriverIntakeFeedback;
 import frc.robot.commands.InterpolateToSpeaker;
+import frc.robot.commands.Launch;
 import frc.robot.commands.MailboxCheck;
 import frc.robot.commands.MailboxClimbingPosition;
 import frc.robot.commands.PivotToAmp;
@@ -85,6 +86,7 @@ public class RobotContainer {
     private final MailboxClimbingPosition PivotToClimb = new MailboxClimbingPosition(pidPivot);
     private final MailboxCheck mailboxCheck = new MailboxCheck(collector, mailbox);
     private final AutoShoot autoShoot = new AutoShoot(launcher, pidPivot, mailbox, vision);
+    private final Launch launch = new Launch(launcher, vision);
    // private final ReturnFromAmp returnFromAmp = new ReturnFromAmp(pidPivot, baseClef);
 
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -224,11 +226,11 @@ public class RobotContainer {
 
     
         //LAUNCHER - when auto shoot is not working
-        opX.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        opX.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opX.whileTrue(launch);
+        opX.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts(), launcher));
         opX.whileTrue(interpolateToSpeaker); 
         opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-        
+        opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
                     // driveX.whileTrue(Commands.runOnce(() -> 
                     // pidPivot.setSetpointDegrees(SmartDashboard.getNumber("PIGEON MAIL",20)), pidPivot));
         // back up if interpolation is wrong/messed up
@@ -243,8 +245,8 @@ public class RobotContainer {
         opLeftTrigger.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
         opLeftTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
 
-        opRightTrigger.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
-        opRightTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        opRightTrigger.whileTrue(launch);
+        opRightTrigger.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
         opRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
         opRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
         opRightTrigger.whileTrue(interpolateToSpeaker); 
