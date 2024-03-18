@@ -61,22 +61,22 @@ public class Winch extends SubsystemBase{
     }
 
     public void winchUp() {
-        leftMotor.setVoltage(-8);
-        rightMotor.setVoltage(8);
+        leftMotor.setVoltage(-11);
+        rightMotor.setVoltage(11);
     }
 
     public void winchDown() {
-        leftMotor.setVoltage(8);
-        rightMotor.setVoltage(-8);
+        leftMotor.setVoltage(11);
+        rightMotor.setVoltage(-11);
     }
 
     public void leftWinchDown() {
-        leftMotor.setVoltage(8);
+        leftMotor.setVoltage(11);
         
     }
 
     public void leftWinchUp() {
-        leftMotor.setVoltage(-8);
+        leftMotor.setVoltage(-11);
     }
 
     public void leftStop() {
@@ -88,7 +88,7 @@ public class Winch extends SubsystemBase{
     }
 
     public void rightWinchDown() {
-        rightMotor.setVoltage(-8);
+        rightMotor.setVoltage(-11);
     }
 
     public void rightStop() {

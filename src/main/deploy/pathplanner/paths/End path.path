@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.75,
-        "y": 5.73
+        "x": 4.07,
+        "y": 6.54
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8976682934363505,
-        "y": 5.737362183607979
+        "x": 5.07,
+        "y": 6.54
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.72,
-        "y": 6.99
+        "x": 7.6170227399837245,
+        "y": 7.312318662642077
       },
       "prevControl": {
-        "x": 1.4191794154609703,
-        "y": 6.434263781639202
+        "x": 6.6170227399837245,
+        "y": 7.312318662642077
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,25 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "New Event Marker",
-      "waypointRelativePos": 0,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "Mailbox Check"
-              }
-            }
-          ]
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.0,
@@ -57,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 30.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Center Four Note Paths",
+  "folder": null,
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 15.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

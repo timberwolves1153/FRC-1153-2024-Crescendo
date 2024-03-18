@@ -170,7 +170,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "5 Note path"
+            "pathName": "Amp Four Sprint N12 Path2"
           }
         },
         {
@@ -182,7 +182,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.2
           }
         },
         {
@@ -225,12 +225,6 @@
           "type": "named",
           "data": {
             "name": "PivotHome"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "End path"
           }
         }
       ]

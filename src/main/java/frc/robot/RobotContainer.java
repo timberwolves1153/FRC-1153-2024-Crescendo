@@ -270,18 +270,8 @@ public class RobotContainer {
     //     // opA.whileFalse(returnFromAmp);
     //     // opA.onTrue(Commands.runOnce(() -> baseClef.deployClef(), baseClef));
     //     // opA.onFalse(Commands.runOnce(() -> baseClef.retractClef(), baseClef));
-        opA.onTrue(
-            Commands.runOnce(() -> baseClef.deployClef())
-            .andThen(new WaitCommand(1))
-            .andThen(Commands.runOnce(() -> pidPivot.setSetpointDegrees(42))));
-        opA.onFalse(
-            Commands.runOnce(() -> pidPivot.setSetpointDegrees(30))
-            .andThen(new WaitCommand(0.55))
-            .andThen(Commands.runOnce(() -> baseClef.stowingClef()))
-            .andThen(new WaitCommand(0.5))
-            .andThen(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22)))
-            .andThen(new WaitCommand(0.5))
-            .andThen(Commands.runOnce(() -> baseClef.retractClef())));
+        opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(49.1)));
+        opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22)));
 
         // CLIMB
 
@@ -292,12 +282,15 @@ public class RobotContainer {
         driveLeftTrigger.onFalse(new InstantCommand(() -> winch.stop()));
 
         driveRightTrigger.onTrue(Commands.runOnce(() -> winch.pidWinchDown(), winch));
+        driveRightTrigger.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
         driveRightTrigger.onFalse(new InstantCommand(() -> winch.stop()));
 
         driveLeftBumper.onTrue(new InstantCommand(() -> winch.winchUp(), winch));
+        driveLeftBumper.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
         driveLeftBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
 
         driveRightBumper.onTrue(new InstantCommand(() -> winch.winchDown(), winch));
+        driveRightBumper.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
         driveRightBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
 
         driveY.onTrue(new InstantCommand(() -> winch.rightWinchUp()));

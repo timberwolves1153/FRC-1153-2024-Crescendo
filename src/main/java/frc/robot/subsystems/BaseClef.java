@@ -33,11 +33,11 @@ public class BaseClef extends SubsystemBase{
     }
 
     public void manualDeploy() {
-        m_Clef.setVoltage(-3);
+        m_Clef.setVoltage(-1.5);
     }
 
     public void manualRetract() {
-        m_Clef.setVoltage(3);
+        m_Clef.setVoltage(1.5);
     }
 
     public void stop() {
