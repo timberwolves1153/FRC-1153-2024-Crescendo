@@ -50,7 +50,7 @@ public final class Constants {
         public static final double FIELD_LENGTH = 16.5417;
         public static final double FIELD_WIDTH = 8.0136;
 
-        public static final double NOTE_VELOCITY = 17;
+        public static final double NOTE_VELOCITY = 40;
         public static final double TIME_UNTIL_SHOT = 0.2;
 
         public static final Translation2d BLUE_SPEAKER = new Translation2d(0.0241, 5.547868);
@@ -89,7 +89,7 @@ public final class Constants {
 
 
         /* Module Gear Ratios */
-        public static final double driveGearRatio = chosenModule.driveGearRatio;
+        public static final double driveGearRatio = 5.90278;
         public static final double angleGearRatio = chosenModule.angleGearRatio;
 
         /* Motor Inverts */
@@ -148,7 +148,7 @@ public final class Constants {
         /* Swerve Profiling Values */
         /** Meters per Second */
         
-        public static final double maxSpeed = 10; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 20; //TODO: This must be tuned to specific robot
         /** Radians per Second */
         public static final double maxAngularVelocity = 11.5; //TODO: This must be tuned to specific robot
 

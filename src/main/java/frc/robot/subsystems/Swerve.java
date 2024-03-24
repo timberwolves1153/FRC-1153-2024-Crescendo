@@ -128,7 +128,7 @@ public class Swerve extends SubsystemBase {
             new HolonomicPathFollowerConfig(
                 new PIDConstants(10), 
                 new PIDConstants(10), 
-                4.5, 
+                5.24, 
                 0.406, 
                 new ReplanningConfig()), 
             () -> {
@@ -364,13 +364,14 @@ public double getDistToSpeaker(Translation2d robotPose) {
 
         if (Constants.swerveTuningMode) {
             for(SwerveModule mod : mSwerveMods){
-                SmartDashboard.putNumber("Mod " + mod.moduleNumber + " absoluteEncoderPorts", mod.getAbsoluteEncoder().getDegrees());
+                
                 SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getState().angle.getDegrees());
                 
                 
                 SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Position", mod.getPosition().distanceMeters);
-                SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
+                
                 //SmartDashboard.putNumber("Mod" + mod.moduleNumber + " get encoder 1", mod.getDriveEncoderPositon());
+                SmartDashboard.putNumber("Mod " + mod.moduleNumber + " absoluteEncoderPorts", mod.getAbsoluteEncoder().getDegrees());
 
         }
 
@@ -381,6 +382,7 @@ public double getDistToSpeaker(Translation2d robotPose) {
 
     for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
         }
     SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
     }

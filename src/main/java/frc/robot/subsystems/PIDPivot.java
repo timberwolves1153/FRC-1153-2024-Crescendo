@@ -27,7 +27,7 @@ public class PIDPivot extends PIDSubsystem{
     private final Pigeon2 encoder = new Pigeon2(7);
 
     public PIDPivot() {
-        super(new PIDController(20, 0.01, 0.01));
+        super(new PIDController(16, 0.01, 0.01));
 
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
@@ -49,14 +49,14 @@ public class PIDPivot extends PIDSubsystem{
         m_leftPivot.clearFaults();
         m_leftPivot.setIdleMode(IdleMode.kBrake);
         m_leftPivot.setInverted(false);
-        m_leftPivot.setSmartCurrentLimit(40);
+        m_leftPivot.setSmartCurrentLimit(30);
 
 
         
         m_rightPivot.clearFaults();
         m_rightPivot.setIdleMode(IdleMode.kBrake);
         m_rightPivot.follow(m_leftPivot, false);
-        m_rightPivot.setSmartCurrentLimit(40);
+        m_rightPivot.setSmartCurrentLimit(30);
         m_rightPivot.burnFlash();
         m_leftPivot.burnFlash();
     }

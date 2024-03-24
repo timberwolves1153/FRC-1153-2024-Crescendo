@@ -43,7 +43,7 @@ public class Collector extends SubsystemBase{
        
         pivotMotor.setInverted(false);
         pivotMotor.setIdleMode(IdleMode.kBrake);
-        pivotMotor.setSmartCurrentLimit(40);
+        pivotMotor.setSmartCurrentLimit(30);
         pivotMotor.burnFlash();
 
         collectorMotor1.restoreFactoryDefaults();

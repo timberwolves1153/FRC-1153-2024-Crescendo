@@ -131,7 +131,7 @@ public class RobotContainer {
     private final JoystickButton atari1 = new JoystickButton(atari, 1);
     private final JoystickButton atari2 = new JoystickButton(atari, 2);
     private final JoystickButton atari3 = new JoystickButton(atari, 3);
-    private final JoystickButton atari14 = new JoystickButton(atari, 4);
+    private final JoystickButton atari4 = new JoystickButton(atari, 4);
 
 
 
@@ -167,8 +167,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
         NamedCommands.registerCommand("Pivot Mailbox", new InstantCommand(() -> pidPivot.interpolateSetpoint()));
         NamedCommands.registerCommand("Close Launcher", new InstantCommand(() -> launcher.closeLaunchSpeed()));
-        NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(24), pidPivot));
-        NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(42), pidPivot));
+        NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(21.3), pidPivot));
+        NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(35), pidPivot));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autoChooser);
@@ -250,7 +250,7 @@ public class RobotContainer {
         opRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
         opRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
         opRightTrigger.whileTrue(interpolateToSpeaker); 
-        opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+        opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(20), pidPivot));
 
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));

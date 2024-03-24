@@ -79,8 +79,8 @@ public class SwerveModule {
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
         // if(isOpenLoop){
-        //     double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
-        //     mDriveMotor.set(percentOutput);
+            // double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
+            // mDriveMotor.set(percentOutput);
         // }
         // else {
             driveController.setReference(
@@ -159,6 +159,10 @@ public class SwerveModule {
 
     public double getDriveDistance() {
         return driveEncoder.getPosition();
+    }
+
+    public double getDriveRPM() {
+        return mDriveMotor.getEncoder().getVelocity();
     }
 
     public double getDriveVelocity() {

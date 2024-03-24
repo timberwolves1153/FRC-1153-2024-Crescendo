@@ -83,9 +83,9 @@ public class TeleopSwerve extends Command {
 
     @Override
     public void initialize() {
-        thetaController = new PIDController(0.015, 0.001, 0.0);
+        thetaController = new PIDController(0.01, 0.001, 0.001);
         thetaController.enableContinuousInput(-180, 180);
-        translationController = new PIDController(0.05, 0, 0);
+        //translationController = new PIDController(0.05, 0, 0);
     }
 
     @Override
@@ -119,23 +119,23 @@ public class TeleopSwerve extends Command {
             .equals(DriverStation.Alliance.Blue);
             double directionFlip = isBlue ? 1.0 : -1.0;
 
-            translationVal = Math.pow(directionFlip* MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = Math.pow(directionFlip* MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+            translationVal = 0.3 * Math.pow(directionFlip* MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = 0.3 * Math.pow(directionFlip* MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
 
             
-            thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle()));
-            rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), Math.toDegrees(s_Swerve.getSpeakerAngle()) + 180);
+            thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle())- 180);
+            rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), Math.toDegrees(s_Swerve.getSpeakerAngle())-180);
         } else if (windhamAim.getAsBoolean()) {
             shotTimer.start();
-            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+            translationVal = 0.3 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = 0.3 * Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
             currentRobotTranslation = s_Swerve.getPose().getTranslation(); 
             //Calculate angle relative to the speaker from current pose
             currentAngleToSpeaker = s_Swerve.getSpeakerAngle(); 
             //Get current drivetrain velocities in field relative terms
             speeds = s_Swerve.getFieldRelativeSpeeds(); 
             
-            timeUntilShot = 4- shotTimer.get();
+            timeUntilShot = 0.5;
            // timeUntilShot = Constants.FieldConstants.TIME_UNTIL_SHOT - shotTimer.get();
             if (timeUntilShot < 0) {
                 timeUntilShot = 0.00;
@@ -148,8 +148,8 @@ public class TeleopSwerve extends Command {
             futureRobotTranslation = currentRobotTranslation.plus(moveDelta);
             //Angle to the speaker at future position
             futureAngleToSpeaker = s_Swerve.getAngleToSpeaker(futureRobotTranslation);
-            thetaController.setSetpoint(futureAngleToSpeaker.getDegrees());
-            rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), (futureAngleToSpeaker.getDegrees()+ 90+180));
+            thetaController.setSetpoint(futureAngleToSpeaker.getDegrees() - 90);
+            rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), (futureAngleToSpeaker.getDegrees() - 90));
             
         }
         else {
