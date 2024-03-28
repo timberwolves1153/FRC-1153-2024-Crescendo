@@ -26,6 +26,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Ready Close Shot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Deploy Intake"
           }
         },
@@ -39,12 +45,6 @@
           "type": "named",
           "data": {
             "name": "Run Launcher"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ready Close Shot"
           }
         },
         {

@@ -147,6 +147,7 @@ public class RobotContainer {
                 () -> rotateWithTag.getAsBoolean(),
                 () -> driveA.getAsBoolean(),
                 () -> driveX.getAsBoolean(),
+                () -> driveLeftTrigger.getAsBoolean(), // change to a button
                 vision
             )
         );
@@ -190,6 +191,12 @@ public class RobotContainer {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
         driveX.onTrue(new InstantCommand(() -> winch.resetEncoder()));
+
+        driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote()));
+        driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+        driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(40), pidPivot));
+        driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(21), pidPivot));
+
 
         // INTAKE
         opLeftBumper.onTrue(new InstantCommand(() -> collector.intake(), collector));
@@ -254,10 +261,10 @@ public class RobotContainer {
 
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));
-        povUp.onFalse(new InstantCommand(() -> pidPivot.pivotStop(), pidPivot));
+        povUp.onFalse(new InstantCommand(() -> pidPivot.holdPosition(), pidPivot));
         //povUp.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
         povDown.onTrue(new InstantCommand(() -> pidPivot.pivotDown(), pidPivot));
-        povDown.onFalse(new InstantCommand(() -> pidPivot.pivotStop(), pidPivot));
+        povDown.onFalse(new InstantCommand(() -> pidPivot.holdPosition(), pidPivot));
         //povDown.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
 
         //AMP
@@ -270,7 +277,7 @@ public class RobotContainer {
     //     // opA.whileFalse(returnFromAmp);
     //     // opA.onTrue(Commands.runOnce(() -> baseClef.deployClef(), baseClef));
     //     // opA.onFalse(Commands.runOnce(() -> baseClef.retractClef(), baseClef));
-        opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(49.1)));
+        opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(47.5)));
         opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22)));
 
         // CLIMB
@@ -278,12 +285,7 @@ public class RobotContainer {
         // opY.whileTrue(PivotToClimb);
         // opY.whileFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
 
-        driveLeftTrigger.onTrue(Commands.runOnce(() -> winch.pidWinchUp(), winch));
-        driveLeftTrigger.onFalse(new InstantCommand(() -> winch.stop()));
-
-        driveRightTrigger.onTrue(Commands.runOnce(() -> winch.pidWinchDown(), winch));
-        driveRightTrigger.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
-        driveRightTrigger.onFalse(new InstantCommand(() -> winch.stop()));
+        
 
         driveLeftBumper.onTrue(new InstantCommand(() -> winch.winchUp(), winch));
         driveLeftBumper.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));

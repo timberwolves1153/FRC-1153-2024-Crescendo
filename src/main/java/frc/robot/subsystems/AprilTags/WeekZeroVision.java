@@ -76,9 +76,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
             if (preferredTarget.isPresent()) {
                 double targetRotation = preferredTarget.get().getYaw();
                 if (isBlue) {
-                    return targetRotation -2;
+                    return targetRotation;
                 } else {
-                    return targetRotation + 2;
+                    return targetRotation;
                 }
                
             } else {

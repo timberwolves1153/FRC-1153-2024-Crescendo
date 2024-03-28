@@ -35,6 +35,7 @@ public class TeleopSwerve extends Command {
     
     private BooleanSupplier lockOnSpeaker;
     private PIDController translationController;
+    private BooleanSupplier isPassingNote;
 
     Timer shotTimer;
     Boolean ranOnce;
@@ -64,7 +65,8 @@ public class TeleopSwerve extends Command {
         BooleanSupplier robotCentricSup, 
         BooleanSupplier lockOnTag,
         BooleanSupplier lockOnSpeaker,
-        BooleanSupplier windhamAim, 
+        BooleanSupplier windhamAim,
+        BooleanSupplier isPassingNote, 
         WeekZeroVision vision) {
         
         this.s_Swerve = s_Swerve;
@@ -77,13 +79,14 @@ public class TeleopSwerve extends Command {
         this.lockOnTag = lockOnTag;
         this.windhamAim = windhamAim;
         this.lockOnSpeaker = lockOnSpeaker;
+        this.isPassingNote = isPassingNote;
         
         addRequirements(s_Swerve);
     }
 
     @Override
     public void initialize() {
-        thetaController = new PIDController(0.01, 0.001, 0.001);
+        thetaController = new PIDController(0.01, 0.00, 0.0001);
         thetaController.enableContinuousInput(-180, 180);
         //translationController = new PIDController(0.05, 0, 0);
     }
@@ -124,7 +127,7 @@ public class TeleopSwerve extends Command {
 
             
             thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle())- 180);
-            rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), Math.toDegrees(s_Swerve.getSpeakerAngle())-180);
+            rotationVal = thetaController.calculate(s_Swerve.getYaw(), Math.toDegrees(s_Swerve.getSpeakerAngle())-180);
         } else if (windhamAim.getAsBoolean()) {
             shotTimer.start();
             translationVal = 0.3 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
@@ -149,8 +152,22 @@ public class TeleopSwerve extends Command {
             //Angle to the speaker at future position
             futureAngleToSpeaker = s_Swerve.getAngleToSpeaker(futureRobotTranslation);
             thetaController.setSetpoint(futureAngleToSpeaker.getDegrees() - 90);
-            rotationVal = thetaController.calculate(s_Swerve.getAngleAsDouble(), (futureAngleToSpeaker.getDegrees() - 90));
+            rotationVal = thetaController.calculate(s_Swerve.getYaw(), (futureAngleToSpeaker.getDegrees() - 90));
             
+        } else if (isPassingNote.getAsBoolean()) {
+            boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+            .equals(DriverStation.Alliance.Blue);
+            if (isBlue) {
+                double setpoint = -40;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            } else {
+                double setpoint= 30;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            }
+            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
         }
         else {
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);

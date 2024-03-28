@@ -217,6 +217,9 @@ public class Swerve extends SubsystemBase {
     public void zeroGyro(){
         gyro.setYaw(0);
     }
+    public double getYaw() {
+        return gyro.getYaw().getValueAsDouble();
+    }
 
     public Rotation2d getAngle() {
         return (Constants.Swerve.invertGyro) ? 
@@ -385,6 +388,8 @@ public double getDistToSpeaker(Translation2d robotPose) {
             SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
         }
     SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
+
+    SmartDashboard.putNumber("gyro yaw", getYaw());
     }
 
 
