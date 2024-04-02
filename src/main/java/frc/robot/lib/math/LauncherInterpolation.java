@@ -15,20 +15,19 @@ public class LauncherInterpolation {
 // value = rpm setpoint
     static {    
         pivotMap.put(new InterpolatingDouble(1.44), new InterpolatingDouble(57.0));
-        pivotMap.put(new InterpolatingDouble(1.85), new InterpolatingDouble(49.0));
-        pivotMap.put(new InterpolatingDouble(2.207), new InterpolatingDouble(42.5));
-        pivotMap.put(new InterpolatingDouble(2.61), new InterpolatingDouble(36.0));
-        pivotMap.put(new InterpolatingDouble(2.72), new InterpolatingDouble(35.0));
-        pivotMap.put(new InterpolatingDouble(3.06), new InterpolatingDouble(30.1));
-        pivotMap.put(new InterpolatingDouble(3.33), new InterpolatingDouble(27.7));
+        pivotMap.put(new InterpolatingDouble(1.85), new InterpolatingDouble(48.5));
+        pivotMap.put(new InterpolatingDouble(2.227), new InterpolatingDouble(38.9));
+        pivotMap.put(new InterpolatingDouble(2.61), new InterpolatingDouble(34.5));
+        pivotMap.put(new InterpolatingDouble(2.72), new InterpolatingDouble(32.8));
+        pivotMap.put(new InterpolatingDouble(3.06), new InterpolatingDouble(29.7));
+        pivotMap.put(new InterpolatingDouble(3.33), new InterpolatingDouble(27.3));
         pivotMap.put(new InterpolatingDouble(3.55), new InterpolatingDouble(25.0));
-        pivotMap.put(new InterpolatingDouble(3.59), new InterpolatingDouble(25.7));
-        pivotMap.put(new InterpolatingDouble(3.8), new InterpolatingDouble(25.0));
-        pivotMap.put(new InterpolatingDouble(4.01), new InterpolatingDouble(24.2));
+        pivotMap.put(new InterpolatingDouble(3.8), new InterpolatingDouble(24.3));
+        pivotMap.put(new InterpolatingDouble(4.01), new InterpolatingDouble(23.7));
         pivotMap.put(new InterpolatingDouble(4.22), new InterpolatingDouble(22.5));
-        pivotMap.put(new InterpolatingDouble(4.41), new InterpolatingDouble(22.0));
-        pivotMap.put(new InterpolatingDouble(4.6), new InterpolatingDouble(21.5));
-        pivotMap.put(new InterpolatingDouble(4.7), new InterpolatingDouble(21.1));
+        pivotMap.put(new InterpolatingDouble(4.45), new InterpolatingDouble(21.5));
+        pivotMap.put(new InterpolatingDouble(4.6), new InterpolatingDouble(21.3));
+        pivotMap.put(new InterpolatingDouble(4.7), new InterpolatingDouble(20.5));
         pivotMap.put(new InterpolatingDouble(5.1), new InterpolatingDouble(20.0));
         pivotMap.put(new InterpolatingDouble(5.2), new InterpolatingDouble(18.8));
     }

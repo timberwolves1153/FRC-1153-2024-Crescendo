@@ -226,12 +226,6 @@
           "data": {
             "name": "PivotHome"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "End path"
-          }
         }
       ]
     }

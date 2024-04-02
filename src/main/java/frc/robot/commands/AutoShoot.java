@@ -46,7 +46,16 @@ public class AutoShoot extends Command{
             } else {
                 mailbox.stop();
             }
-    }
+        } else if (vision.calculateRange() > 3.8) {
+            if (launcher.isLauncherReadyToShootWing() && pidPivot.isPivotReadyToShoot() && vision.isOnTarget()) {
+                    
+                        new WaitCommand(0.5);
+                        mailbox.sendToLauncher();
+
+                }   else {
+                        mailbox.stop();
+                }
+        }
     }
 
 //     @Override

@@ -14,7 +14,7 @@ public class BaseClef extends SubsystemBase{
     private CANSparkMax m_Clef;
     private RelativeEncoder encoder;
     private SparkPIDController controller;
-    private final double setpoint = -30;
+    private final double setpoint = -21;
 
     public BaseClef() {
         m_Clef = new CANSparkMax(56, MotorType.kBrushless);
@@ -22,13 +22,13 @@ public class BaseClef extends SubsystemBase{
         controller = m_Clef.getPIDController();
 
         m_Clef.restoreFactoryDefaults();
-        controller.setP(0.03);
+        controller.setP(0.02);
         controller.setI(0);
-        controller.setD(0.001);
+        controller.setD(0.00);
         controller.setFF(0);
         m_Clef.setInverted(false);
         m_Clef.setIdleMode(IdleMode.kBrake);
-        m_Clef.setSmartCurrentLimit(40);
+        m_Clef.setSmartCurrentLimit(15);
         m_Clef.burnFlash();
     }
 
@@ -62,6 +62,6 @@ public class BaseClef extends SubsystemBase{
 
     @Override
     public void periodic() {
-        //SmartDashboard.putNumber("Clef Encoder", encoder.getPosition());
+        SmartDashboard.putNumber("Clef Encoder", encoder.getPosition());
     }
 }

@@ -67,8 +67,8 @@ public class Launcher extends SubsystemBase {
     }
 
      public void launchAtWing() {
-        m_leftLauncher.setControl(new VoltageOut(10));
-        m_rightLauncher.setControl(new VoltageOut(5));
+        m_leftLauncher.setControl(new VoltageOut(12));
+        m_rightLauncher.setControl(new VoltageOut(7.5));
     }
 
     public void passNote() {
@@ -77,8 +77,8 @@ public class Launcher extends SubsystemBase {
     }
 
     public void slowLaunchWithVolts() {
-        m_leftLauncher.setControl(new VoltageOut(2.125));
-        m_rightLauncher.setControl(new VoltageOut(2.125));
+        m_leftLauncher.setControl(new VoltageOut(2.5));
+        m_rightLauncher.setControl(new VoltageOut(2.5));
     }
 
     public void stopLaunchWithVolts() {
@@ -125,6 +125,14 @@ public class Launcher extends SubsystemBase {
 
     public boolean isLauncherReadyToShootFar() {
         if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 9.75) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isLauncherReadyToShootWing() {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 11.5) {
             return true;
         } else {
             return false;

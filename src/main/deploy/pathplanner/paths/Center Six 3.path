@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.75,
-        "y": 5.73
+        "x": 2.76,
+        "y": 5.59
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8976682934363505,
-        "y": 5.737362183607979
+        "x": 1.9076682934363502,
+        "y": 5.597362183607978
       },
       "isLocked": false,
       "linkedName": null
@@ -63,7 +63,7 @@
   "reversed": false,
   "folder": "Center 6 Sprint Paths",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 5.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

@@ -146,8 +146,9 @@ public class RobotContainer {
                 () -> false,
                 () -> rotateWithTag.getAsBoolean(),
                 () -> driveA.getAsBoolean(),
-                () -> driveX.getAsBoolean(),
-                () -> driveLeftTrigger.getAsBoolean(), // change to a button
+                () -> false,
+                () -> driveLeftTrigger.getAsBoolean(),
+                () -> driveX.getAsBoolean(), // change to a button
                 vision
             )
         );
@@ -168,8 +169,11 @@ public class RobotContainer {
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
         NamedCommands.registerCommand("Pivot Mailbox", new InstantCommand(() -> pidPivot.interpolateSetpoint()));
         NamedCommands.registerCommand("Close Launcher", new InstantCommand(() -> launcher.closeLaunchSpeed()));
-        NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(21.3), pidPivot));
-        NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(35), pidPivot));
+        NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(21.0), pidPivot));
+        NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(34), pidPivot));
+        NamedCommands.registerCommand("SkipNSprint Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(23.4), pidPivot));
+        NamedCommands.registerCommand("SkipNSprint Shot2", Commands.runOnce(() -> pidPivot.setSetpointDegrees(23.0), pidPivot));
+        NamedCommands.registerCommand("Shoot At Wing", new InstantCommand(() -> launcher.launchAtWing()));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autoChooser);
@@ -194,7 +198,7 @@ public class RobotContainer {
 
         driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote()));
         driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
-        driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(40), pidPivot));
+        driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(53), pidPivot));
         driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(21), pidPivot));
 
 
@@ -275,8 +279,8 @@ public class RobotContainer {
     //     // opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(19.5), pidPivot));
     //     // opA.whileTrue(pivotToAmp);
     //     // opA.whileFalse(returnFromAmp);
-    //     // opA.onTrue(Commands.runOnce(() -> baseClef.deployClef(), baseClef));
-    //     // opA.onFalse(Commands.runOnce(() -> baseClef.retractClef(), baseClef));
+        opA.onTrue(Commands.runOnce(() -> baseClef.deployClef(), baseClef));
+        opA.onFalse(Commands.runOnce(() -> baseClef.retractClef(), baseClef));
         opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(47.5)));
         opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22)));
 

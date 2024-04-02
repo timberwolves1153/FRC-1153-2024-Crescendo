@@ -3,50 +3,56 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.25,
-        "y": 5.55
+        "x": 1.4844248215812361,
+        "y": 6.4445901813418836
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.189296230444312,
-        "y": 5.531335051274091
+        "x": 2.332653786447717,
+        "y": 6.308093566305898
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.6,
-        "y": 4.25
+        "x": 4.809092373529166,
+        "y": 6.327593082739611
       },
       "prevControl": {
-        "x": 1.5592202546228457,
-        "y": 4.390329853309279
+        "x": 3.8090923735291664,
+        "y": 6.327593082739611
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.6,
+      "rotationDegrees": 0.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -30.0,
+    "rotation": 13.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Center Four Note Paths",
+  "folder": "SkipNSprint",
   "previewStartingState": {
-    "rotation": 0,
-    "velocity": 0
+    "rotation": 0.0,
+    "velocity": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

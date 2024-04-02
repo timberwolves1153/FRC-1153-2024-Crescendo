@@ -92,6 +92,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Index"
           }
         },
@@ -116,6 +122,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Index"
           }
         },
@@ -134,7 +146,19 @@
         {
           "type": "named",
           "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Ready Wing Shot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot At Wing"
           }
         },
         {
@@ -152,7 +176,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.1
           }
         },
         {
@@ -171,12 +195,6 @@
           "type": "named",
           "data": {
             "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Ready Wing Shot"
           }
         },
         {

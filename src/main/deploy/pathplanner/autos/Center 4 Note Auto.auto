@@ -38,7 +38,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Stop Index"
+            "name": "Index"
           }
         },
         {
@@ -56,13 +56,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Ready Close Shot"
+            "name": "Run Launcher"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Ready Close Shot"
           }
         },
         {
@@ -114,6 +114,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Index"
@@ -141,6 +147,12 @@
           "type": "named",
           "data": {
             "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
           }
         },
         {

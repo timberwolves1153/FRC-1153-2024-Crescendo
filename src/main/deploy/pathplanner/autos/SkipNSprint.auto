@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.68,
-      "y": 6.6188914144210065
+      "x": 1.4746750633643797,
+      "y": 6.327593082739611
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,25 @@
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer No Spin"
+            "name": "Run Launcher"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Ready Close Shot"
+            "name": "SkipNSprint Shot2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SNS Start Path"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.75
+            "waitTime": 0.25
           }
         },
         {
@@ -38,7 +44,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.4
+            "waitTime": 0.25
           }
         },
         {
@@ -50,7 +56,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "Run Intake"
           }
         },
         {
@@ -62,44 +68,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "SkipNSprint Shot"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Run Intake"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Four 1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
+            "pathName": "SNS N1 Path"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.3
           }
         },
         {
@@ -121,34 +102,21 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Four 2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
+            "name": "SkipNSprint Shot"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Pivot Mailbox"
+            "pathName": "SNS N3 Path"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.3
           }
         },
         {
@@ -160,7 +128,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -170,34 +138,21 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Four 3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
+            "name": "SkipNSprint Shot"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Pivot Mailbox"
+            "pathName": "SNS N2 Path"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.2
+            "waitTime": 0.3
           }
         },
         {
@@ -209,7 +164,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -221,7 +176,13 @@
         {
           "type": "named",
           "data": {
-            "name": "End Intake"
+            "name": "SkipNSprint Shot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Retract Intake"
           }
         },
         {
@@ -233,12 +194,12 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "End Intake"
           }
         }
       ]
     }
   },
-  "folder": "4 Notes",
+  "folder": null,
   "choreoAuto": false
 }
