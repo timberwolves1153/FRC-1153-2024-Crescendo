@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4746750633643797,
-      "y": 6.327593082739611
+      "x": 1.4844248215812361,
+      "y": 6.4445901813418836
     },
     "rotation": 0
   },
@@ -30,9 +30,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.1
           }
         },
         {
@@ -74,13 +80,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SNS N1 Path"
+            "pathName": "SNS N2 Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.1
           }
         },
         {
@@ -114,9 +126,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.1
           }
         },
         {
@@ -146,13 +164,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SNS N2 Path"
+            "pathName": "SNS N1 Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.1
           }
         },
         {

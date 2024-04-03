@@ -171,9 +171,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("Close Launcher", new InstantCommand(() -> launcher.closeLaunchSpeed()));
         NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(21.0), pidPivot));
         NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(34), pidPivot));
-        NamedCommands.registerCommand("SkipNSprint Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(23.4), pidPivot));
-        NamedCommands.registerCommand("SkipNSprint Shot2", Commands.runOnce(() -> pidPivot.setSetpointDegrees(23.0), pidPivot));
+        NamedCommands.registerCommand("SkipNSprint Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(22.0), pidPivot));
+        NamedCommands.registerCommand("SkipNSprint Shot2", Commands.runOnce(() -> pidPivot.setSetpointDegrees(22.0), pidPivot));
         NamedCommands.registerCommand("Shoot At Wing", new InstantCommand(() -> launcher.launchAtWing()));
+        
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("autoChooser", autoChooser);
