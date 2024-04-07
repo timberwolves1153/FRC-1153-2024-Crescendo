@@ -14,13 +14,19 @@
         {
           "type": "named",
           "data": {
+            "name": "Subwoofer"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Subwoofer No Spin"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.5
           }
         },
         {
@@ -32,7 +38,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {
@@ -44,7 +50,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "Ready Source Shot"
           }
         },
         {
@@ -117,7 +123,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Ready Wing Shot"
+            "name": "Ready Source Shot"
           }
         },
         {
@@ -148,7 +154,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.5
           }
         },
         {
@@ -160,7 +166,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.25
           }
         },
         {

@@ -14,7 +14,7 @@ public class BaseClef extends SubsystemBase{
     private CANSparkMax m_Clef;
     private RelativeEncoder encoder;
     private SparkPIDController controller;
-    private final double setpoint = -21;
+    private final double setpoint = -30;
 
     public BaseClef() {
         m_Clef = new CANSparkMax(56, MotorType.kBrushless);
@@ -22,9 +22,9 @@ public class BaseClef extends SubsystemBase{
         controller = m_Clef.getPIDController();
 
         m_Clef.restoreFactoryDefaults();
-        controller.setP(0.02);
+        controller.setP(0.03);
         controller.setI(0);
-        controller.setD(0.00);
+        controller.setD(0.001);
         controller.setFF(0);
         m_Clef.setInverted(false);
         m_Clef.setIdleMode(IdleMode.kBrake);

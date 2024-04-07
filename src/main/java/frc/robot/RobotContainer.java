@@ -169,8 +169,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("End Intake", new InstantCommand(() -> collector.collectorStop()));
         NamedCommands.registerCommand("Pivot Mailbox", new InstantCommand(() -> pidPivot.interpolateSetpoint()));
         NamedCommands.registerCommand("Close Launcher", new InstantCommand(() -> launcher.closeLaunchSpeed()));
-        NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(21.0), pidPivot));
-        NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(34), pidPivot));
+        NamedCommands.registerCommand("Ready Wing Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(20.0), pidPivot));
+        NamedCommands.registerCommand("Ready Close Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(34.5), pidPivot));
+        NamedCommands.registerCommand("Ready Source Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(31), pidPivot));
         NamedCommands.registerCommand("SkipNSprint Shot", Commands.runOnce(() -> pidPivot.setSetpointDegrees(22.0), pidPivot));
         NamedCommands.registerCommand("SkipNSprint Shot2", Commands.runOnce(() -> pidPivot.setSetpointDegrees(22.0), pidPivot));
         NamedCommands.registerCommand("Shoot At Wing", new InstantCommand(() -> launcher.launchAtWing()));
@@ -195,12 +196,12 @@ public class RobotContainer {
     private void configureButtonBindings() {
         /* Driver Buttons */
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
-        driveX.onTrue(new InstantCommand(() -> winch.resetEncoder()));
+       // driveX.onTrue(new InstantCommand(() -> winch.resetEncoder()));
 
         driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote()));
         driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
-        driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(53), pidPivot));
-        driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(21), pidPivot));
+        driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+        driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
 
 
         // INTAKE
@@ -243,6 +244,8 @@ public class RobotContainer {
         opX.whileTrue(interpolateToSpeaker); 
         opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
+        opX.onTrue(new InstantCommand(() -> pidPivot.isXButtonPressed(true)));
+        opX.onFalse(new InstantCommand(() -> pidPivot.isXButtonPressed(false)));
                     // driveX.whileTrue(Commands.runOnce(() -> 
                     // pidPivot.setSetpointDegrees(SmartDashboard.getNumber("PIGEON MAIL",20)), pidPivot));
         // back up if interpolation is wrong/messed up
@@ -255,14 +258,19 @@ public class RobotContainer {
 
         //launcher override
         opLeftTrigger.onTrue(new InstantCommand(() -> launcher.launchWithVolts()));
+        opLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+        opLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         opLeftTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+        
 
         opRightTrigger.whileTrue(launch);
         opRightTrigger.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
         opRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
         opRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
         opRightTrigger.whileTrue(interpolateToSpeaker); 
-        opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(20), pidPivot));
+        opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+        opRightTrigger.onTrue(new InstantCommand(() -> pidPivot.isLTPressed(true)));
+        opRightTrigger.onFalse(new InstantCommand(() -> pidPivot.isLTPressed(false)));
 
         // mailbox pivot override
         povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));

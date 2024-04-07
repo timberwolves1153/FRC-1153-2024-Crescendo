@@ -161,11 +161,11 @@ public class TeleopSwerve extends Command {
             boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
             .equals(DriverStation.Alliance.Blue);
             if (isBlue) {
-                double setpoint = -30;
+                double setpoint = -35;
                 thetaController.setSetpoint(setpoint);
                 rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
             } else {
-                double setpoint= 30;
+                double setpoint= 35;
                 thetaController.setSetpoint(setpoint);
                 rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
             }
@@ -183,8 +183,8 @@ public class TeleopSwerve extends Command {
                 thetaController.setSetpoint(setpoint);
                 rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
             }
-            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+            translationVal = 0.4 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = 0.4 *Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
         }
         else {
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);

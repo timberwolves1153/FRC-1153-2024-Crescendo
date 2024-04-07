@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": -45.0,
+      "rotationDegrees": -40.0,
       "rotateFast": false
     }
   ],

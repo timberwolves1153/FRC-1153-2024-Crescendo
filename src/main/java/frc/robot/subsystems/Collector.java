@@ -49,7 +49,7 @@ public class Collector extends SubsystemBase{
         collectorMotor1.restoreFactoryDefaults();
         collectorMotor1.setInverted(false);
         collectorMotor1.setIdleMode(IdleMode.kCoast);
-        collectorMotor1.setSmartCurrentLimit(30);
+        collectorMotor1.setSmartCurrentLimit(40);
         collectorMotor1.burnFlash();
 
        

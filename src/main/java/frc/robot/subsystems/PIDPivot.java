@@ -89,14 +89,14 @@ public class PIDPivot extends PIDSubsystem{
         // TODO Auto-generated method stub
         
         //PIDmovePivot(MathUtil.clamp(output, -8, 12.3));
-        PIDmovePivot(MathUtil.clamp(output, -12, 12));
+        PIDmovePivot(MathUtil.clamp(output, -6, 6));
     }
 
     public void PIDmovePivot(double volts) {
         double adjustedVolts = volts;
             //negative goes up & positive goes down PLIMPTON ABS ENCODER THEORY
         double constantV;
-        double clampedVolts = MathUtil.clamp(adjustedVolts, -12, 12);
+        double clampedVolts = MathUtil.clamp(adjustedVolts, -6, 6);
         if (clampedVolts > 0) {
             constantV = 0.18;
             m_leftPivot.setVoltage(clampedVolts + constantV);
@@ -116,7 +116,7 @@ public class PIDPivot extends PIDSubsystem{
     public double getRoll() {
         return encoder.getRoll().getValueAsDouble();
     }
-
+    
 
 
 
@@ -190,14 +190,27 @@ public class PIDPivot extends PIDSubsystem{
         }
      }
 
+     public void isXButtonPressed(boolean button) {
+        SmartDashboard.putBoolean("x button pressed", button);
+
+     }
+
+    public void isLTPressed(boolean button) {
+        SmartDashboard.putBoolean("right Trigger pressed", button);
+
+     }
+     
+
     @Override
     public void periodic() {
         super.periodic();
         SmartDashboard.putBoolean("Pivot Ready", isPivotReadyToShoot());
         SmartDashboard.putNumber("adjusted pigeon", getPigeonMeasurement());
-        SmartDashboard.putNumber("adjusted pigeon rads", Math.toRadians(getPigeonMeasurement()));
-        SmartDashboard.putNumber("Pivot PID Controller", getController().getSetpoint());
-        SmartDashboard.putNumber("Pivot PID measure", getMeasurement());
+        
+    
+        // SmartDashboard.putNumber("adjusted pigeon rads", Math.toRadians(getPigeonMeasurement()));
+        // SmartDashboard.putNumber("Pivot PID Controller", getController().getSetpoint());
+        // SmartDashboard.putNumber("Pivot PID measure", getMeasurement());
         if (Constants.launcherPivotTuningMode) {
             //SmartDashboard.putNumber("pivot degrees", getDegrees());
             // SmartDashboard.putNumber("pivot absolute", getAbsoluteMeasurement());

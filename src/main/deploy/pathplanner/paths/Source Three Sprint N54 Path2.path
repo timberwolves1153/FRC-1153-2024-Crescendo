@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.03,
-        "y": 3.12
+        "x": 3.0736354109287802,
+        "y": 3.3344173101647874
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.5073696950244204,
-        "y": 1.5942057536846668
+        "x": 3.551005105953201,
+        "y": 1.808623063849454
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.539222092689199,
-        "y": 2.7715146028582662
+        "x": 8.728495176705318,
+        "y": 2.720182542502853
       },
       "prevControl": {
-        "x": 7.132145875500986,
-        "y": 1.571711023317291
+        "x": 7.321418959517104,
+        "y": 1.520378962961878
       },
       "nextControl": {
-        "x": 9.02892287256047,
-        "y": 3.1890788693964778
+        "x": 9.218195956576588,
+        "y": 3.1377468090410647
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.153914176774222,
-        "y": 4.9934039469218545
+        "x": 4.555598659890908,
+        "y": 5.567111941824834
       },
       "prevControl": {
-        "x": 5.042669914399658,
-        "y": 3.4146930971924627
+        "x": 5.121084636468562,
+        "y": 4.416640472235814
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,12 +46,29 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.05,
+      "waypointRelativePos": 0.95,
       "rotationDegrees": 40.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.45,
+      "rotationDegrees": -10.0,
       "rotateFast": false
     }
   ],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "New Constraints Zone",
+      "minWaypointRelativePos": 1.25,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 4.0,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0
+      }
+    }
+  ],
   "eventMarkers": [
     {
       "name": "New Event Marker",
@@ -72,21 +89,21 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.7,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -10.0,
+    "rotation": -1.5074357587750509,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Source Three Sprint N54 Paths",
   "previewStartingState": {
-    "rotation": -35.0,
+    "rotation": -42.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
