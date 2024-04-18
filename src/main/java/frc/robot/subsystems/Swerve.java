@@ -385,7 +385,8 @@ public double getDistToSpeaker(Translation2d robotPose) {
 
     for (SwerveModule mod : mSwerveMods) {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
-            SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
+            //SmartDashboard.putNumber("test velocity" + mod.moduleNumber, mod.getDriveVelocity());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " absoluteEncoderPorts", mod.getAbsoluteEncoder().getDegrees());
         }
     SmartDashboard.putNumber("Gyro Angle", getAngle().getDegrees());
 

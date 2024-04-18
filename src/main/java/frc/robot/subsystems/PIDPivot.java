@@ -27,7 +27,7 @@ public class PIDPivot extends PIDSubsystem{
     private final Pigeon2 encoder = new Pigeon2(7);
 
     public PIDPivot() {
-        super(new PIDController(16, 0.01, 0.01));
+        super(new PIDController(13, 0.01, 0.01));
 
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
