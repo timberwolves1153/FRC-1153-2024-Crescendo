@@ -168,15 +168,15 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Ready Wing Shot"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "5 Note path"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
           }
         },
         {
@@ -188,7 +188,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.3
+            "waitTime": 0.5
           }
         },
         {

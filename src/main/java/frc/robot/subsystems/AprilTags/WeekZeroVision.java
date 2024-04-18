@@ -156,7 +156,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
         public boolean isOnTarget() {
             var result = cam.getLatestResult();
             if(result.hasTargets()) {
-            if (Math.abs(result.getBestTarget().getYaw()) < 3) {
+            if (Math.abs(result.getBestTarget().getYaw()) < 2) {
                 return true;
             } else {
                 return false;

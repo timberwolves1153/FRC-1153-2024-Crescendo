@@ -198,6 +198,11 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
        // driveX.onTrue(new InstantCommand(() -> winch.resetEncoder()));
 
+        driveRightTrigger.onTrue(new InstantCommand(() -> launcher.passNote()));
+        driveRightTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+        driveRightTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+        driveRightTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+
         driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote()));
         driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
         driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
@@ -241,8 +246,9 @@ public class RobotContainer {
         //LAUNCHER - when auto shoot is not working
         opX.whileTrue(launch);
         opX.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts(), launcher));
-        opX.whileTrue(interpolateToSpeaker); 
-        opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+        //opX.whileTrue(new InterpolateToSpeaker(pidPivot));
+        opX.whileTrue(new InstantCommand(() -> pidPivot.interpolateSetpoint()));  
+        opX.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
         opX.onTrue(new InstantCommand(() -> pidPivot.isXButtonPressed(true)));
         opX.onFalse(new InstantCommand(() -> pidPivot.isXButtonPressed(false)));
@@ -267,7 +273,7 @@ public class RobotContainer {
         opRightTrigger.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
         opRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
         opRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
-        opRightTrigger.whileTrue(interpolateToSpeaker); 
+        opRightTrigger.whileTrue(Commands.runOnce(() -> pidPivot.interpolateSetpoint())); 
         opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
         opRightTrigger.onTrue(new InstantCommand(() -> pidPivot.isLTPressed(true)));
         opRightTrigger.onFalse(new InstantCommand(() -> pidPivot.isLTPressed(false)));
@@ -281,7 +287,7 @@ public class RobotContainer {
         //povDown.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
 
         //AMP
-       opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
         opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
     //     //opA.whileTrue(pivotToAmp);
     //     // opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(42), pidPivot));
@@ -292,6 +298,10 @@ public class RobotContainer {
         opA.onFalse(Commands.runOnce(() -> baseClef.retractClef(), baseClef));
         opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(47.5)));
         opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22)));
+
+
+        //opB.onTrue(Commands.runOnce(() -> {pidPivot.setGoal(40); pidPivot.enable();}, pidPivot));
+    
 
         // CLIMB
 

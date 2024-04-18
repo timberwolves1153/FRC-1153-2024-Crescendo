@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -7,15 +9,20 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
+import edu.wpi.first.wpilibj2.command.TrapezoidProfileSubsystem;
 import frc.robot.Constants;
 import frc.robot.lib.Interpolation.InterpolatingDouble;
 import frc.robot.lib.math.LauncherInterpolation;
 import frc.robot.subsystems.AprilTags.WeekZeroVision;
 
-public class PIDPivot extends PIDSubsystem{
+public class PIDPivot extends ProfiledPIDSubsystem{
     
     private CANSparkMax m_leftPivot, m_rightPivot;
     private DutyCycleEncoder pivotEncoder;   
@@ -25,9 +32,12 @@ public class PIDPivot extends PIDSubsystem{
     private final double FINAL_UNIT_CIRCLE_OFFSET =  Math.toRadians(80);
     private final double SUBWOOFER_DEGREES = 56;
     private final Pigeon2 encoder = new Pigeon2(7);
+    private static final double PivotMaxVelocityRadsPerSecond = 4;
+    private static final double PivotMaxAccelerationRadsPerSecondSquared = 10;
+    
 
     public PIDPivot() {
-        super(new PIDController(16, 0.01, 0.01));
+        super(new ProfiledPIDController(50, 0.001, 0, new TrapezoidProfile.Constraints(PivotMaxVelocityRadsPerSecond, PivotMaxAccelerationRadsPerSecondSquared)));
 
 
         m_leftPivot = new CANSparkMax(51, MotorType.kBrushless);
@@ -37,7 +47,8 @@ public class PIDPivot extends PIDSubsystem{
         pivotEncoder = new DutyCycleEncoder(0);
 
         configMotors();
-        getController().setSetpoint(Math.toRadians(getPigeonMeasurement()));
+        
+        getController().setGoal(Math.toRadians(getPigeonMeasurement()));
         disable();
     }
     
@@ -85,11 +96,12 @@ public class PIDPivot extends PIDSubsystem{
 
 
     @Override
-    protected void useOutput(double output, double setpoint) {
+    protected void useOutput(double output, TrapezoidProfile.State setpoint) {
         // TODO Auto-generated method stub
         
         //PIDmovePivot(MathUtil.clamp(output, -8, 12.3));
         PIDmovePivot(MathUtil.clamp(output, -6, 6));
+
     }
 
     public void PIDmovePivot(double volts) {
@@ -98,7 +110,7 @@ public class PIDPivot extends PIDSubsystem{
         double constantV;
         double clampedVolts = MathUtil.clamp(adjustedVolts, -6, 6);
         if (clampedVolts > 0) {
-            constantV = 0.18;
+            constantV = 0;
             m_leftPivot.setVoltage(clampedVolts + constantV);
         } else if (clampedVolts < 0) {
             constantV = 0.0;
@@ -144,8 +156,7 @@ public class PIDPivot extends PIDSubsystem{
 
     public void setSetpointDegrees(double degrees) {
         double newSetpoint = Math.toRadians(degrees);
-        setSetpoint(newSetpoint);
-        getController().reset();
+        setGoal(newSetpoint);
         enable();
     }
 
@@ -153,37 +164,39 @@ public class PIDPivot extends PIDSubsystem{
        double newSetpoint =  Math.toRadians(SUBWOOFER_DEGREES);
        if (vision.isConnected()) {
            double interpolatedSetpoint = pivotMap.pivotMap.getInterpolated(new InterpolatingDouble(vision.calculateRange())).value;
+           double range = vision.calculateRange();
+           //double interpolatedSetpoint = pivotMap.getSetpoint(range).getAsDouble();
+           //System.out.println("Calc range is " + Double.toString(range));
            newSetpoint = Math.toRadians(interpolatedSetpoint);
+           //getController().getPositionError();
+           //getController().reset(newSetpoint, interpolatedSetpoint);
        }
-       setSetpoint(newSetpoint);
-       getController().reset();
+       setGoal(newSetpoint);
+       getController().reset(getMeasurement());
        enable();
     }
 
     public void holdPosition() {
-        setSetpoint(getMeasurement());
-        getController().reset();
+        setGoal(getMeasurement());
         enable();
     }
 
     public void incrementSetpointDegrees() {
         double newSetpoint = Math.toRadians(0.25);
-        double oldSetpoint = getController().getSetpoint();
-        setSetpoint(newSetpoint + oldSetpoint);
-        getController().reset();
+        double oldSetpoint = getController().getGoal().position;
+        setGoal(newSetpoint + oldSetpoint);
         enable();
     }
 
     public void decrementSetpointDegrees() {
         double newSetpoint = Math.toRadians(0.25);
-        double oldSetpoint = getController().getSetpoint();
-        setSetpoint(oldSetpoint - newSetpoint);
-        getController().reset();
+        double oldSetpoint = getController().getGoal().position;
+        setGoal(oldSetpoint - newSetpoint);
         enable();
     }
 
     public boolean isPivotReadyToShoot() {
-        if (getController().atSetpoint()) {
+        if (getController().atGoal()) {
             return true;
         } else {
             return false;
@@ -206,6 +219,7 @@ public class PIDPivot extends PIDSubsystem{
         super.periodic();
         SmartDashboard.putBoolean("Pivot Ready", isPivotReadyToShoot());
         SmartDashboard.putNumber("adjusted pigeon", getPigeonMeasurement());
+        SmartDashboard.putNumber("Get Measurement", getMeasurement());
         
     
         // SmartDashboard.putNumber("adjusted pigeon rads", Math.toRadians(getPigeonMeasurement()));
@@ -219,4 +233,5 @@ public class PIDPivot extends PIDSubsystem{
     }
 
 }
+
 }

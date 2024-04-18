@@ -61,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 15.0,
+    "rotation": 13.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "SkipNSprint",
   "previewStartingState": {
-    "rotation": 15.0,
+    "rotation": 13.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

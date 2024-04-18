@@ -121,7 +121,7 @@ public class Swerve extends SubsystemBase {
 
         // Drive base radius needs to be configured
         AutoBuilder.configureHolonomic(
-            this::getPose, 
+            this::getPose,
             this::resetOdometry, 
             this::getRobotRelativeSpeeds, 
             this::driveRobotRelative, 

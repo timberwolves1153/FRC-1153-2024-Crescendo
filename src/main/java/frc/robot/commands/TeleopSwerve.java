@@ -37,6 +37,7 @@ public class TeleopSwerve extends Command {
     private BooleanSupplier lockOnSpeaker;
     private PIDController translationController;
     private BooleanSupplier isPassingNote;
+    private BooleanSupplier isPassingMidline;
 
     Timer shotTimer;
     Boolean ranOnce;
@@ -66,7 +67,7 @@ public class TeleopSwerve extends Command {
         BooleanSupplier robotCentricSup, 
         BooleanSupplier lockOnTag,
         BooleanSupplier lockOnSpeaker,
-        BooleanSupplier windhamAim,
+        BooleanSupplier isPassingMidline,
         BooleanSupplier isPassingNote, 
         BooleanSupplier aimAtAmp,
         WeekZeroVision vision) {
@@ -81,6 +82,7 @@ public class TeleopSwerve extends Command {
         this.aimAtAmp = aimAtAmp;
         this.lockOnTag = lockOnTag;
         this.windhamAim = windhamAim;
+        this.isPassingMidline = isPassingMidline;
         this.lockOnSpeaker = lockOnSpeaker;
         this.isPassingNote = isPassingNote;
         
@@ -131,33 +133,33 @@ public class TeleopSwerve extends Command {
             
             thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle())- 180);
             rotationVal = thetaController.calculate(s_Swerve.getYaw(), Math.toDegrees(s_Swerve.getSpeakerAngle())-180);
-        } else if (windhamAim.getAsBoolean()) {
-            shotTimer.start();
-            translationVal = 0.3 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = 0.3 * Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-            currentRobotTranslation = s_Swerve.getPose().getTranslation(); 
-            //Calculate angle relative to the speaker from current pose
-            currentAngleToSpeaker = s_Swerve.getSpeakerAngle(); 
-            //Get current drivetrain velocities in field relative terms
-            speeds = s_Swerve.getFieldRelativeSpeeds(); 
+             // } else if (windhamAim.getAsBoolean()) {
+        //     shotTimer.start();
+        //     translationVal = 0.3 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+        //     strafeVal = 0.3 * Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+        //     currentRobotTranslation = s_Swerve.getPose().getTranslation(); 
+        //     //Calculate angle relative to the speaker from current pose
+        //     currentAngleToSpeaker = s_Swerve.getSpeakerAngle(); 
+        //     //Get current drivetrain velocities in field relative terms
+        //     speeds = s_Swerve.getFieldRelativeSpeeds(); 
             
-            timeUntilShot = 0.5;
-           // timeUntilShot = Constants.FieldConstants.TIME_UNTIL_SHOT - shotTimer.get();
-            if (timeUntilShot < 0) {
-                timeUntilShot = 0.00;
-            }
+        //     timeUntilShot = 0.5;
+        //    // timeUntilShot = Constants.FieldConstants.TIME_UNTIL_SHOT - shotTimer.get();
+        //     if (timeUntilShot < 0) {
+        //         timeUntilShot = 0.00;
+        //     }
     
-            //Calculate change in x/y distance due to time and velocity
-            moveDelta = new Translation2d(timeUntilShot*(speeds.vxMetersPerSecond),timeUntilShot*(speeds.vyMetersPerSecond));
+        //     //Calculate change in x/y distance due to time and velocity
+        //     moveDelta = new Translation2d(timeUntilShot*(speeds.vxMetersPerSecond),timeUntilShot*(speeds.vyMetersPerSecond));
     
-            //futureRobotPose is the position the robot will be at timeUntilShot in the future
-            futureRobotTranslation = currentRobotTranslation.plus(moveDelta);
-            //Angle to the speaker at future position
-            futureAngleToSpeaker = s_Swerve.getAngleToSpeaker(futureRobotTranslation);
-            thetaController.setSetpoint(futureAngleToSpeaker.getDegrees() - 90);
-            rotationVal = thetaController.calculate(s_Swerve.getYaw(), (futureAngleToSpeaker.getDegrees() - 90));
+        //     //futureRobotPose is the position the robot will be at timeUntilShot in the future
+        //     futureRobotTranslation = currentRobotTranslation.plus(moveDelta);
+        //     //Angle to the speaker at future position
+        //     futureAngleToSpeaker = s_Swerve.getAngleToSpeaker(futureRobotTranslation);
+        //     thetaController.setSetpoint(futureAngleToSpeaker.getDegrees() - 90);
+        //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), (futureAngleToSpeaker.getDegrees() - 90));
             
-        } else if (isPassingNote.getAsBoolean()) {
+         } else if (isPassingNote.getAsBoolean()) {
             boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
             .equals(DriverStation.Alliance.Blue);
             if (isBlue) {
@@ -171,7 +173,23 @@ public class TeleopSwerve extends Command {
             }
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
             strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-        } else if (aimAtAmp.getAsBoolean()) {
+        } else if (isPassingMidline.getAsBoolean()) {
+             boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+            .equals(DriverStation.Alliance.Blue);
+            if (isBlue) {
+                double setpoint = -10;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            } else {
+                double setpoint= 10;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            }
+            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+
+
+        }else if (aimAtAmp.getAsBoolean()) {
             boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
             .equals(DriverStation.Alliance.Blue);
             if (isBlue) {

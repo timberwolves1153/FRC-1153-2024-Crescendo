@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.25,
-      "y": 5.55
+      "x": 1.4844248215812361,
+      "y": 6.4445901813418836
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,31 @@
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer"
+            "name": "Run Launcher"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Close Launcher"
+            "name": "SkipNSprint Shot2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SNS Start Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {
@@ -44,13 +56,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Deploy Intake"
+            "name": "Stop Index"
           }
         },
         {
@@ -62,19 +68,25 @@
         {
           "type": "named",
           "data": {
-            "name": "Run Launcher"
+            "name": "Deploy Intake"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Ready Close Shot"
+            "name": "SkipNSprint Shot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Center Four 1"
+            "pathName": "SNS N2 Path"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
           }
         },
         {
@@ -86,79 +98,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Four 2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Four 3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {
@@ -182,7 +122,55 @@
         {
           "type": "named",
           "data": {
-            "name": "End Intake"
+            "name": "SkipNSprint Shot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SNS N1 Path"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SkipNSprint Shot"
           }
         },
         {
@@ -200,12 +188,12 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotHome"
+            "name": "End Intake"
           }
         }
       ]
     }
   },
-  "folder": "4 Notes",
+  "folder": null,
   "choreoAuto": false
 }

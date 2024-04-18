@@ -67,7 +67,7 @@
   "reversed": false,
   "folder": "SkipNSprint",
   "previewStartingState": {
-    "rotation": 15.0,
+    "rotation": 13.0,
     "velocity": 0
   },
   "useDefaultConstraints": false

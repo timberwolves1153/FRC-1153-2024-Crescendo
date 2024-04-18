@@ -80,48 +80,6 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SNS N2 Path"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SkipNSprint Shot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "SNS N3 Path"
           }
         },
@@ -165,6 +123,48 @@
           "type": "path",
           "data": {
             "pathName": "SNS N1 Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Index"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Index"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SkipNSprint Shot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SNS N2 Path"
           }
         },
         {

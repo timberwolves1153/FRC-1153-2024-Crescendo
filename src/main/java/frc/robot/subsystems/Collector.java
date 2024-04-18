@@ -22,7 +22,7 @@ public class Collector extends SubsystemBase{
 
 
     public double kP, kI, kD, kFF, kMaxOutput, kMinOutput, kInput, maxRPM;
-    private final double IntakeSetpoint = 30;
+    private final double IntakeSetpoint = 31;
     private boolean isCollecting = false;
 
     public Collector() {
@@ -133,7 +133,7 @@ public class Collector extends SubsystemBase{
     }
 
     public void retractIntake() {
-        pidController.setReference(IntakeSetpoint - IntakeSetpoint, ControlType.kPosition);
+        pidController.setReference(IntakeSetpoint - IntakeSetpoint-1, ControlType.kPosition);
     }
 
     public void resetIntakeEncoder() {

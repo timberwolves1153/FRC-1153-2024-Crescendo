@@ -132,7 +132,7 @@ public class Launcher extends SubsystemBase {
     }
 
     public boolean isLauncherReadyToShootWing() {
-        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 11.5) {
+        if (m_leftLauncher.getMotorVoltage().getValueAsDouble() > 11.9) {
             return true;
         } else {
             return false;
