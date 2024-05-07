@@ -172,19 +172,23 @@ public class TeleopSwerve extends Command {
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
             strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
         } else if (aimAtAmp.getAsBoolean()) {
-            boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
-            .equals(DriverStation.Alliance.Blue);
-            if (isBlue) {
-                double setpoint = -91;
-                thetaController.setSetpoint(setpoint);
-                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-            } else {
-                double setpoint= 91;
-                thetaController.setSetpoint(setpoint);
-                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-            }
-            translationVal = 0.4 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = 0.4 *Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+            // boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+            // .equals(DriverStation.Alliance.Blue);
+            // if (isBlue) {
+            //     double setpoint = -91;
+            //     thetaController.setSetpoint(setpoint);
+            //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            // } else {
+            //     double setpoint= 91;
+            //     thetaController.setSetpoint(setpoint);
+            //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            // }
+            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+            rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
+            translationVal = translationVal *0.1;
+            strafeVal = strafeVal *0.1;
+            rotationVal = rotationVal *0.1;
         }
         else {
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);

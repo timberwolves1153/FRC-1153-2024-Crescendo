@@ -198,10 +198,15 @@ public class RobotContainer {
         zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
        // driveX.onTrue(new InstantCommand(() -> winch.resetEncoder()));
 
-        driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote()));
+        driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote(6.75, 4.21)));
         driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
         driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
         driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+
+        driveRightTrigger.onTrue(new InstantCommand(() -> launcher.passNote(5.75, 5.75)));
+        driveRightTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+        driveRightTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+        driveRightTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
 
 
         // INTAKE
@@ -281,7 +286,7 @@ public class RobotContainer {
         //povDown.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
 
         //AMP
-       opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+        opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
         opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
     //     //opA.whileTrue(pivotToAmp);
     //     // opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(42), pidPivot));

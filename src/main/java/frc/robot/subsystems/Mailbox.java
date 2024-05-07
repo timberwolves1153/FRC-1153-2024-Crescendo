@@ -30,7 +30,7 @@ public class Mailbox extends SubsystemBase {
     }
 
     public void sendToIntake() {
-        indexMotor.setVoltage(-12);
+        indexMotor.setVoltage(-6);
     }
 
     public void intake() {

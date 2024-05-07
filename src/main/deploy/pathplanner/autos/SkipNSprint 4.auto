@@ -122,7 +122,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SNS N3 Path"
+            "pathName": "SNS N1 Path"
           }
         },
         {
@@ -164,7 +164,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SNS N1 Path"
+            "pathName": "SNS N3 Path"
           }
         },
         {

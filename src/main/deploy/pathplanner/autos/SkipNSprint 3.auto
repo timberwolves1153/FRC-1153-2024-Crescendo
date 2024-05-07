@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8210801606788397,
-      "y": 6.525338178881486
+      "x": 1.4844248215812361,
+      "y": 6.4445901813418836
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,19 +14,31 @@
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer"
+            "name": "Run Launcher"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Subwoofer No Spin"
+            "name": "SkipNSprint Shot2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SNS Start Path"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Pivot Mailbox"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 0.2
           }
         },
         {
@@ -44,7 +56,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Deploy Intake"
+            "name": "Stop Index"
           }
         },
         {
@@ -56,38 +68,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Ready Close Shot"
+            "name": "Deploy Intake"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Stop Index"
+            "name": "SkipNSprint Shot"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Run Launcher"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Four Sprint N12 Path1"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
+            "pathName": "SNS N1 Path"
           }
         },
         {
@@ -99,7 +92,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {
@@ -123,26 +116,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Ready Wing Shot"
+            "name": "SkipNSprint Shot"
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Four Sprint N12 Path2"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
+            "pathName": "SNS N2 Path"
           }
         },
         {
@@ -154,7 +134,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.2
           }
         },
         {
@@ -178,68 +158,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Ready Source Shot"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Amp Four Sprint N12 Path3"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Mailbox Check"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Pivot Mailbox"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.65
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Index"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Index"
+            "name": "SkipNSprint Shot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Retract Intake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "PivotHome"
           }
         },
         {
@@ -257,6 +182,6 @@
       ]
     }
   },
-  "folder": "4 Notes",
+  "folder": null,
   "choreoAuto": false
 }
