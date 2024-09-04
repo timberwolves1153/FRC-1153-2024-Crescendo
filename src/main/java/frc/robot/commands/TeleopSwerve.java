@@ -65,10 +65,6 @@ public class TeleopSwerve extends Command {
         DoubleSupplier rotationSup, 
         BooleanSupplier robotCentricSup, 
         BooleanSupplier lockOnTag,
-        BooleanSupplier lockOnSpeaker,
-        BooleanSupplier windhamAim,
-        BooleanSupplier isPassingNote, 
-        BooleanSupplier aimAtAmp,
         WeekZeroVision vision) {
         
         this.s_Swerve = s_Swerve;
@@ -78,11 +74,9 @@ public class TeleopSwerve extends Command {
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
-        this.aimAtAmp = aimAtAmp;
+        
         this.lockOnTag = lockOnTag;
-        this.windhamAim = windhamAim;
-        this.lockOnSpeaker = lockOnSpeaker;
-        this.isPassingNote = isPassingNote;
+        
         
         addRequirements(s_Swerve);
     }
@@ -98,7 +92,7 @@ public class TeleopSwerve extends Command {
     public void execute() {
         /* Get Values, Deadband*/
         boolean aimAtTag = lockOnTag.getAsBoolean();
-        boolean aimAtSpeaker = lockOnSpeaker.getAsBoolean();
+        //boolean aimAtSpeaker = lockOnSpeaker.getAsBoolean();
         
         if(aimAtTag) {
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
@@ -107,90 +101,90 @@ public class TeleopSwerve extends Command {
             rotationVal = thetaController.calculate(vision.aimAtTarget(), 0);
         }
            
-        // } else if (lockOnObject) {
-        //     //translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+        // // } else if (lockOnObject) {
+        // //     //translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+        // //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+        // //     thetaController.setSetpoint(0);
+        // //     rotationVal = thetaController.calculate(objectDetecting.aimAtObject(), 0);
+        // //     translationController.setSetpoint(0);
+        // //     translationVal = translationController.calculate(objectDetecting.calculateRange(), 0);
+        // // } else if (!lockOnObject){
+        // //     translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+        // //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+        // //     rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
+        
+        //     else if(aimAtSpeaker) {
+            
+        //     boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+        //     .equals(DriverStation.Alliance.Blue);
+        //     double directionFlip = isBlue ? 1.0 : -1.0;
+
+        //     translationVal = 0.3 * Math.pow(directionFlip* MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+        //     strafeVal = 0.3 * Math.pow(directionFlip* MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+
+            
+        //     thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle())- 180);
+        //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), Math.toDegrees(s_Swerve.getSpeakerAngle())-180);
+        // } else if (windhamAim.getAsBoolean()) {
+        //     shotTimer.start();
+        //     translationVal = 0.3 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+        //     strafeVal = 0.3 * Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+        //     currentRobotTranslation = s_Swerve.getPose().getTranslation(); 
+        //     //Calculate angle relative to the speaker from current pose
+        //     currentAngleToSpeaker = s_Swerve.getSpeakerAngle(); 
+        //     //Get current drivetrain velocities in field relative terms
+        //     speeds = s_Swerve.getFieldRelativeSpeeds(); 
+            
+        //     timeUntilShot = 0.5;
+        //    // timeUntilShot = Constants.FieldConstants.TIME_UNTIL_SHOT - shotTimer.get();
+        //     if (timeUntilShot < 0) {
+        //         timeUntilShot = 0.00;
+        //     }
+    
+        //     //Calculate change in x/y distance due to time and velocity
+        //     moveDelta = new Translation2d(timeUntilShot*(speeds.vxMetersPerSecond),timeUntilShot*(speeds.vyMetersPerSecond));
+    
+        //     //futureRobotPose is the position the robot will be at timeUntilShot in the future
+        //     futureRobotTranslation = currentRobotTranslation.plus(moveDelta);
+        //     //Angle to the speaker at future position
+        //     futureAngleToSpeaker = s_Swerve.getAngleToSpeaker(futureRobotTranslation);
+        //     thetaController.setSetpoint(futureAngleToSpeaker.getDegrees() - 90);
+        //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), (futureAngleToSpeaker.getDegrees() - 90));
+            
+        // } else if (isPassingNote.getAsBoolean()) {
+        //     boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+        //     .equals(DriverStation.Alliance.Blue);
+        //     if (isBlue) {
+        //         double setpoint = -35;
+        //         thetaController.setSetpoint(setpoint);
+        //         rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+        //     } else {
+        //         double setpoint= 35;
+        //         thetaController.setSetpoint(setpoint);
+        //         rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+        //     }
+        //     translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
         //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-        //     thetaController.setSetpoint(0);
-        //     rotationVal = thetaController.calculate(objectDetecting.aimAtObject(), 0);
-        //     translationController.setSetpoint(0);
-        //     translationVal = translationController.calculate(objectDetecting.calculateRange(), 0);
-        // } else if (!lockOnObject){
+        // } else if (aimAtAmp.getAsBoolean()) {
+        //     // boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+        //     // .equals(DriverStation.Alliance.Blue);
+        //     // if (isBlue) {
+        //     //     double setpoint = -91;
+        //     //     thetaController.setSetpoint(setpoint);
+        //     //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+        //     // } else {
+        //     //     double setpoint= 91;
+        //     //     thetaController.setSetpoint(setpoint);
+        //     //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+        //     // }
         //     translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
         //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
         //     rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
-        
-            else if(aimAtSpeaker) {
-            
-            boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
-            .equals(DriverStation.Alliance.Blue);
-            double directionFlip = isBlue ? 1.0 : -1.0;
-
-            translationVal = 0.3 * Math.pow(directionFlip* MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = 0.3 * Math.pow(directionFlip* MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-
-            
-            thetaController.setSetpoint(Math.toDegrees(s_Swerve.getSpeakerAngle())- 180);
-            rotationVal = thetaController.calculate(s_Swerve.getYaw(), Math.toDegrees(s_Swerve.getSpeakerAngle())-180);
-        } else if (windhamAim.getAsBoolean()) {
-            shotTimer.start();
-            translationVal = 0.3 *Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = 0.3 * Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-            currentRobotTranslation = s_Swerve.getPose().getTranslation(); 
-            //Calculate angle relative to the speaker from current pose
-            currentAngleToSpeaker = s_Swerve.getSpeakerAngle(); 
-            //Get current drivetrain velocities in field relative terms
-            speeds = s_Swerve.getFieldRelativeSpeeds(); 
-            
-            timeUntilShot = 0.5;
-           // timeUntilShot = Constants.FieldConstants.TIME_UNTIL_SHOT - shotTimer.get();
-            if (timeUntilShot < 0) {
-                timeUntilShot = 0.00;
-            }
-    
-            //Calculate change in x/y distance due to time and velocity
-            moveDelta = new Translation2d(timeUntilShot*(speeds.vxMetersPerSecond),timeUntilShot*(speeds.vyMetersPerSecond));
-    
-            //futureRobotPose is the position the robot will be at timeUntilShot in the future
-            futureRobotTranslation = currentRobotTranslation.plus(moveDelta);
-            //Angle to the speaker at future position
-            futureAngleToSpeaker = s_Swerve.getAngleToSpeaker(futureRobotTranslation);
-            thetaController.setSetpoint(futureAngleToSpeaker.getDegrees() - 90);
-            rotationVal = thetaController.calculate(s_Swerve.getYaw(), (futureAngleToSpeaker.getDegrees() - 90));
-            
-        } else if (isPassingNote.getAsBoolean()) {
-            boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
-            .equals(DriverStation.Alliance.Blue);
-            if (isBlue) {
-                double setpoint = -35;
-                thetaController.setSetpoint(setpoint);
-                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-            } else {
-                double setpoint= 35;
-                thetaController.setSetpoint(setpoint);
-                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-            }
-            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-        } else if (aimAtAmp.getAsBoolean()) {
-            // boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
-            // .equals(DriverStation.Alliance.Blue);
-            // if (isBlue) {
-            //     double setpoint = -91;
-            //     thetaController.setSetpoint(setpoint);
-            //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-            // } else {
-            //     double setpoint= 91;
-            //     thetaController.setSetpoint(setpoint);
-            //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-            // }
-            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-            rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
-            translationVal = translationVal *0.1;
-            strafeVal = strafeVal *0.1;
-            rotationVal = rotationVal *0.1;
-        }
-        else {
+        //     translationVal = translationVal *0.1;
+        //     strafeVal = strafeVal *0.1;
+        //     rotationVal = rotationVal *0.1;
+        // }
+         else {
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
             strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
             rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
