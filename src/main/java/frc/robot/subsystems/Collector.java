@@ -86,40 +86,6 @@ public class Collector extends SubsystemBase{
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void pivotDown(){
         pivotMotor.setVoltage(2.5);
     }
