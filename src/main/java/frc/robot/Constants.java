@@ -23,6 +23,7 @@ public final class Constants {
     public static final boolean launcherPivotTuningMode = false;
     public static final boolean collectorTuningMode = true;
     public static final boolean swerveTuningMode = false;
+    public static final boolean HERSH_MODE = false;
     public static final double stickDeadband = 0.2;
 
     public static final class Field {

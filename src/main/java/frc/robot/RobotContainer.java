@@ -99,9 +99,9 @@ public class RobotContainer {
     private final Joystick operator = new Joystick(1);
     private final Joystick atari = new Joystick(2);
     // The robot's subsystems and commands are defined here...
-    private final JoystickButton rotateWithTag = new JoystickButton(driver, XboxController.Button.kRightStick.value);
+    private final JoystickButton driveRightStick = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     //private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
+    private final JoystickButton driveLeftStick = new JoystickButton(driver, XboxController.Button.kLeftStick.value);
     private final JoystickButton driveA = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton driveY = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton driveB = new JoystickButton(driver, XboxController.Button.kB.value);
@@ -112,6 +112,10 @@ public class RobotContainer {
     private final JoystickButton driveSelect = new JoystickButton(driver, XboxController.Button.kBack.value);
     private final AxisButton driveLeftTrigger = new AxisButton(driver, 2, 0.5);
     private final AxisButton driveRightTrigger = new AxisButton(driver, 3, 0.5);
+    private final POVButton drivePovUp = new POVButton(driver, 0);
+    private final POVButton drivePovDown = new POVButton(driver, 180);
+    private final POVButton drivePovRight = new POVButton(driver, 90);
+    private final POVButton drivePovLeft = new POVButton(driver, 270);
 
     private final JoystickButton opLeftStick = new JoystickButton(operator, XboxController.Button.kLeftStick.value);
     private final JoystickButton opRightStick = new JoystickButton(operator, XboxController.Button.kRightStick.value);
@@ -139,17 +143,32 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    if (!Constants.HERSH_MODE) {
         s_Swerve.setDefaultCommand(
+            
             new TeleopSwerve(
                 s_Swerve, 
                 () -> -driver.getRawAxis(translationAxis), 
                 () -> -driver.getRawAxis(strafeAxis), 
                 () -> -driver.getRawAxis(rotationAxis), 
                 () -> false,
-                () -> rotateWithTag.getAsBoolean(),
-                vision
-            )
-        );
+                () -> driveRightStick.getAsBoolean(),
+                () -> driveX.getAsBoolean(),
+                () -> driveLeftTrigger.getAsBoolean(),
+                vision));
+            } else {
+                s_Swerve.setDefaultCommand(
+                new TeleopSwerve(s_Swerve, 
+                () -> -driver.getRawAxis(translationAxis), 
+                () -> -driver.getRawAxis(strafeAxis), 
+                () -> -driver.getRawAxis(rotationAxis), 
+                () -> false, 
+                () -> driveLeftStick.getAsBoolean(), 
+                () -> driveA.getAsBoolean(), 
+                () -> driveLeftTrigger.getAsBoolean(), 
+                vision));
+            }
+        
 
        
 
@@ -193,11 +212,11 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        // Demo Mode Controls
+        if (!Constants.HERSH_MODE) {
             //resets
-        zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
-        opSelect.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
-        opSelect.onTrue(new InstantCommand(() -> baseClef.resetEncoder()));
+                driveLeftStick.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
+                opSelect.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
+                opSelect.onTrue(new InstantCommand(() -> baseClef.resetEncoder()));
             // Intake
                 opLeftBumper.onTrue(new InstantCommand(() -> collector.intake(), collector));
                 opLeftBumper.onTrue(Commands.runOnce(() -> collector.deployIntake(), collector));
@@ -212,30 +231,15 @@ public class RobotContainer {
                 opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
                 opRightBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
                 opRightBumper.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
-            //Shooting
-                // opLeftStick.whileTrue(launch);
-                // opLeftStick.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts(), launcher));
-                // opLeftStick.whileTrue(interpolateToSpeaker); 
-                // opLeftStick.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-                // opLeftStick.whileFalse(new InstantCommand(() -> mailbox.stop()));
-
-                zeroGyro.onTrue(new InstantCommand(() -> mailbox.sendToLauncher(), mailbox));
-                zeroGyro.onTrue(new InstantCommand(() -> collector.intake(), collector));
-                zeroGyro.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
-                zeroGyro.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
                 
-
+                //passing notes
 
                 driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote(6.75, 4.21)));
                 driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
                 driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
                 driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
 
-                // opLeftTrigger.onTrue(new InstantCommand(() -> launcher.closeLaunchSpeed()));
-                // opLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(45), pidPivot));
-                // opLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-                // opLeftTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
-                // pivot
+                // manual pivot
                 povUp.onTrue(new InstantCommand(() -> pidPivot.pivotUp(), pidPivot));
                 povUp.onFalse(new InstantCommand(() -> pidPivot.holdPosition(), pidPivot));
                 povDown.onTrue(new InstantCommand(() -> pidPivot.pivotDown(), pidPivot));
@@ -246,132 +250,163 @@ public class RobotContainer {
                 povLeft.onTrue(new InstantCommand(() -> collector.pivotDown(), collector));
                 povLeft.onFalse(new InstantCommand(() -> collector.pivotStop(), collector));
                 
+                // AMP
+
+                opA.onTrue(new InstantCommand(() -> baseClef.deployClef()));
+                opA.onFalse(new InstantCommand(() -> baseClef.retractClef()));
+                opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(45), pidPivot));
+                opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+                opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+                opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
 
 
-        opA.onTrue(new InstantCommand(() -> baseClef.deployClef()));
-        opA.onFalse(new InstantCommand(() -> baseClef.retractClef()));
-        opA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(45), pidPivot));
-        opA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-        opA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
-        opA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
-
-        /* Driver Buttons */
-        
-       // driveX.onTrue(new InstantCommand(() -> winch.resetEncoder()));
-
-        // driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote(6.75, 4.21)));
-        // driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
-        // driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
-        // driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-
-        // driveRightTrigger.onTrue(new InstantCommand(() -> launcher.passNote(5.75, 5.75)));
-        // driveRightTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
-        // driveRightTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
-        // driveRightTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-
-
-        // INTAKE
-        // opLeftBumper.onTrue(new InstantCommand(() -> collector.intake(), collector));
-        // opLeftBumper.onTrue(Commands.runOnce(() -> collector.deployIntake(), collector));
-        // opLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-        // opLeftBumper.onFalse(Commands.runOnce(() -> collector.retractIntake(), collector));
-        // opLeftBumper.onTrue(mailboxCheck);
-        // opLeftBumper.onFalse(new InstantCommand(()-> mailbox.stop()));
-        // opLeftBumper.whileTrue(new DriverIntakeFeedback(collector, mailbox, driver, operator));
-
+                opLeftStick.onTrue(new InstantCommand(() -> mailbox.sendToLauncher(), mailbox));
+                opLeftStick.onTrue(new InstantCommand(() -> collector.intake(), collector));
                 
-        // opRightBumper.onTrue(new InstantCommand(() -> collector.outtake(), collector));
-        // opRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+                opLeftStick.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
+                opLeftStick.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
 
-        opLeftStick.onTrue(new InstantCommand(() -> mailbox.sendToLauncher(), mailbox));
-        opLeftStick.onTrue(new InstantCommand(() -> collector.intake(), collector));
-        
-        opLeftStick.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
-        opLeftStick.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
-
-        opStart.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
-        opStart.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
-
-        driveSelect.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
-        driveSelect.onTrue(new InstantCommand(() -> baseClef.resetEncoder()));
-        
-        //PIVOTS
+                opStart.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
+                opStart.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
         
         
 
     
-        //LAUNCHER - when auto shoot is not working
-        opX.whileTrue(launch);
-        opX.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts(), launcher));
-        opX.whileTrue(interpolateToSpeaker); 
-        opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-        opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
-        opX.onTrue(new InstantCommand(() -> pidPivot.isXButtonPressed(true)));
-        opX.onFalse(new InstantCommand(() -> pidPivot.isXButtonPressed(false)));
-                    // driveX.whileTrue(Commands.runOnce(() -> 
-                    // pidPivot.setSetpointDegrees(SmartDashboard.getNumber("PIGEON MAIL",20)), pidPivot));
-        // back up if interpolation is wrong/messed up
+                //LAUNCHER - when auto shoot is not working
+                driveX.whileTrue(launch);
+                driveX.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts(), launcher));
+                driveX.whileTrue(interpolateToSpeaker); 
+                driveX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+                driveX.whileFalse(new InstantCommand(() -> mailbox.stop()));
+                
+                            // driveX.whileTrue(Commands.runOnce(() -> 
+                            // pidPivot.setSetpointDegrees(SmartDashboard.getNumber("PIGEON MAIL",20)), pidPivot));
+                // back up if interpolation is wrong/messed up
 
-        // BASE CLEF (AMP MECH)
-        opY.onTrue(new InstantCommand(() -> baseClef.manualDeploy()));
-        opY.onFalse(new InstantCommand(() -> baseClef.stop()));
-        opB.onTrue(new InstantCommand(() -> baseClef.manualRetract()));
-        opB.onFalse(new InstantCommand(() -> baseClef.stop()));
+                // BASE CLEF (AMP MECH)
+                opY.onTrue(new InstantCommand(() -> baseClef.manualDeploy()));
+                opY.onFalse(new InstantCommand(() -> baseClef.stop()));
+                opB.onTrue(new InstantCommand(() -> baseClef.manualRetract()));
+                opB.onFalse(new InstantCommand(() -> baseClef.stop()));
 
-        //launcher override
-        opLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote(9, 9)));
-        opLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
-        opLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
-        opLeftTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+                //launcher override
+                opLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote(7, 7)));
+                opLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+                opLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+                opLeftTrigger.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+                
+
+                opRightTrigger.whileTrue(launch);
+                opRightTrigger.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+                opRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
+                opRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
+                opRightTrigger.whileTrue(interpolateToSpeaker); 
+                opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+
+            // CLIMBING BUTTONS
+                driveLeftBumper.onTrue(new InstantCommand(() -> winch.winchUp(), winch));
+                driveLeftBumper.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
+                driveLeftBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
+
+                driveRightBumper.onTrue(new InstantCommand(() -> winch.winchDown(), winch));
+                driveRightBumper.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
+                driveRightBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
+
+                driveY.onTrue(new InstantCommand(() -> winch.rightWinchUp()));
+                driveY.onFalse(new InstantCommand(() -> winch.rightStop()));
+                
+                driveB.onTrue(new InstantCommand(() -> winch.rightWinchDown()));
+                driveB.onFalse(new InstantCommand(() -> winch.rightStop()));
+
+                driveStart.onTrue(new InstantCommand(() -> winch.leftWinchUp()));
+                driveStart.onFalse(new InstantCommand(() -> winch.leftStop()));
+                
+                driveSelect.onTrue(new InstantCommand(() -> winch.leftWinchDown()));
+                driveSelect.onFalse(new InstantCommand(() -> winch.leftStop()));
+                
+        } else {
+            // HERSH'S SINGLE DRIVER CONTROLS
+
+            // Resets
+                driveSelect.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro(), s_Swerve));
+                driveSelect.onTrue(new InstantCommand(() -> collector.resetIntakeEncoder()));
+                driveSelect.onTrue(new InstantCommand(() -> baseClef.resetEncoder()));
+
+            // Shooting notes
+                driveRightTrigger.whileTrue(launch);
+                driveRightTrigger.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+                driveRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
+                driveRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
+                driveRightTrigger.whileTrue(interpolateToSpeaker); 
+                driveRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+
+
+            //when auto shoot is not working
+                opX.whileTrue(launch);
+                opX.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts(), launcher));
+                opX.whileTrue(interpolateToSpeaker); 
+                opX.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+                opX.whileFalse(new InstantCommand(() -> mailbox.stop()));
         
 
-        opRightTrigger.whileTrue(launch);
-        opRightTrigger.whileFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
-        opRightTrigger.whileTrue(autoShoot);// for some reason auto shoot wants to be called before interpolate to speaker
-        opRightTrigger.whileFalse(new InstantCommand(() -> mailbox.stop()));
-        opRightTrigger.whileTrue(interpolateToSpeaker); 
-        opRightTrigger.whileFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+            // Passing Notes
+                driveLeftTrigger.onTrue(new InstantCommand(() -> launcher.passNote(6.75, 4.21)));
+                driveLeftTrigger.onFalse(new InstantCommand(() -> launcher.idleLaunchWithVolts()));
+                driveLeftTrigger.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+                driveLeftTrigger.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+
+            // send notes to launcher 
+
+                driveLeftStick.onTrue(new InstantCommand(() -> mailbox.sendToLauncher(), mailbox));
+                driveLeftStick.onTrue(new InstantCommand(() -> collector.intake(), collector));
+                
+                driveLeftStick.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
+                driveLeftStick.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+
+
+                //launcher override
+                driveY.onTrue(new InstantCommand(() -> launcher.passNote(7, 7)));
+                driveY.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(56), pidPivot));
+                driveY.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+                driveY.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+
+                // Intake
+                driveRightBumper.onTrue(new InstantCommand(() -> collector.intake(), collector));
+                driveRightBumper.onTrue(Commands.runOnce(() -> collector.deployIntake(), collector));
+                driveRightBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+                driveRightBumper.onFalse(Commands.runOnce(() -> collector.retractIntake(), collector));
+                driveRightBumper.onTrue(mailboxCheck);
+                driveRightBumper.onFalse(new InstantCommand(()-> mailbox.stop()));
+                driveRightBumper.whileTrue(new DriverIntakeFeedback(collector, mailbox, driver, operator));
+
+                driveLeftBumper.onTrue(new InstantCommand(() -> collector.outtake(), collector));
+                driveLeftBumper.onFalse(new InstantCommand(() -> collector.collectorStop(), collector));
+                driveLeftBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
+                driveLeftBumper.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
+                driveLeftBumper.onTrue(new InstantCommand(() -> mailbox.sendToIntake(), mailbox));
+                driveLeftBumper.onFalse(new InstantCommand(() -> mailbox.stop(), mailbox));
+
+            // AMP
+
+                driveA.onTrue(new InstantCommand(() -> baseClef.deployClef()));
+                driveA.onFalse(new InstantCommand(() -> baseClef.retractClef()));
+                driveA.onTrue(Commands.runOnce(() -> pidPivot.setSetpointDegrees(45), pidPivot));
+                driveA.onFalse(Commands.runOnce(() -> pidPivot.setSetpointDegrees(22), pidPivot));
+                driveA.onTrue(new InstantCommand(() -> launcher.slowLaunchWithVolts()));
+                driveA.onFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts()));
+
+                // CLIMBING BUTTONS
+                // drivePovUp.onTrue(new InstantCommand(() -> winch.winchUp(), winch));
+                // drivePovUp.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
+                // drivePovUp.onFalse(new InstantCommand(() -> winch.stop(), winch));
+
+                // drivePovDown.onTrue(new InstantCommand(() -> winch.winchDown(), winch));
+                // drivePovDown.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
+                // drivePovDown.onFalse(new InstantCommand(() -> winch.stop(), winch));
+        }   
+    
         
-        
-    //this may be for single controller things
-        // opRightTrigger.whileTrue(new InstantCommand(() -> launcher.passNote(4.5, 4.5), launcher));
-        // opRightTrigger.whileFalse(new InstantCommand(() -> launcher.stopLaunchWithVolts(), launcher));
-        // opRightTrigger.onTrue(new InstantCommand(() -> pidPivot.isLTPressed(true)));
-        // opRightTrigger.onFalse(new InstantCommand(() -> pidPivot.isLTPressed(false)));
 
-        // mailbox pivot override
-        
-        //povDown.onFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
-
-        //AMP
-        
-
-        // CLIMB
-
-        // opY.whileTrue(PivotToClimb);
-        // opY.whileFalse(Commands.runOnce(() -> pidPivot.holdPosition(), pidPivot));
-
-        
-
-        driveLeftBumper.onTrue(new InstantCommand(() -> winch.winchUp(), winch));
-        driveLeftBumper.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
-        driveLeftBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
-
-        driveRightBumper.onTrue(new InstantCommand(() -> winch.winchDown(), winch));
-        driveRightBumper.onTrue(Commands.runOnce(() -> pidPivot.pivotStop()));
-        driveRightBumper.onFalse(new InstantCommand(() -> winch.stop(), winch));
-
-        driveY.onTrue(new InstantCommand(() -> winch.rightWinchUp()));
-        driveY.onFalse(new InstantCommand(() -> winch.rightStop()));
-        
-        driveB.onTrue(new InstantCommand(() -> winch.rightWinchDown()));
-        driveB.onFalse(new InstantCommand(() -> winch.rightStop()));
-
-        driveStart.onTrue(new InstantCommand(() -> winch.leftWinchUp()));
-        driveStart.onFalse(new InstantCommand(() -> winch.leftStop()));
-        
-        driveSelect.onTrue(new InstantCommand(() -> winch.leftWinchDown()));
-        driveSelect.onFalse(new InstantCommand(() -> winch.leftStop()));
     }
 
     public Joystick getDriveController(){

@@ -65,6 +65,8 @@ public class TeleopSwerve extends Command {
         DoubleSupplier rotationSup, 
         BooleanSupplier robotCentricSup, 
         BooleanSupplier lockOnTag,
+        BooleanSupplier aimAtAmp,
+        BooleanSupplier isPassingNote,
         WeekZeroVision vision) {
         
         this.s_Swerve = s_Swerve;
@@ -74,8 +76,9 @@ public class TeleopSwerve extends Command {
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
-        
+        this.aimAtAmp = aimAtAmp;
         this.lockOnTag = lockOnTag;
+        this.isPassingNote = isPassingNote;
         
         
         addRequirements(s_Swerve);
@@ -99,7 +102,7 @@ public class TeleopSwerve extends Command {
             strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
             thetaController.setSetpoint(0);
             rotationVal = thetaController.calculate(vision.aimAtTarget(), 0);
-        }
+        
            
         // // } else if (lockOnObject) {
         // //     //translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
@@ -151,39 +154,39 @@ public class TeleopSwerve extends Command {
         //     thetaController.setSetpoint(futureAngleToSpeaker.getDegrees() - 90);
         //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), (futureAngleToSpeaker.getDegrees() - 90));
             
-        // } else if (isPassingNote.getAsBoolean()) {
-        //     boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
-        //     .equals(DriverStation.Alliance.Blue);
-        //     if (isBlue) {
-        //         double setpoint = -35;
-        //         thetaController.setSetpoint(setpoint);
-        //         rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-        //     } else {
-        //         double setpoint= 35;
-        //         thetaController.setSetpoint(setpoint);
-        //         rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-        //     }
-        //     translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-        //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-        // } else if (aimAtAmp.getAsBoolean()) {
-        //     // boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
-        //     // .equals(DriverStation.Alliance.Blue);
-        //     // if (isBlue) {
-        //     //     double setpoint = -91;
-        //     //     thetaController.setSetpoint(setpoint);
-        //     //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-        //     // } else {
-        //     //     double setpoint= 91;
-        //     //     thetaController.setSetpoint(setpoint);
-        //     //     rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
-        //     // }
-        //     translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
-        //     strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
-        //     rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
-        //     translationVal = translationVal *0.1;
-        //     strafeVal = strafeVal *0.1;
-        //     rotationVal = rotationVal *0.1;
-        // }
+        } else if (isPassingNote.getAsBoolean()) {
+            boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+            .equals(DriverStation.Alliance.Blue);
+            if (isBlue) {
+                double setpoint = -35;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            } else {
+                double setpoint= 35;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            }
+            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+        } else if (aimAtAmp.getAsBoolean()) {
+            boolean isBlue = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue)
+            .equals(DriverStation.Alliance.Blue);
+            if (isBlue) {
+                double setpoint = -91;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            } else {
+                double setpoint= 91;
+                thetaController.setSetpoint(setpoint);
+                rotationVal = thetaController.calculate(s_Swerve.getYaw(), setpoint);
+            }
+            translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
+            strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
+           // rotationVal = Math.pow(MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband),3);
+            translationVal = translationVal *0.1;
+            strafeVal = strafeVal *0.1;
+            //rotationVal = rotationVal *0.1;
+        }
          else {
             translationVal = Math.pow(MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband), 3);
             strafeVal = Math.pow(MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband), 3);
